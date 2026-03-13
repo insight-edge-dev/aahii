@@ -39,6 +39,8 @@ export default function VacanciesPage() {
 
       {/* HERO */}
 
+
+
       {/* CURRENT OPPORTUNITIES */}
 
       <section className="max-w-6xl mx-auto px-6 pb-20">
