@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 
 const announcements = [
   {
-    href: "/announcement/1",
-    text: "Call for Data Contribution – Last Date Feb 20, 2025",
+    href: "/careers/vacancies",
+    text: "Research Associate – Low-field MRI Metamaterial Development",
   },
   {
     href: "/workshop",
