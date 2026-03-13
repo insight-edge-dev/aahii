@@ -39,61 +39,6 @@ export default function VacanciesPage() {
 
       {/* HERO */}
 
-      <section className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="bg-yellow-100 text-yellow-700 text-xs px-3 py-1 rounded-full">
-            COMING SOON
-          </span>
-
-          <h1 className="text-5xl font-bold mt-4 leading-tight">
-            Vacancies <span className="text-yellow-500">& Careers</span>
-          </h1>
-
-          <p className="mt-4 text-gray-600 max-w-lg">
-            Join the Assam Advanced Healthcare Innovation Institute. Discover
-            open positions at the intersection of cutting-edge technology and
-            modern medicine.
-          </p>
-
-          <div className="flex mt-6 gap-3">
-            <input
-              placeholder="Enter your email"
-              className="border rounded-lg px-4 py-3 w-64 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-            />
-
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-5 rounded-lg font-medium transition">
-              Subscribe
-            </button>
-          </div>
-
-          <p className="text-xs text-gray-500 mt-2">
-            No spam, only important career updates.
-          </p>
-        </motion.div>
-
-        <motion.div
-          className="flex justify-center"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* subtle glow */}
-          <div className="absolute w-[460px] h-[360px] bg-gradient-to-r from-blue-200 via-blue-300 to-blue-200 opacity-40 blur-3xl rounded-full"></div>
-          <Image
-            src="/images/coming-soon.png"
-            alt="Healthcare illustration"
-            width={420}
-            height={320}
-          />
-        </motion.div>
-
-      </section>
-
       {/* CURRENT OPPORTUNITIES */}
 
       <section className="max-w-6xl mx-auto px-6 pb-20">
