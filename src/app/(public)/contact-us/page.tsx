@@ -27,11 +27,11 @@ export default function ContactPage() {
       variants={fadeUp}
       className="text-center max-w-2xl mx-auto mb-16">
       <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
-        Contact us
+        Get in touch with AAHII
       </h1>
       <p className="text-gray-600 text-sm leading-relaxed">
-        Get in touch and ask us anything. We are here to help and answer any
-        question you might have. We look forward to hearing from you 🙂
+        Get in touch with us. We are here to help and answer any
+        question you might have. We look forward to hearing from you
       </p>
     </motion.div>
 
@@ -105,7 +105,7 @@ export default function ContactPage() {
       variants={fadeUp}
       className="mt-32">
       <h2 className="text-4xl font-extrabold text-center mb-12">
-        Get in touch with AAHII
+        Contact us
       </h2>
 
       <div className="grid lg:grid-cols-2 gap-12 items-start">

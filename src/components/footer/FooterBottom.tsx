@@ -13,37 +13,36 @@ export default function FooterBottom() {
   return (
     <section className="bg-(--nav-blue) text-white">
       {/* MARQUEE STRIP */}
-<div className="footer-marquee bg-(--nav-blue) py-4 overflow-hidden">
-  <div className="footer-marquee-track flex items-center gap-2 sm:gap-4 md:gap-6">
+<div className="footer-marquee bg-[var(--nav-blue)] py-3 overflow-hidden">
+  <div className="footer-marquee-track flex items-center gap-3 sm:gap-6 md:gap-8">
+    
     {[...logos, ...logos].map((logo, index) => (
       <div
         key={index}
         className="
-          min-w-[90px]        /* mobile */
-          sm:min-w-[140px]    /* phones */
-          md:min-w-[200px]    /* tablets */
-          lg:min-w-[240px]    /* desktop */
+          flex-shrink-0
+          w-[110px] sm:w-[150px] md:w-[200px] lg:w-[240px]
+          h-[50px] sm:h-[70px] md:h-[90px]
 
-          bg-white rounded-lg
-          px-2 sm:px-4 md:px-6
-          py-1.5 sm:py-3 md:py-4
+          bg-white rounded-xl
+          px-3 sm:px-4 md:px-5
 
-          flex justify-center items-center
+          flex items-center justify-center
           shadow-sm
         "
       >
-        <Image
-          src={logo}
-          alt="Partner logo"
-          width={200}
-          height={80}
-          className="
-            object-contain
-            h-6 sm:h-10 md:h-14 lg:h-20
-          "
-        />
+        <div className="relative w-full h-full">
+          <Image
+            src={logo}
+            alt="Partner logo"
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 110px, (max-width: 768px) 150px, 200px"
+          />
+        </div>
       </div>
     ))}
+
   </div>
 </div>
 
@@ -58,14 +57,14 @@ export default function FooterBottom() {
             <Link href="/privacy-policy" className="hover:underline">
               Privacy Policy
             </Link>
-            <Link href="/website-policies" className="hover:underline">
-              Website Policies
+            <Link href="/legal-disclaimer" className="hover:underline">
+              Legal Disclaimer
             </Link>
           </div>
 
           <p className="md:ml-auto text-center md:text-left">
             <span className="text-orange-400">Page Update on:</span>{" "}
-            <strong>20/02/2026</strong>
+            <strong>17/03/2026</strong>
           </p>
         </div>
       </div>
