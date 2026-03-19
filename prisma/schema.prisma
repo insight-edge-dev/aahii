@@ -73,6 +73,11 @@ enum DocumentType {
   CLRA_REGISTRATION
 }
 
+enum NewsType {
+  PRESS
+  INTERNAL
+}
+
 //////////////////// ADMIN MODAL ////////////////////
 
  model Admin {
@@ -214,3 +219,40 @@ model VendorAdminReview {
   reviewedAt      DateTime?
   rejectionReason String?
 }
+
+//////////////////// NEWS ////////////////////
+
+model News {
+
+  id String @id @default(uuid())
+
+  slug String @unique   // ADD THIS
+
+  source String
+
+  title String
+
+  excerpt String @db.Text
+
+  content String? @db.Text
+
+  link String?
+
+  coverImage String?
+
+  publicId String?
+
+  publishedAt DateTime
+
+  featured Boolean @default(false)
+
+  type NewsType @default(PRESS)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+}
+
