@@ -9,7 +9,6 @@ datasource db {
 
 //////////////////// ENUMS ////////////////////
 
-
 enum AdminRole {
   SUPER_ADMIN
   ADMIN
@@ -80,28 +79,28 @@ enum NewsType {
 
 //////////////////// ADMIN MODAL ////////////////////
 
- model Admin {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  password  String
-  role      AdminRole  @default(ADMIN)
+model Admin {
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  password String
+  role     AdminRole @default(ADMIN)
 
-  createdAt DateTime   @default(now())
+  createdAt DateTime @default(now())
 }
 
 //////////////////// MAIN VENDOR ////////////////////
 
 model Vendor {
-  id          String       @id @default(uuid())
-  entityName  String
-  email       String       @unique
-  website     String?
-  status      VendorStatus @default(PENDING)
-  isDeleted   Boolean      @default(false)
+  id         String       @id @default(uuid())
+  entityName String
+  email      String       @unique
+  website    String?
+  status     VendorStatus @default(PENDING)
+  isDeleted  Boolean      @default(false)
 
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   categories  VendorCategory[]
   address     VendorAddress?
@@ -123,34 +122,34 @@ model VendorCategory {
   vendorId String
   category Category
 
-  @@index([vendorId])
   @@unique([vendorId, category])
+  @@index([vendorId])
 }
 
 //////////////////// ADDRESS ////////////////////
 
 model VendorAddress {
-  id       String  @id @default(uuid())
-  vendor   Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId String  @unique
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
 
-  registeredAddress     String
-  registeredPin         String
-  registeredContact     String
+  registeredAddress String
+  registeredPin     String
+  registeredContact String
 
-  sameAsRegistered      Boolean @default(false)
+  sameAsRegistered Boolean @default(false)
 
-  communicationAddress  String
-  communicationPin      String
-  communicationContact  String
+  communicationAddress String
+  communicationPin     String
+  communicationContact String
 }
 
 //////////////////// TAX DETAILS ////////////////////
 
 model VendorTaxDetails {
-  id       String  @id @default(uuid())
-  vendor   Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId String  @unique
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
 
   panNumber String
   cinNumber String?
@@ -168,13 +167,13 @@ model VendorTaxDetails {
 //////////////////// BUSINESS DETAILS ////////////////////
 
 model VendorBusinessDetails {
-  id       String  @id @default(uuid())
-  vendor   Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId String  @unique
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
 
-  establishmentType EstablishmentType
-  keyProducts       String[]
-  specificProducts  String[]
+  establishmentType    EstablishmentType
+  keyProducts          String[]
+  specificProducts     String[]
   hasRelationWithAGIHF Boolean
   relationDetails      String?
 }
@@ -182,9 +181,9 @@ model VendorBusinessDetails {
 //////////////////// APPLICANT ////////////////////
 
 model VendorApplicant {
-  id       String  @id @default(uuid())
-  vendor   Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId String  @unique
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
 
   applicantName    String
   authorisedPerson String
@@ -193,27 +192,27 @@ model VendorApplicant {
 //////////////////// DOCUMENTS ////////////////////
 
 model VendorDocument {
-  id           String       @id @default(uuid())
-  vendor       Vendor       @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId     String
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String
 
   documentType DocumentType
   fileUrl      String
   publicId     String
   originalName String
 
-  uploadedAt   DateTime     @default(now())
+  uploadedAt DateTime @default(now())
 
-  @@index([vendorId])
   @@unique([vendorId, documentType])
+  @@index([vendorId])
 }
 
 //////////////////// ADMIN REVIEW ////////////////////
 
 model VendorAdminReview {
-  id       String  @id @default(uuid())
-  vendor   Vendor  @relation(fields: [vendorId], references: [id], onDelete: Cascade)
-  vendorId String  @unique
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
 
   reviewedBy      String?
   reviewedAt      DateTime?
@@ -223,10 +222,9 @@ model VendorAdminReview {
 //////////////////// NEWS ////////////////////
 
 model News {
-
   id String @id @default(uuid())
 
-  slug String @unique   // ADD THIS
+  slug String @unique // ADD THIS
 
   source String
 
@@ -253,6 +251,57 @@ model News {
   createdAt DateTime @default(now())
 
   updatedAt DateTime @updatedAt
-
 }
 
+model Event {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  description   String?  @db.Text
+  eventDate     DateTime
+  coverImage    String?
+  coverPublicId String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  images EventImage[]
+
+  @@index([eventDate])
+}
+
+model EventImage {
+  id        String   @id @default(uuid())
+  eventId   String
+  fileUrl   String
+  publicId  String
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
+
+model Video {
+  id String @id @default(uuid())
+
+  title String
+
+  description String @db.Text
+
+  thumbnail String?
+
+  thumbnailPublicId String?
+
+  videoUrl String
+
+  publishedAt DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([publishedAt])
+}
