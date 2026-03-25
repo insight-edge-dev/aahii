@@ -4,14 +4,15 @@ import cloudinary from "@/lib/cloudinary";
 import {
   createVideoSchema,
   updateVideoSchema,
-  validateThumbnail
+  validateThumbnail,
+  validateVideo
 } from "../validations/videos.validation";
 
 import { randomUUID } from "crypto";
 
 /* ================= CONSTANTS ================= */
 
-const VIDEO_FOLDER = "aahii/videos";
+const VIDEO_FOLDER="aahii/videos";
 
 type UploadResult={
   secure_url:string;
@@ -22,7 +23,7 @@ const isFileLike=(value:unknown):value is Blob =>
   value instanceof Blob &&
   typeof (value as Blob).arrayBuffer==="function";
 
-/* ================= UPLOAD ================= */
+/* ================= UPLOAD HELPERS ================= */
 
 async function uploadThumbnail(
   file:File,
@@ -39,7 +40,7 @@ async function uploadThumbnail(
     cloudinary.uploader.upload_stream(
 
       {
-        folder:`${VIDEO_FOLDER}/${videoId}`,
+        folder:`${VIDEO_FOLDER}/${videoId}/thumbnail`,
         resource_type:"image"
       },
 
@@ -59,8 +60,43 @@ async function uploadThumbnail(
 
 }
 
+async function uploadVideo(
+  file:File,
+  videoId:string
+):Promise<UploadResult>{
+
+  validateVideo(file);
+
+  const buffer=
+  Buffer.from(await file.arrayBuffer());
+
+  return new Promise((resolve,reject)=>{
+
+    cloudinary.uploader.upload_stream(
+
+      {
+        folder:`${VIDEO_FOLDER}/${videoId}/video`,
+        resource_type:"video"
+      },
+
+      (error,result)=>{
+
+        if(error || !result){
+          return reject(error);
+        }
+
+        resolve(result as UploadResult);
+
+      }
+
+    ).end(buffer);
+
+  });
+
+}
+
 /* ===================================================== */
-/* ================= CREATE VIDEO ====================== */
+/* ================= CREATE ============================ */
 /* ===================================================== */
 
 export async function createVideo(
@@ -69,7 +105,8 @@ export async function createVideo(
 
   const videoId=randomUUID();
 
-  let uploadedPublicId:string | null=null;
+  let uploadedVideo:string | null=null;
+  let uploadedThumb:string | null=null;
 
   try{
 
@@ -116,25 +153,69 @@ export async function createVideo(
 
     const data=parsed.data;
 
-    /* ================= THUMBNAIL ================= */
+    /* ================= FILES ================= */
+
+    const videoFile=
+    formData.get("videoFile");
+
+    const thumbFile=
+    formData.get("thumbnail");
+
+    /* BUSINESS RULE */
+
+    if(
+      !isFileLike(videoFile) &&
+      !data.externalUrl
+    ){
+
+      return {
+        success:false,
+        status:400,
+        message:
+        "Upload video or provide external URL"
+      };
+
+    }
+
+    let videoUrl=null;
+    let videoPublicId=null;
 
     let thumbnail=null;
-    let publicId=null;
+    let thumbnailPublicId=null;
 
-    const file=formData.get("thumbnail");
+    /* ================= VIDEO UPLOAD ================= */
 
-    if(isFileLike(file)){
+    if(isFileLike(videoFile)){
+
+      const upload=
+      await uploadVideo(
+        videoFile as File,
+        videoId
+      );
+
+      videoUrl=upload.secure_url;
+
+      videoPublicId=upload.public_id;
+
+      uploadedVideo=videoPublicId;
+
+    }
+
+    /* ================= THUMBNAIL ================= */
+
+    if(isFileLike(thumbFile)){
 
       const upload=
       await uploadThumbnail(
-        file as File,
+        thumbFile as File,
         videoId
       );
 
       thumbnail=upload.secure_url;
-      publicId=upload.public_id;
 
-      uploadedPublicId=publicId;
+      thumbnailPublicId=upload.public_id;
+
+      uploadedThumb=thumbnailPublicId;
 
     }
 
@@ -151,11 +232,18 @@ export async function createVideo(
 
         description:data.description,
 
-        videoUrl:data.videoUrl,
+        videoUrl,
+
+        videoPublicId,
+
+        externalUrl:
+          videoUrl
+          ? null
+          : data.externalUrl ?? null,
 
         thumbnail,
 
-        thumbnailPublicId:publicId,
+        thumbnailPublicId,
 
         publishedAt:
           new Date(data.publishedAt),
@@ -180,18 +268,27 @@ export async function createVideo(
   }
   catch(error){
 
-    /* rollback upload */
+    /* ROLLBACK */
 
-    if(uploadedPublicId){
+    if(uploadedVideo){
 
       await cloudinary.uploader.destroy(
-        uploadedPublicId,
+        uploadedVideo,
+        { invalidate:true, resource_type:"video" }
+      );
+
+    }
+
+    if(uploadedThumb){
+
+      await cloudinary.uploader.destroy(
+        uploadedThumb,
         { invalidate:true }
       );
 
     }
 
-    console.error("CREATE VIDEO ERROR:",error);
+    console.error("CREATE VIDEO:",error);
 
     return {
 
@@ -208,7 +305,7 @@ export async function createVideo(
 }
 
 /* ===================================================== */
-/* ================= UPDATE VIDEO ====================== */
+/* ================= UPDATE ============================ */
 /* ===================================================== */
 
 export async function updateVideo(
@@ -216,7 +313,8 @@ export async function updateVideo(
   formData:FormData
 ){
 
-  let newPublicId:string | null=null;
+  let newVideo:string | null=null;
+  let newThumb:string | null=null;
 
   try{
 
@@ -228,9 +326,13 @@ export async function updateVideo(
     if(!existing){
 
       return {
+
         success:false,
+
         status:404,
+
         message:"Video not found"
+
       };
 
     }
@@ -240,30 +342,21 @@ export async function updateVideo(
     if(!raw || typeof raw!=="string"){
 
       return {
+
         success:false,
+
         status:400,
+
         message:"Invalid payload"
-      };
 
-    }
-
-    let parsedJson;
-
-    try{
-      parsedJson=JSON.parse(raw);
-    }
-    catch{
-
-      return {
-        success:false,
-        status:400,
-        message:"Invalid JSON"
       };
 
     }
 
     const parsed=
-    updateVideoSchema.safeParse(parsedJson);
+    updateVideoSchema.safeParse(
+      JSON.parse(raw)
+    );
 
     if(!parsed.success){
 
@@ -273,8 +366,6 @@ export async function updateVideo(
 
         status:400,
 
-        message:"Validation failed",
-
         errors:parsed.error.flatten()
 
       };
@@ -283,30 +374,82 @@ export async function updateVideo(
 
     const data=parsed.data;
 
-    /* ================= THUMBNAIL ================= */
+    const videoFile=
+    formData.get("videoFile");
+
+    const thumbFile=
+    formData.get("thumbnail");
+
+    let videoUrl=existing.videoUrl;
+    let videoPublicId=existing.videoPublicId;
+    let externalUrl=existing.externalUrl;
 
     let thumbnail=existing.thumbnail;
-    let publicId=existing.thumbnailPublicId;
+    let thumbnailPublicId=existing.thumbnailPublicId;
 
-    const file=formData.get("thumbnail");
+    /* ================= NEW VIDEO ================= */
 
-    if(isFileLike(file)){
+    if(isFileLike(videoFile)){
+
+      const upload=
+      await uploadVideo(
+        videoFile as File,
+        videoId
+      );
+
+      videoUrl=upload.secure_url;
+
+      videoPublicId=upload.public_id;
+
+      externalUrl=null;
+
+      newVideo=videoPublicId;
+
+    }
+
+    /* SWITCH TO EXTERNAL */
+
+    if(data.externalUrl){
+
+      externalUrl=data.externalUrl;
+
+      if(existing.videoPublicId){
+
+        await cloudinary.uploader.destroy(
+
+          existing.videoPublicId,
+
+          {
+            resource_type:"video",
+            invalidate:true
+          }
+
+        );
+
+      }
+
+      videoUrl=null;
+      videoPublicId=null;
+
+    }
+
+    /* ================= THUMBNAIL ================= */
+
+    if(isFileLike(thumbFile)){
 
       const upload=
       await uploadThumbnail(
-        file as File,
+        thumbFile as File,
         videoId
       );
 
       thumbnail=upload.secure_url;
 
-      publicId=upload.public_id;
+      thumbnailPublicId=upload.public_id;
 
-      newPublicId=publicId;
+      newThumb=thumbnailPublicId;
 
     }
-
-    /* ================= UPDATE ================= */
 
     const updated=
     await prisma.video.update({
@@ -321,12 +464,15 @@ export async function updateVideo(
         description:
           data.description ?? existing.description,
 
-        videoUrl:
-          data.videoUrl ?? existing.videoUrl,
+        videoUrl,
+
+        videoPublicId,
+
+        externalUrl,
 
         thumbnail,
 
-        thumbnailPublicId:publicId,
+        thumbnailPublicId,
 
         publishedAt:
           data.publishedAt
@@ -340,10 +486,28 @@ export async function updateVideo(
 
     });
 
-    /* delete old thumbnail */
+    /* DELETE OLD MEDIA */
 
     if(
-      newPublicId &&
+      newVideo &&
+      existing.videoPublicId
+    ){
+
+      await cloudinary.uploader.destroy(
+
+        existing.videoPublicId,
+
+        {
+          resource_type:"video",
+          invalidate:true
+        }
+
+      );
+
+    }
+
+    if(
+      newThumb &&
       existing.thumbnailPublicId
     ){
 
@@ -370,18 +534,24 @@ export async function updateVideo(
   }
   catch(error){
 
-    /* rollback new upload */
-
-    if(newPublicId){
+    if(newVideo){
 
       await cloudinary.uploader.destroy(
-        newPublicId,
-        { invalidate:true }
+        newVideo,
+        { resource_type:"video" }
       );
 
     }
 
-    console.error("UPDATE VIDEO ERROR:",error);
+    if(newThumb){
+
+      await cloudinary.uploader.destroy(
+        newThumb
+      );
+
+    }
+
+    console.error(error);
 
     return {
 
@@ -389,7 +559,7 @@ export async function updateVideo(
 
       status:500,
 
-      message:"Failed to update video"
+      message:"Update failed"
 
     };
 
@@ -398,7 +568,7 @@ export async function updateVideo(
 }
 
 /* ===================================================== */
-/* ================= DELETE VIDEO ====================== */
+/* ================= DELETE ============================ */
 /* ===================================================== */
 
 export async function deleteVideo(
@@ -409,7 +579,9 @@ export async function deleteVideo(
 
     const existing=
     await prisma.video.findUnique({
+
       where:{ id:videoId }
+
     });
 
     if(!existing){
@@ -431,6 +603,23 @@ export async function deleteVideo(
       where:{ id:videoId }
 
     });
+
+    /* DELETE MEDIA */
+
+    if(existing.videoPublicId){
+
+      await cloudinary.uploader.destroy(
+
+        existing.videoPublicId,
+
+        {
+          resource_type:"video",
+          invalidate:true
+        }
+
+      );
+
+    }
 
     if(existing.thumbnailPublicId){
 
@@ -457,7 +646,7 @@ export async function deleteVideo(
   }
   catch(error){
 
-    console.error("DELETE VIDEO ERROR:",error);
+    console.error(error);
 
     return {
 
@@ -465,7 +654,7 @@ export async function deleteVideo(
 
       status:500,
 
-      message:"Failed to delete video"
+      message:"Delete failed"
 
     };
 
@@ -478,22 +667,27 @@ export async function deleteVideo(
 /* ===================================================== */
 
 export async function getVideos(
-  page:number=1,
-  limit:number=10,
-  search?:string
+  page:number = 1,
+  limit:number = 10,
+  search?:string,
+  onlyActive:boolean = false
 ){
 
-  const skip=(page-1)*limit;
+  const skip = (page-1)*limit;
 
-  const where:any={
+  const where:any = {};
 
-    isActive:true
+  /* PUBLIC FILTER */
 
-  };
+  if(onlyActive){
+    where.isActive = true;
+  }
+
+  /* SEARCH */
 
   if(search){
 
-    where.OR=[
+    where.OR = [
 
       {
         title:{
@@ -513,7 +707,7 @@ export async function getVideos(
 
   }
 
-  const [videos,total]=
+  const [videos,total] =
   await Promise.all([
 
     prisma.video.findMany({
@@ -551,7 +745,7 @@ export async function getVideos(
       total,
 
       pages:
-        Math.ceil(total/limit)
+      Math.ceil(total/limit)
 
     }
 
@@ -560,7 +754,7 @@ export async function getVideos(
 }
 
 /* ===================================================== */
-/* ================= GET BY ID ========================= */
+/* ================= GET ONE =========================== */
 /* ===================================================== */
 
 export async function getVideoById(

@@ -18,41 +18,89 @@ export class ForbiddenError extends Error {
 
 export async function requireAdmin(
   allowedRoles: AdminRole[] = []
-): Promise<JwtPayload> {
+): Promise<JwtPayload>{
 
-  // ✅ DEV BYPASS
-  if (process.env.NODE_ENV === "development") {
+  /* DEV BYPASS */
+
+  if(
+
+    process.env.NODE_ENV==="development" &&
+
+    process.env.ADMIN_DEV_BYPASS==="true"
+
+  ){
+
     return {
-      id: "dev-admin",
-      role: "SUPER_ADMIN",
-    } as JwtPayload;
+
+      adminId:"dev-admin",
+
+      role:AdminRole.SUPER_ADMIN
+
+    };
+
   }
 
-  const cookieStore = await cookies();
+  /* REAL AUTH */
 
-  const token = cookieStore.get("admin_token")?.value;
+  const cookieStore =
+  await cookies();
 
-  if (!token) {
-    throw new UnauthorizedError("No token found");
+  const token =
+  cookieStore.get("admin_token")?.value;
+
+  if(!token){
+
+    throw new UnauthorizedError(
+      "Admin login required"
+    );
+
   }
 
-  let payload: JwtPayload;
+  let payload:JwtPayload;
 
-  try {
-    payload = verifyToken(token);
-  } catch (err) {
-    throw new UnauthorizedError("Invalid or expired token");
+  try{
+
+    payload =
+    verifyToken(token);
+
+  }
+  catch{
+
+    throw new UnauthorizedError(
+      "Invalid or expired token"
+    );
+
   }
 
-  const role = payload.role as AdminRole;
+  const role =
+  payload.role as AdminRole;
 
-  if (!Object.values(AdminRole).includes(role)) {
-    throw new ForbiddenError("Invalid role");
+  if(
+
+    !Object.values(AdminRole)
+    .includes(role)
+
+  ){
+
+    throw new ForbiddenError(
+      "Invalid role"
+    );
+
   }
 
-  if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
-    throw new ForbiddenError("Access denied");
+  if(
+
+    allowedRoles.length &&
+    !allowedRoles.includes(role)
+
+  ){
+
+    throw new ForbiddenError(
+      "Access denied"
+    );
+
   }
 
   return payload;
+
 }

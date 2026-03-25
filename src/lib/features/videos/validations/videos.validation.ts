@@ -4,26 +4,59 @@ import { z } from "zod";
 
 export const MAX_THUMBNAIL_SIZE = 1024 * 1024; // 1MB
 
+export const MAX_VIDEO_SIZE =
+100 * 1024 * 1024; // 100MB
+
 export const ALLOWED_THUMBNAIL_TYPES = [
   "image/jpeg",
   "image/png",
   "image/webp"
 ];
 
-/* ================= HELPERS ================= */
+export const ALLOWED_VIDEO_TYPES = [
+  "video/mp4",
+  "video/quicktime",
+  "video/webm"
+];
 
-export function validateThumbnail(file: File){
+/* ================= FILE HELPERS ================= */
+
+export function validateThumbnail(file:File){
 
   if(!ALLOWED_THUMBNAIL_TYPES.includes(file.type)){
+
     throw new Error(
       "Thumbnail must be JPG, PNG or WEBP"
     );
+
   }
 
   if(file.size > MAX_THUMBNAIL_SIZE){
+
     throw new Error(
       "Thumbnail must be less than 1MB"
     );
+
+  }
+
+}
+
+export function validateVideo(file:File){
+
+  if(!ALLOWED_VIDEO_TYPES.includes(file.type)){
+
+    throw new Error(
+      "Video must be MP4, MOV or WEBM"
+    );
+
+  }
+
+  if(file.size > MAX_VIDEO_SIZE){
+
+    throw new Error(
+      "Video must be less than 100MB"
+    );
+
   }
 
 }
@@ -42,9 +75,11 @@ export const createVideoSchema = z.object({
     .min(10,"Description too short")
     .max(5000,"Description too long"),
 
-  videoUrl: z
+  externalUrl: z
     .string()
-    .url("Invalid video URL"),
+    .url("Invalid video URL")
+    .optional()
+    .or(z.literal("").transform(()=>undefined)),
 
   publishedAt: z
     .string()
@@ -75,10 +110,11 @@ export const updateVideoSchema = z.object({
     .max(5000)
     .optional(),
 
-  videoUrl: z
+  externalUrl: z
     .string()
     .url()
-    .optional(),
+    .optional()
+    .or(z.literal("").transform(()=>undefined)),
 
   publishedAt: z
     .string()
@@ -111,14 +147,6 @@ export const videoQuerySchema = z.object({
     .optional(),
 
   search: z
-    .string()
-    .optional(),
-
-  year: z
-    .string()
-    .optional(),
-
-  active: z
     .string()
     .optional()
 

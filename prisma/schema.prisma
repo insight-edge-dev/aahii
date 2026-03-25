@@ -289,11 +289,15 @@ model Video {
 
   description String @db.Text
 
+  videoUrl String? // uploaded video url
+
+  videoPublicId String? // cloudinary id
+
+  externalUrl String? // youtube/external
+
   thumbnail String?
 
   thumbnailPublicId String?
-
-  videoUrl String
 
   publishedAt DateTime
 
