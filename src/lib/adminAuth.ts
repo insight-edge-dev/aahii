@@ -19,26 +19,39 @@ export class ForbiddenError extends Error {
 export async function requireAdmin(
   allowedRoles: AdminRole[] = []
 ): Promise<JwtPayload> {
-  const cookieStore = cookies();
-  const token = (await cookieStore).get("admin_token")?.value;
+
+  // ✅ DEV BYPASS
+  if (process.env.NODE_ENV === "development") {
+    return {
+      id: "dev-admin",
+      role: "SUPER_ADMIN",
+    } as JwtPayload;
+  }
+
+  const cookieStore = await cookies();
+
+  const token = cookieStore.get("admin_token")?.value;
 
   if (!token) {
-    throw new UnauthorizedError();
+    throw new UnauthorizedError("No token found");
   }
 
   let payload: JwtPayload;
 
   try {
     payload = verifyToken(token);
-  } catch {
+  } catch (err) {
     throw new UnauthorizedError("Invalid or expired token");
   }
 
-  if (
-    allowedRoles.length > 0 &&
-    !allowedRoles.includes(payload.role as AdminRole)
-  ) {
-    throw new ForbiddenError();
+  const role = payload.role as AdminRole;
+
+  if (!Object.values(AdminRole).includes(role)) {
+    throw new ForbiddenError("Invalid role");
+  }
+
+  if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+    throw new ForbiddenError("Access denied");
   }
 
   return payload;
