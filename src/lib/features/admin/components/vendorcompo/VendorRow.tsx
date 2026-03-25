@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Check, X, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
   approveVendor,
   rejectVendor,
@@ -12,7 +13,7 @@ import toast from "react-hot-toast";
 export default function VendorRow({ vendor, refresh }: any) {
   const [loading, setLoading] = useState<"approve" | "reject" | null>(null);
   const [showRejectModal, setShowRejectModal] = useState(false);
-
+  const router = useRouter();
   // ✅ Approve Handler (clean separation)
   const handleApprove = async () => {
     toast(
@@ -70,11 +71,16 @@ export default function VendorRow({ vendor, refresh }: any) {
   return (
     <>
       <tr className="border-t hover:bg-gray-50 transition-all duration-200">
-        {/* 👤 Vendor */}
-        <td className="p-4 font-medium text-gray-800">
-          {vendor.name || "—"}
+
+        {/* 🆔 Vendor ID (short) */}
+        <td className="p-4 text-xs text-gray-500 font-mono">
+          {vendor.id?.slice(0, 8)}
         </td>
 
+        {/* 👤 Vendor */}
+        <td className="p-4 font-medium text-gray-800">
+          {vendor.entityName || "—"}
+        </td>
         {/* 📧 Email */}
         <td className="p-4 text-gray-600 text-sm">
           {vendor.email}
@@ -123,9 +129,12 @@ export default function VendorRow({ vendor, refresh }: any) {
                 </button>
               </>
             ) : (
-              <span className="text-gray-400 text-sm italic">
-                No actions
-              </span>
+              <button
+                onClick={() => router.push(`/admin/vendors/${vendor.id}`)}
+                className="text-blue-600 text-sm hover:underline"
+              >
+                View
+              </button>
             )}
           </div>
         </td>
