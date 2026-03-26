@@ -19,7 +19,7 @@ export const StatCard = ({ title, value, icon: Icon, color }: any) => {
                 </h2>
 
                 <p className="text-sm text-green-500 mt-2">
-                    +12% from last month
+                    Live data
                 </p>
             </div>
 

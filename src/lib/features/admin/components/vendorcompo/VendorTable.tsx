@@ -39,6 +39,7 @@ export default function VendorTable({ vendors, loading, refresh }: any) {
         {/* Header */}
         <thead className="bg-gray-50 text-gray-600 text-sm sticky top-0 z-10">
           <tr>
+             <th className="p-4 font-medium text-left">ID</th>
             <th className="p-4 font-medium text-left">Vendor</th>
             <th className="p-4 font-medium text-left">Email</th>
             <th className="p-4 font-medium text-left">Status</th>
