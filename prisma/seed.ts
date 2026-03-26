@@ -3,49 +3,43 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-async function main(){
+async function main() {
+  const email = process.env.ADMIN_EMAIL;
+  const password = process.env.ADMIN_PASSWORD;
 
- const hashedPassword =
- await bcrypt.hash(
-  "pkmkbpkmkb",
-  10
- );
-
- await prisma.admin.upsert({
-
-  where:{
-   email:"admin@aahii.com"
-  },
-
-  update:{        // ✅ FIX
-
-   password:hashedPassword,
-   role:AdminRole.SUPER_ADMIN
-
-  },
-
-  create:{
-
-   name:"Super Admin",
-
-   email:"admin@aahii.com",
-
-   password:hashedPassword,
-
-   role:AdminRole.SUPER_ADMIN
-
+  // 🚨 ENV validation
+  if (!email || !password) {
+    throw new Error("❌ ADMIN_EMAIL or ADMIN_PASSWORD missing in .env");
   }
 
- });
+  // 🔐 Hash password
+  const hashedPassword = await bcrypt.hash(password, 10);
 
- console.log("Super Admin seeded");
+  // ✅ Upsert (safe + idempotent)
+  await prisma.admin.upsert({
+    where: {
+      email,
+    },
+    update: {
+      password: hashedPassword,
+      role: AdminRole.SUPER_ADMIN,
+    },
+    create: {
+      name: "Super Admin",
+      email,
+      password: hashedPassword,
+      role: AdminRole.SUPER_ADMIN,
+    },
+  });
 
+  console.log("✅ Super Admin seeded");
 }
 
 main()
-.catch(console.error)
-.finally(async()=>{
-
- await prisma.$disconnect();
-
-});
+  .catch((error) => {
+    console.error("❌ Seeding failed:", error);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
