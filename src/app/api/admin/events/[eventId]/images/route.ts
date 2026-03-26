@@ -1,91 +1,48 @@
-import { NextRequest,NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 import {
-
-addEventImages,
-deleteEventImages,
-
-
+  addEventImages,
+  deleteEventImages,
 } from "@/lib/features/events/services/events.service";
 
 import { requireAdmin } from "@/lib/adminAuth";
 
-type Params={
-params:Promise<{
-eventId:string;
-}>;
+type Params = {
+  params: Promise<{
+    eventId: string;
+  }>;
 };
 
 /* ================= ADD IMAGES ================= */
 
-export async function POST(
-req:NextRequest,
-{params}:Params
-){
+export async function POST(req: NextRequest, { params }: Params) {
+  try {
+    await requireAdmin();
 
-try{
+    const { eventId } = await params;
 
-await requireAdmin();
+    const formData = await req.formData();
 
-const {eventId}=await params;
+    const result = await addEventImages(eventId, formData);
 
-const formData=
-await req.formData();
-
-const result=
-await addEventImages(
-eventId,
-formData
-);
-
-return NextResponse.json(
-result,
-{status:result.status}
-);
-
-}
-catch{
-
-return NextResponse.json(
-{success:false},
-{status:500}
-);
-
-}
-
+    return NextResponse.json(result, { status: result.status });
+  } catch {
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 }
 
 /* ================= DELETE IMAGES ================= */
 
-export async function DELETE(
-req:NextRequest
-){
+export async function DELETE(req: NextRequest) {
+  try {
+    await requireAdmin();
 
-try{
+    const body = await req.json();
 
-await requireAdmin();
+    const result = await deleteEventImages(body.imageIds);
 
-const body=
-await req.json();
-
-const result=
-await deleteEventImages(
-body.imageIds
-);
-
-return NextResponse.json(
-result,
-{status:result.status}
-);
-
-}
-catch{
-
-return NextResponse.json(
-{success:false},
-{status:500}
-);
-
-}
-
+    return NextResponse.json(result, { status: result.status });
+  } catch {
+    return NextResponse.json({ success: false }, { status: 500 });
+  }
 }

@@ -1,28 +1,71 @@
 'use client'
 
-import { Bell } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { api } from '@/lib/axios'
 
 export const Header = () => {
-    return (
-        <motion.div
-            initial={{ y: -10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            className="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm"
-        >
-            <h1 className="font-semibold text-lg">Dashboard</h1>
+  const [admin, setAdmin] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
 
-            <div className="flex items-center gap-4">
-                <Bell className="text-gray-500" />
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const res = await api.get('/admin/auth/me')
+        setAdmin(res.data.data)
+      } catch (err) {
+        console.error('Admin fetch failed:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-                <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 bg-gray-300 rounded-full" />
-                    <div className="text-sm">
-                        <p className="font-medium">Admin User</p>
-                        <p className="text-gray-500 text-xs">System Architect</p>
-                    </div>
-                </div>
+    fetchAdmin()
+  }, [])
+
+  const getInitial = () => {
+    if (!admin?.name) return 'A'
+    return admin.name.charAt(0).toUpperCase()
+  }
+
+  return (
+    <motion.div
+      initial={{ y: -10, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm"
+    >
+      {/* LEFT */}
+      <h1 className="font-semibold text-lg text-gray-900">
+        Dashboard
+      </h1>
+
+      {/* RIGHT */}
+      <div className="flex items-center gap-4">
+
+        {loading ? (
+          <div className="w-32 h-8 bg-gray-200 animate-pulse rounded-md" />
+        ) : (
+          <div className="flex items-center gap-3">
+
+            {/* Avatar */}
+            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-indigo-500 to-blue-500 text-white flex items-center justify-center text-sm font-semibold shadow-sm">
+              {getInitial()}
             </div>
-        </motion.div>
-    )
+
+            {/* Info */}
+            <div className="text-sm leading-tight">
+              <p className="font-medium text-gray-900">
+                {admin?.name}
+              </p>
+              <p className="text-xs text-gray-500">
+                {admin?.role}
+              </p>
+            </div>
+
+          </div>
+        )}
+
+      </div>
+    </motion.div>
+  )
 }
