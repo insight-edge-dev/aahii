@@ -1,0 +1,311 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//////////////////// ENUMS ////////////////////
+
+enum AdminRole {
+  SUPER_ADMIN
+  ADMIN
+}
+
+enum VendorStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum Category {
+  trader
+  manufacturer
+  authorised_dealer
+  service_provider
+}
+
+enum EstablishmentType {
+  proprietorship
+  partnership
+  private_ltd
+  public_ltd
+  trust
+  llp
+  society
+  other
+}
+
+enum GstRegistrationType {
+  registered
+  composite
+  unregistered
+  exempt
+}
+
+enum MsmeType {
+  micro
+  small
+  medium
+}
+
+enum MsmeClass {
+  trading
+  service
+  manufacturing
+}
+
+enum DocumentType {
+  PAN_CARD
+  CANCELLED_CHEQUE
+  DECLARATION_FORM
+  GST_CERTIFICATE
+  MSME_CERTIFICATE
+  AUTHORIZATION_CERTIFICATE
+  TRADE_LICENSE
+  ITR_YEAR_1
+  ITR_YEAR_2
+  PF_REGISTRATION
+  ESIC_REGISTRATION
+  CLRA_REGISTRATION
+}
+
+enum NewsType {
+  PRESS
+  INTERNAL
+}
+
+//////////////////// ADMIN MODAL ////////////////////
+
+model Admin {
+  id       String    @id @default(uuid())
+  name     String
+  email    String    @unique
+  password String
+  role     AdminRole @default(ADMIN)
+
+  createdAt DateTime @default(now())
+}
+
+//////////////////// MAIN VENDOR ////////////////////
+
+model Vendor {
+  id         String       @id @default(uuid())
+  entityName String
+  email      String       @unique
+  website    String?
+  status     VendorStatus @default(PENDING)
+  isDeleted  Boolean      @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories  VendorCategory[]
+  address     VendorAddress?
+  taxDetails  VendorTaxDetails?
+  business    VendorBusinessDetails?
+  applicant   VendorApplicant?
+  documents   VendorDocument[]
+  adminReview VendorAdminReview?
+
+  @@index([status])
+  @@index([isDeleted])
+}
+
+//////////////////// CATEGORY ////////////////////
+
+model VendorCategory {
+  id       String   @id @default(uuid())
+  vendor   Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String
+  category Category
+
+  @@unique([vendorId, category])
+  @@index([vendorId])
+}
+
+//////////////////// ADDRESS ////////////////////
+
+model VendorAddress {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
+
+  registeredAddress String
+  registeredPin     String
+  registeredContact String
+
+  sameAsRegistered Boolean @default(false)
+
+  communicationAddress String
+  communicationPin     String
+  communicationContact String
+}
+
+//////////////////// TAX DETAILS ////////////////////
+
+model VendorTaxDetails {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
+
+  panNumber String
+  cinNumber String?
+
+  gstApplicable       Boolean
+  gstRegistrationType GstRegistrationType?
+  gstNumber           String?
+
+  msmeApplicable Boolean
+  msmeNumber     String?
+  msmeType       MsmeType?
+  msmeClass      MsmeClass?
+}
+
+//////////////////// BUSINESS DETAILS ////////////////////
+
+model VendorBusinessDetails {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
+
+  establishmentType    EstablishmentType
+  keyProducts          String[]
+  specificProducts     String[]
+  hasRelationWithAGIHF Boolean
+  relationDetails      String?
+}
+
+//////////////////// APPLICANT ////////////////////
+
+model VendorApplicant {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
+
+  applicantName    String
+  authorisedPerson String
+}
+
+//////////////////// DOCUMENTS ////////////////////
+
+model VendorDocument {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String
+
+  documentType DocumentType
+  fileUrl      String
+  publicId     String
+  originalName String
+
+  uploadedAt DateTime @default(now())
+
+  @@unique([vendorId, documentType])
+  @@index([vendorId])
+}
+
+//////////////////// ADMIN REVIEW ////////////////////
+
+model VendorAdminReview {
+  id       String @id @default(uuid())
+  vendor   Vendor @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  vendorId String @unique
+
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  rejectionReason String?
+}
+
+//////////////////// NEWS ////////////////////
+
+model News {
+  id String @id @default(uuid())
+
+  slug String @unique // ADD THIS
+
+  source String
+
+  title String
+
+  excerpt String @db.Text
+
+  content String? @db.Text
+
+  link String?
+
+  coverImage String?
+
+  publicId String?
+
+  publishedAt DateTime
+
+  featured Boolean @default(false)
+
+  type NewsType @default(PRESS)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id            String   @id @default(uuid())
+  title         String
+  slug          String   @unique
+  description   String?  @db.Text
+  eventDate     DateTime
+  coverImage    String?
+  coverPublicId String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  images EventImage[]
+
+  @@index([eventDate])
+}
+
+model EventImage {
+  id        String   @id @default(uuid())
+  eventId   String
+  fileUrl   String
+  publicId  String
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@index([eventId])
+}
+
+model Video {
+  id String @id @default(uuid())
+
+  title String
+
+  description String @db.Text
+
+  videoUrl String? // uploaded video url
+
+  videoPublicId String? // cloudinary id
+
+  externalUrl String? // youtube/external
+
+  thumbnail String?
+
+  thumbnailPublicId String?
+
+  publishedAt DateTime
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  @@index([publishedAt])
+}

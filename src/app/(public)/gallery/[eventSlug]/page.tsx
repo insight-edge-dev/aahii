@@ -81,7 +81,7 @@ export default function EventDetailPage() {
               setZoom(1);
               setOpen(true);
             }}
-            className="relative aspect-[4/3] overflow-hidden rounded-xl bg-slate-100"
+            className="relative aspect-4/3 overflow-hidden rounded-xl bg-slate-100"
           >
             <Image
               src={img}

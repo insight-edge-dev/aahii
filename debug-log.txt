@@ -1,0 +1,88 @@
+
+[2026-03-17T06:23:33.169Z] FormData Keys
+[
+  "vendorData"
+]
+
+[2026-03-17T06:23:33.171Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fulltest@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T06:45:10.609Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T06:45:10.610Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fulltest@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T06:48:13.597Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T06:48:13.598Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fulltest@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T07:14:15.148Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T07:14:15.148Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fulltest@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T07:25:02.155Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T07:25:02.156Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fulltest@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T07:33:05.553Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T07:33:05.554Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"greenleaf45.fullt8est@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": false,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T11:16:03.515Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T11:16:03.516Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"gree55nleaf45.fullt8est@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n  \"documentFlags\": {\n    \"hasAuthorizationCertificate\": true,\n    \"hasTradeLicense\": true,\n    \"hasItrYear1\": false,\n    \"hasItrYear2\": false,\n    \"hasPfRegistration\": true,\n    \"hasEsicRegistration\": false,\n    \"hasClraRegistration\": false\n  }\n}\n"
+
+[2026-03-17T11:16:56.525Z] FormData Keys
+[
+  "vendorData",
+  "PAN_CARD",
+  "DECLARATION_FORM",
+  "CANCELLED_CHEQUE"
+]
+
+[2026-03-17T11:16:56.526Z] Raw vendorData
+"{\n  \"category\": [\"manufacturer\", \"service_provider\"],\n  \"entityName\": \"GreenLeaf Industries Pvt Ltd\",\n  \"email\": \"gree55nlea66f45.fullt8est@example.com\",\n  \"website\": \"https://greenleafindustries.com\",\n  \"registeredAddress\": {\n    \"address\": \"Plot No. 45, Industrial Area Phase 2, Guwahati, Assam\",\n    \"pin\": \"781034\",\n    \"contactNumber\": \"9123456780\"\n  },\n  \"communicationAddress\": {\n    \"sameAsRegistered\": false,\n    \"address\": \"Office No. 12, GS Road, Bhangagarh, Guwahati, Assam\",\n    \"pin\": \"781005\",\n    \"contactNumber\": \"9123456781\"\n  },\n\"taxDetails\": {\n  \"panNumber\": \"ABCDE1234F\",\n  \"cinNumber\": \"U12345AS2022PTC123456\",\n  \"gstApplicable\": false,\n  \"msmeApplicable\": false\n},\n  \"businessDetails\": {\n    \"establishmentType\": \"private_ltd\",\n    \"keyProducts\": [\"Pharmaceutical Supplies\"],\n    \"specificProducts\": [\"Surgical Gloves\", \"Face Masks\"],\n    \"hasRelationWithAGIHF\": false\n  },\n  \"applicant\": {\n    \"applicantName\": \"Rahul Sharma\",\n    \"authorisedPerson\": \"Rahul Sharma\"\n  },\n}\n"
+
+[2026-03-17T11:16:56.534Z] Error: JSON Parse failed
+{}
