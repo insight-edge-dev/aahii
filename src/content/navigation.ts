@@ -53,7 +53,6 @@ export const primaryNavigation: NavItem[] = [
       { label: "Gallery", href: "/gallery" },
       { label: "Videos", href: "/videos" },
       { label: "Employee Engagement", href: "/employee-engagement" },
-      { label: "Press Coverage", href: "/media/press-coverage" },
     ],
   },
 
