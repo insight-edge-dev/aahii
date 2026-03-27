@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ChevronDown, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface GallerySectionProps {
   title: string;
@@ -51,10 +52,15 @@ export default function GallerySection({
   return (
     <>
       {/* ================= SECTION ================= */}
-      <section className="max-w-7xl mx-auto px-4 py-20">
+      <motion.section
+        className="max-w-7xl mx-auto px-4 py-20"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
         {/* ================= HEADER ================= */}
         <div className="mb-10">
-          {/* Title row */}
           <div className="flex items-center justify-between gap-4">
             <div>
               {subtitle && (
@@ -83,7 +89,6 @@ export default function GallerySection({
             )}
           </div>
 
-          {/* Description */}
           {description && (
             <p className="max-w-xl text-gray-600 text-sm sm:text-base mt-3">
               {description}
@@ -105,8 +110,12 @@ export default function GallerySection({
           /* ================= PREVIEW GRID ================= */
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Big image */}
-            <div
+            <motion.div
               onClick={() => setActiveIndex(0)}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              whileHover={{ scale: 1.03 }}
               className="relative md:col-span-2 md:row-span-2 rounded-xl overflow-hidden aspect-[16/11] bg-gray-100 cursor-pointer"
             >
               <Image
@@ -116,13 +125,14 @@ export default function GallerySection({
                 priority
                 className="object-cover"
               />
-            </div>
+            </motion.div>
 
             {/* Small images */}
             {previewImages.slice(1).map((src, i) => (
-              <div
+              <motion.div
                 key={src}
                 onClick={() => setActiveIndex(i + 1)}
+                whileHover={{ scale: 1.05 }}
                 className="relative rounded-xl overflow-hidden aspect-[4/3] bg-gray-100 cursor-pointer"
               >
                 <Image
@@ -131,60 +141,84 @@ export default function GallerySection({
                   fill
                   className="object-cover"
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
         ) : (
           /* ================= EXPANDED GRID ================= */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: {},
+              show: {
+                transition: { staggerChildren: 0.08 },
+              },
+            }}
+          >
             {images.map((src, i) => (
-              <div
+              <motion.div
                 key={src}
                 onClick={() => setActiveIndex(i)}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                whileHover={{ scale: 1.05 }}
                 className="relative overflow-hidden rounded-xl bg-gray-100 aspect-[4/3] cursor-pointer"
               >
                 <Image
                   src={src}
                   alt={title}
                   fill
-                  className="object-cover transition hover:scale-105"
+                  className="object-cover"
                 />
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
-      </section>
+      </motion.section>
 
       {/* ================= MODAL ================= */}
-      {activeIndex !== null && (
-        <div
-          className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center px-4"
-          onClick={() => setActiveIndex(null)}
-        >
-          {/* Close button */}
-          <button
-            aria-label="Close preview"
-            className="absolute top-5 right-5 text-white"
+      <AnimatePresence>
+        {activeIndex !== null && (
+          <motion.div
+            className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center px-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onClick={() => setActiveIndex(null)}
           >
-            <X className="h-6 w-6" />
-          </button>
+            {/* Close button */}
+            <button
+              aria-label="Close preview"
+              className="absolute top-5 right-5 text-white"
+              onClick={() => setActiveIndex(null)}
+            >
+              <X className="h-6 w-6" />
+            </button>
 
-          {/* Image */}
-          <div
-            className="relative w-full max-w-6xl aspect-video"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={images[activeIndex]}
-              alt={`${title} preview`}
-              fill
-              className="object-contain"
-              sizes="100vw"
-            />
-          </div>
-        </div>
-      )}
+            {/* Animated Image */}
+            <motion.div
+              className="relative w-full max-w-6xl aspect-video"
+              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.8, opacity: 0, y: 50 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Image
+                src={images[activeIndex]}
+                alt={`${title} preview`}
+                fill
+                className="object-contain"
+                sizes="100vw"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }
