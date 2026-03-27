@@ -64,7 +64,7 @@ export default function FooterBottom() {
 
           <p className="md:ml-auto text-center md:text-left">
             <span className="text-orange-400">Page Update on:</span>{" "}
-            <strong>17/03/2026</strong>
+            <strong>27/03/2026</strong>
           </p>
         </div>
       </div>

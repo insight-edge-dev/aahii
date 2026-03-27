@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import {
   Leaf,
   Settings,
@@ -34,7 +35,12 @@ const UPCOMING_HOSPITAL_IMAGES = [
 export default function InfrastructurePage() {
   
   return (
-    <section className="bg-[#f9fcff] py-20">
+    <motion.section
+  className="bg-[#f9fcff] py-20"
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6, ease: "easeOut" }}
+>
       <div className="max-w-7xl mx-auto px-6 space-y-28">
         {/* ================================================= */}
         {/* INFRASTRUCTURE OVERVIEW */}
@@ -364,6 +370,6 @@ export default function InfrastructurePage() {
       description="A glimpse into our upcoming world-class healthcare campus."
       images={UPCOMING_HOSPITAL_IMAGES}
     />
-    </section>
+   </motion.section>
   );
 }
