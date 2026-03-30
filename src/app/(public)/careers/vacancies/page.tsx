@@ -58,72 +58,82 @@ export default function VacanciesPage() {
 
         </div>
 
-        <div className="space-y-6">
+<div className="space-y-6">
+  {jobs.map((job, i) => (
+    <motion.div
+      key={i}
+      whileHover={{ y: -3 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: i * 0.1 }}
+      className="relative border rounded-xl p-6 bg-gray-50 hover:shadow-lg transition"
+    >
+      
+      {/* ✅ Refined Badge */}
+      <div className="absolute top-2 right-2 z-10">
+        <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-gray-200 rounded-full shadow-sm">
+          
+          {/* Subtle Animated Green Dot */}
+          <span className="relative flex h-2 w-2">
+  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+</span>
 
-          {jobs.map((job, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ y: -3 }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="border rounded-xl p-6 bg-gray-50 hover:shadow-lg transition"
-            >
-              <h3 className="text-lg font-semibold">{job.title}</h3>
-
-              {/* META */}
-
-              <div className="flex flex-wrap gap-6 text-sm text-gray-500 mt-2">
-
-                <span className="flex items-center gap-1">
-                  <MapPin size={16} /> {job.location}
-                </span>
-
-                <span className="flex items-center gap-1">
-                  <Clock size={16} /> {job.type}
-                </span>
-
-                <span className="flex items-center gap-1">
-                  <Building2 size={16} /> Dept: {job.dept}
-                </span>
-
-                <span className="flex items-center gap-1">
-                  <Clock size={16} /> Posted: {job.date}
-                </span>
-
-              </div>
-
-              <p className="mt-3 text-gray-600 max-w-3xl">
-                {job.description}
-              </p>
-
-              {/* ACTIONS */}
-
-              <div className="mt-5 flex gap-4 flex-wrap">
-
-                <a
-                  href="mailto:careers@agihf.org"
-                  className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
-                >
-                  <Mail size={16} />
-                  Apply via Email
-                </a>
-
-                <a
-                  href={job.pdf}
-                  target="_blank"
-                  className="flex items-center gap-2 border px-5 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
-                >
-                  <FileText size={16} />
-                  PDF Advt.
-                </a>
-
-              </div>
-
-            </motion.div>
-          ))}
-
+          {/* Text */}
+          <span className="text-xs font-medium text-gray-600 whitespace-nowrap">
+            Extended Till 10th April
+          </span>
         </div>
+      </div>
+
+      <h3 className="text-lg font-semibold">{job.title}</h3>
+
+      {/* META */}
+      <div className="flex flex-wrap gap-6 text-sm text-gray-500 mt-2">
+        <span className="flex items-center gap-1">
+          <MapPin size={16} /> {job.location}
+        </span>
+
+        <span className="flex items-center gap-1">
+          <Clock size={16} /> {job.type}
+        </span>
+
+        <span className="flex items-center gap-1">
+          <Building2 size={16} /> Dept: {job.dept}
+        </span>
+
+        <span className="flex items-center gap-1">
+          <Clock size={16} /> Posted: {job.date}
+        </span>
+      </div>
+
+      <p className="mt-3 text-gray-600 max-w-3xl">
+        {job.description}
+      </p>
+
+      {/* ACTIONS */}
+      <div className="mt-5 flex gap-4 flex-wrap">
+        <a
+          href="mailto:careers@agihf.org"
+          className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
+        >
+          <Mail size={16} />
+          Apply via Email
+        </a>
+
+        <a
+          href={job.pdf}
+          target="_blank"
+          className="flex items-center gap-2 border px-5 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
+        >
+          <FileText size={16} />
+          PDF Advt.
+        </a>
+      </div>
+
+    </motion.div>
+  ))}
+</div>
       </section>
 
       {/* PREVIOUS VACANCIES */}
