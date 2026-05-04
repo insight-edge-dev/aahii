@@ -9,16 +9,24 @@ export default function PopupBanner() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
-  // 👇 ALWAYS SHOW ON LOAD
+  // ✅ Show only once per session (tab)
   useEffect(() => {
-    setIsOpen(true);
+    const hasSeen = sessionStorage.getItem("hasSeenPopup");
+
+    if (!hasSeen) {
+      setIsOpen(true);
+    }
   }, []);
 
+  // ✅ Close handler
   const handleClose = () => {
+    sessionStorage.setItem("hasSeenPopup", "true");
     setIsOpen(false);
   };
 
+  // ✅ Click handler
   const handleClick = () => {
+    sessionStorage.setItem("hasSeenPopup", "true");
     setIsOpen(false);
     router.push("/vendor-registration");
   };

@@ -15,19 +15,32 @@ import {
 
 } from "lucide-react";
 
-const jobs = [
-  {
-    title: "Research Associate – Low-field MRI Metamaterial Development",
-    location: " Assam Advanced Healthcare Innovation Institute (AAHII)",
-    type: "Full-time",
-    dept: "R&D",
-    date: "13.03.2026 ",
-    description:
-      "Lead laboratory research in low-field MRI metamaterial development and collaborate with interdisciplinary healthcare innovation teams.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/v1773392052/Advertisement_-_2-1_mb9jrf.pdf",
-  },
+type Job = {
+  title: string;
+  location: string;
+  type: string;
+  dept: string;
+  date: string;
+  description: string;
+  pdf: string;
+};
 
-];
+const jobs: Job[] = [];
+
+
+// const jobs = [
+//   {
+//     title: "Research Associate – Low-field MRI Metamaterial Development",
+//     location: " Assam Advanced Healthcare Innovation Institute (AAHII)",
+//     type: "Full-time",
+//     dept: "R&D",
+//     date: "13.03.2026 ",
+//     description:
+//       "Lead laboratory research in low-field MRI metamaterial development and collaborate with interdisciplinary healthcare innovation teams.",
+//     pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/v1773392052/Advertisement_-_2-1_mb9jrf.pdf",
+//   },
+
+// ];
 
 export default function VacanciesPage() {
   const copyEmail = () => {
@@ -58,7 +71,13 @@ export default function VacanciesPage() {
 
         </div>
 
-<div className="space-y-6">
+         {jobs.length === 0 ? (
+    <div className="text-center text-gray-500 py-10">
+      No openings available right now.
+    </div>
+  ) : (
+
+    <div className="space-y-6">
   {jobs.map((job, i) => (
     <motion.div
       key={i}
@@ -134,6 +153,7 @@ export default function VacanciesPage() {
     </motion.div>
   ))}
 </div>
+)}
       </section>
 
       {/* PREVIOUS VACANCIES */}
@@ -188,114 +208,114 @@ export default function VacanciesPage() {
             </thead>
 
             {/* Body */}
-            <tbody className="divide-y">
+<tbody className="divide-y">
 
-              {/* 1 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">Finance</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Executive – Finance and Accounts
-                </td>
-                <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 1 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">R&D</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis
+    </td>
+    <td className="px-6 py-4 text-gray-500">30/06/2025</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 2 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">Procurement</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Procurement Executive
-                </td>
-                <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 2 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">R&D</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Project Engineer – Low-field MRI Hardware Development – Corrigendum
+    </td>
+    <td className="px-6 py-4 text-gray-500">25/06/2025</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 3 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">R&D</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis
-                </td>
-                <td className="px-6 py-4 text-gray-500">30/06/2025</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 3 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">R&D</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Research Associate – Low-field MRI Metamaterial Development
+    </td>
+    <td className="px-6 py-4 text-gray-500">25/06/2025</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 4 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">R&D</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Project Engineer – Low-field MRI Hardware Development – Corrigendum
-                </td>
-                <td className="px-6 py-4 text-gray-500">25/06/2025</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 4 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">R&D</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Project Engineer – Low-field MRI Hardware Development
+    </td>
+    <td className="px-6 py-4 text-gray-500">05/06/2025</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 5 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">R&D</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Research Associate – Low-field MRI Metamaterial Development
-                </td>
-                <td className="px-6 py-4 text-gray-500">25/06/2025</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 5 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">Finance</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Executive – Finance and Accounts
+    </td>
+    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 6 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">R&D</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Project Engineer – Low-field MRI Hardware Development
-                </td>
-                <td className="px-6 py-4 text-gray-500">05/06/2025</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 6 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">Procurement</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Procurement Executive
+    </td>
+    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-              {/* 7 */}
-              <tr className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 text-gray-600">R&D</td>
-                <td className="px-6 py-4 font-medium text-gray-800">
-                  Research Associate
-                </td>
-                <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-                <td className="px-6 py-4">
-                  <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-                    <XCircle size={14} />
-                    Closed
-                  </span>
-                </td>
-              </tr>
+  {/* 7 */}
+  <tr className="hover:bg-gray-50 transition">
+    <td className="px-6 py-4 text-gray-600">R&D</td>
+    <td className="px-6 py-4 font-medium text-gray-800">
+      Research Associate
+    </td>
+    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
+    <td className="px-6 py-4">
+      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <XCircle size={14} />
+        Closed
+      </span>
+    </td>
+  </tr>
 
-            </tbody>
+</tbody>
 
           </table>
 
