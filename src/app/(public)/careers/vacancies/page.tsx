@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 
 type Job = {
+  id: string;
   title: string;
   location: string;
   type: string;
@@ -25,22 +26,112 @@ type Job = {
   pdf: string;
 };
 
-const jobs: Job[] = [];
+const jobs: Job[] = [
+  {
+    id: "ra-plant-drugs",
+    title: "Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis",
+    location: "Assam Advanced Healthcare Innovation Institute (AAHII), IIT Guwahati",
+    type: "Full-time",
+    dept: "R&D",
+    date: "17.05.2026",
+    description:
+      "Work on developing plant-based therapeutics for rheumatoid arthritis including phytochemical extraction, in-vitro/in-vivo studies, and molecular analysis.",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+  },
+  {
+    id: "rf-engineer-mri",
+    title: "RF Engineer – Low-field MRI Systems (Indigenous Development)",
+    location: "AAHII, IIT Guwahati",
+    type: "Full-time",
+    dept: "R&D",
+    date: "17.05.2026",
+    description:
+      "Design and optimize RF subsystems for low-field MRI including RF coils, EM simulations, impedance matching, and signal chain optimization.",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+  },
+  {
+    id: "robotics-mechatronics",
+    title: "Robotics and Mechatronics Engineer",
+    location: "AAHII, IIT Guwahati",
+    type: "Full-time",
+    dept: "Engineering",
+    date: "17.05.2026",
+    description:
+      "Design, build, and test electromechanical systems for surgical robotics including CAD design, embedded systems, sensors, and system integration.",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+  },
+  {
+    id: "senior-robotics-software",
+    title: "Senior Robotics Software Engineer (C++ Expert)",
+    location: "AAHII, IIT Guwahati",
+    type: "Full-time",
+    dept: "Engineering",
+    date: "17.05.2026",
+    description:
+      "Develop high-performance real-time robotic software using modern C++, ROS2, and multi-threaded architectures for surgical robotics systems.",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+  },
+  {
+    id: "senior-design-surgical",
+    title: "Senior Design Engineer – Surgical Robotics",
+    location: "AAHII, IIT Guwahati",
+    type: "Full-time",
+    dept: "Engineering",
+    date: "17.05.2026",
+    description:
+      "Design and develop next-generation surgical robotic systems including mechanisms, actuation, and sterilizable interfaces with focus on precision and safety.",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+  },
+];
 
 
-// const jobs = [
-//   {
-//     title: "Research Associate – Low-field MRI Metamaterial Development",
-//     location: " Assam Advanced Healthcare Innovation Institute (AAHII)",
-//     type: "Full-time",
-//     dept: "R&D",
-//     date: "13.03.2026 ",
-//     description:
-//       "Lead laboratory research in low-field MRI metamaterial development and collaborate with interdisciplinary healthcare innovation teams.",
-//     pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/v1773392052/Advertisement_-_2-1_mb9jrf.pdf",
-//   },
 
-// ];
+const previousVacancies = [
+  {
+    department: "R&D",
+    role: "Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis",
+    lastDate: "30/06/2025",
+    status: "Closed",
+  },
+  {
+    department: "R&D",
+    role: "Project Engineer – Low-field MRI Hardware Development – Corrigendum",
+    lastDate: "25/06/2025",
+    status: "Closed",
+  },
+  {
+    department: "R&D",
+    role: "Research Associate – Low-field MRI Metamaterial Development",
+    lastDate: "25/06/2025",
+    status: "Closed",
+  },
+  {
+    department: "R&D",
+    role: "Project Engineer – Low-field MRI Hardware Development",
+    lastDate: "05/06/2025",
+    status: "Closed",
+  },
+  {
+    department: "Finance",
+    role: "Executive – Finance and Accounts",
+    lastDate: "30/09/2024",
+    status: "Closed",
+  },
+  {
+    department: "Procurement",
+    role: "Procurement Executive",
+    lastDate: "30/09/2024",
+    status: "Closed",
+  },
+  {
+    department: "R&D",
+    role: "Research Associate",
+    lastDate: "30/09/2024",
+    status: "Closed",
+  },
+];
+
+
 
 export default function VacanciesPage() {
   const copyEmail = () => {
@@ -49,10 +140,6 @@ export default function VacanciesPage() {
 
   return (
     <div className="bg-white">
-
-      {/* HERO */}
-
-
 
       {/* CURRENT OPPORTUNITIES */}
 
@@ -88,22 +175,21 @@ export default function VacanciesPage() {
       className="relative border rounded-xl p-6 bg-gray-50 hover:shadow-lg transition"
     >
       
-      {/* ✅ Refined Badge */}
-      <div className="absolute top-2 right-2 z-10">
-        <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-gray-200 rounded-full shadow-sm">
-          
-          {/* Subtle Animated Green Dot */}
-          <span className="relative flex h-2 w-2">
-  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-  <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-</span>
+{/* 
+<div className="absolute top-2 right-2 z-10">
+  <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-gray-200 rounded-full shadow-sm">
+    
+    <span className="relative flex h-2 w-2">
+      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
+    </span>
 
-          {/* Text */}
-          <span className="text-xs font-medium text-gray-600 whitespace-nowrap">
-            Extended Till 10th April
-          </span>
-        </div>
-      </div>
+    <span className="text-xs font-medium text-gray-600 whitespace-nowrap">
+      Extended Till 10th April
+    </span>
+  </div>
+</div>
+*/}
 
       <h3 className="text-lg font-semibold">{job.title}</h3>
 
@@ -209,112 +295,30 @@ export default function VacanciesPage() {
 
             {/* Body */}
 <tbody className="divide-y">
+  {previousVacancies.map((job, i) => (
+    <tr key={i} className="hover:bg-gray-50 transition">
+      
+      <td className="px-6 py-4 text-gray-600">
+        {job.department}
+      </td>
 
-  {/* 1 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">R&D</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis
-    </td>
-    <td className="px-6 py-4 text-gray-500">30/06/2025</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
+      <td className="px-6 py-4 font-medium text-gray-800">
+        {job.role}
+      </td>
 
-  {/* 2 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">R&D</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Project Engineer – Low-field MRI Hardware Development – Corrigendum
-    </td>
-    <td className="px-6 py-4 text-gray-500">25/06/2025</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
+      <td className="px-6 py-4 text-gray-500">
+        {job.lastDate}
+      </td>
 
-  {/* 3 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">R&D</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Research Associate – Low-field MRI Metamaterial Development
-    </td>
-    <td className="px-6 py-4 text-gray-500">25/06/2025</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
+      <td className="px-6 py-4">
+        <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+          <XCircle size={14} />
+          {job.status}
+        </span>
+      </td>
 
-  {/* 4 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">R&D</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Project Engineer – Low-field MRI Hardware Development
-    </td>
-    <td className="px-6 py-4 text-gray-500">05/06/2025</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
-
-  {/* 5 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">Finance</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Executive – Finance and Accounts
-    </td>
-    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
-
-  {/* 6 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">Procurement</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Procurement Executive
-    </td>
-    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
-
-  {/* 7 */}
-  <tr className="hover:bg-gray-50 transition">
-    <td className="px-6 py-4 text-gray-600">R&D</td>
-    <td className="px-6 py-4 font-medium text-gray-800">
-      Research Associate
-    </td>
-    <td className="px-6 py-4 text-gray-500">30/09/2024</td>
-    <td className="px-6 py-4">
-      <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
-        <XCircle size={14} />
-        Closed
-      </span>
-    </td>
-  </tr>
-
+    </tr>
+  ))}
 </tbody>
 
           </table>
