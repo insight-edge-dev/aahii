@@ -5,15 +5,23 @@ import { useEffect, useState } from "react";
 const announcements = [
   {
     href: "/careers/vacancies",
-    text: "Research Associate – Low-field MRI Metamaterial Development",
+    text: "Current Opportunities : Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis",
   },
   {
-    href: "/workshop",
-    text: "Register Now: Workshop on Data Interpretation",
+    href: "/careers/vacancies",
+    text: "Current Opportunities : RF Engineer – Low-field MRI Systems (Indigenous Development)",
   },
   {
-    href: "/pdf/icmr-notice.pdf",
-    text: "Download Official Notification (PDF)",
+    href: "/careers/vacancies",
+    text: "Current Opportunities : Robotics and Mechatronics Engineer",
+  },
+  {
+    href: "/careers/vacancies",
+    text: "Current Opportunities : Senior Robotics Software Engineer (C++ Expert)",
+  },
+  {
+    href: "/careers/vacancies",
+    text: "Current Opportunities : Senior Design Engineer – Surgical Robotics",
   },
 ];
 
