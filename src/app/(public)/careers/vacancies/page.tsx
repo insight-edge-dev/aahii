@@ -25,7 +25,6 @@ type Job = {
   description: string;
   pdf: string;
 };
-
 const jobs: Job[] = [
   {
     id: "ra-plant-drugs",
@@ -36,7 +35,7 @@ const jobs: Job[] = [
     date: "17.05.2026",
     description:
       "Work on developing plant-based therapeutics for rheumatoid arthritis including phytochemical extraction, in-vitro/in-vivo studies, and molecular analysis.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
   },
   {
     id: "rf-engineer-mri",
@@ -47,7 +46,7 @@ const jobs: Job[] = [
     date: "17.05.2026",
     description:
       "Design and optimize RF subsystems for low-field MRI including RF coils, EM simulations, impedance matching, and signal chain optimization.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
   },
   {
     id: "robotics-mechatronics",
@@ -58,7 +57,7 @@ const jobs: Job[] = [
     date: "17.05.2026",
     description:
       "Design, build, and test electromechanical systems for surgical robotics including CAD design, embedded systems, sensors, and system integration.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
   },
   {
     id: "senior-robotics-software",
@@ -69,7 +68,7 @@ const jobs: Job[] = [
     date: "17.05.2026",
     description:
       "Develop high-performance real-time robotic software using modern C++, ROS2, and multi-threaded architectures for surgical robotics systems.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
   },
   {
     id: "senior-design-surgical",
@@ -80,7 +79,7 @@ const jobs: Job[] = [
     date: "17.05.2026",
     description:
       "Design and develop next-generation surgical robotic systems including mechanisms, actuation, and sterilizable interfaces with focus on precision and safety.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777886477/Advertisement_for_website_q8dond.pdf",
+    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf"
   },
 ];
 
