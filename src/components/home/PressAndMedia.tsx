@@ -1,20 +1,58 @@
 "use client";
 
 import Image from "next/image";
-import { pressData } from "@/content/press";
 import { pressLogos } from "@/content/pressLogos";
-import NewsCard from "../news/NewsCard";
 import NewsGrid from "../news/NewsGrid";
 import NewsList from "../news/NewsList";
+import { useEffect, useState } from "react";
+import { NewsArticle } from "../news/news.types";
+
+type ApiNews = {
+  id: string;
+  slug: string;
+  source: string;
+  title: string;
+  excerpt: string;
+  link: string | null;
+  coverImage: string | null;
+  publishedAt: string;
+  featured?: boolean;
+};
+
+function mapNews(item: ApiNews): NewsArticle {
+  return {
+    id: item.id,
+    slug: item.slug,
+    source: item.source,
+    title: item.title,
+    excerpt: item.excerpt,
+    image: item.coverImage ?? "/press/news1.jpg",
+    link: item.link ?? "#",
+    publishedAt: new Date(item.publishedAt).toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    }),
+    featured: item.featured,
+  };
+}
 
 export default function PressAndMedia() {
-  /* ================= Latest 4 News ================= */
-  const latestNews = [...pressData]
-    .sort(
-      (a, b) =>
-        new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
-    )
-    .slice(0, 4);
+  const [latestNews, setLatestNews] = useState<NewsArticle[]>([]);
+
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await fetch("/api/news");
+        const json = await res.json();
+        setLatestNews((json?.data?.news ?? []).map(mapNews).slice(0, 4));
+      } catch {
+        setLatestNews([]);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   return (
     <section className="bg-white py-20">

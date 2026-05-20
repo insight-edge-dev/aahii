@@ -10,7 +10,9 @@ export const deleteEvent = async (id: string) => {
 };
 
 export const createEvent = async (formData: FormData) => {
-  return api.post("/admin/events", formData);
+  return api.post("/admin/events", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };
 
 export const updateEvent = async (id: string, data: any) => {

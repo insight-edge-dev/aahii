@@ -1,11 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { PressItem } from "@/content/press";
 import { ArrowUpRight } from "lucide-react";
+import { NewsArticle } from "./news.types";
 
 interface Props {
-  articles: PressItem[];
+  articles: NewsArticle[];
 }
 
 export default function NewsList({ articles }: Props) {

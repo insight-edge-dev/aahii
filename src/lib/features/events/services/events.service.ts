@@ -9,7 +9,6 @@ import {
 } from "../validations/events.validations";
 
 import { randomUUID } from "crypto";
-import { image } from "framer-motion/m";
 
 /* ================= CONSTANTS ================= */
 
