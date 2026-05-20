@@ -1,34 +1,65 @@
 "use client";
 
 import Image from "next/image";
-import { notFound, useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import { eventsData } from "@/content/events";
+import { useParams } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
+import {
+  GalleryEvent,
+  normalizeGalleryEvent,
+  normalizeGalleryEvents,
+} from "../gallery-normalize";
+
+const legacyGalleryEvents = normalizeGalleryEvents(eventsData);
 
 export default function EventDetailPage() {
   const params = useParams();
   const slug = params.eventSlug?.toString().toLowerCase();
 
-  const event = eventsData.find(
-    (e) => e.slug.toLowerCase() === slug
-  );
-
-  if (!event) notFound();
-
+  const [event, setEvent] = useState<GalleryEvent | null>(null);
+  const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [index, setIndex] = useState(0);
   const [zoom, setZoom] = useState(1);
 
   const touchStartX = useRef<number | null>(null);
 
-  const prev = () =>
-    setIndex((i) => (i === 0 ? event.images.length - 1 : i - 1));
+  useEffect(() => {
+    if (!slug) return;
 
-  const next = () =>
-    setIndex((i) => (i === event.images.length - 1 ? 0 : i + 1));
+    const fetchEvent = async () => {
+      const legacyEvent =
+        legacyGalleryEvents.find((item) => item.slug.toLowerCase() === slug) ??
+        null;
 
-  // ⌨️ Keyboard support
+      try {
+        const res = await fetch(`/api/events/${slug}`);
+        const json = await res.json();
+        const apiEvent = json?.success ? normalizeGalleryEvent(json.data) : null;
+
+        setEvent(apiEvent ?? legacyEvent);
+      } catch {
+        setEvent(legacyEvent);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvent();
+  }, [slug]);
+
+  const images = event?.images ?? [];
+
+  const prev = useCallback(() => {
+    setIndex((i) => (i === 0 ? images.length - 1 : i - 1));
+  }, [images.length]);
+
+  const next = useCallback(() => {
+    setIndex((i) => (i === images.length - 1 ? 0 : i + 1));
+  }, [images.length]);
+
+  // Keyboard support
   useEffect(() => {
     if (!open) return;
 
@@ -40,9 +71,9 @@ export default function EventDetailPage() {
 
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [open]);
+  }, [open, next, prev]);
 
-  // 👉 Swipe support
+  // Swipe support
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -59,6 +90,9 @@ export default function EventDetailPage() {
     touchStartX.current = null;
   };
 
+  if (loading) return <p className="p-6">Loading...</p>;
+  if (!event) return <p className="p-6">Event not found</p>;
+
   return (
     <main className="max-w-6xl mx-auto px-4 py-14">
       {/* Header */}
@@ -67,15 +101,15 @@ export default function EventDetailPage() {
           {event.title}
         </h1>
         <p className="mt-2 text-sm text-slate-600">
-          {event.images.length} photos
+          {images.length} photos
         </p>
       </div>
 
       {/* Grid */}
       <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {event.images.map((img, i) => (
+        {images.map((img, i) => (
           <button
-            key={i}
+            key={img.id}
             onClick={() => {
               setIndex(i);
               setZoom(1);
@@ -84,7 +118,7 @@ export default function EventDetailPage() {
             className="relative aspect-4/3 overflow-hidden rounded-xl bg-slate-100"
           >
             <Image
-              src={img}
+              src={img.fileUrl}
               alt={`${event.title} ${i + 1}`}
               fill
               className="object-cover hover:scale-105 transition"
@@ -94,7 +128,7 @@ export default function EventDetailPage() {
       </section>
 
       {/* Lightbox */}
-      {open && (
+      {open && images[index] && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
           onTouchStart={onTouchStart}
@@ -110,7 +144,7 @@ export default function EventDetailPage() {
 
           {/* Counter */}
           <div className="absolute top-5 left-5 text-white text-sm">
-            {index + 1} / {event.images.length}
+            {index + 1} / {images.length}
           </div>
 
           {/* Zoom Controls */}
@@ -140,7 +174,7 @@ export default function EventDetailPage() {
           {/* Image */}
           <div className="relative w-[90vw] h-[80vh] overflow-hidden">
             <Image
-              src={event.images[index]}
+              src={images[index].fileUrl}
               alt={`${event.title} image ${index + 1}`}
               fill
               className="object-contain transition-transform"

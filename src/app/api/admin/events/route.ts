@@ -78,7 +78,7 @@ export async function GET(){
     });
 
   }
-  catch(error){
+  catch{
 
     return NextResponse.json(
       { success:false,message:"Failed" },

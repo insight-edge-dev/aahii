@@ -1,7 +1,40 @@
 import NewsGrid from "@/components/news/NewsGrid";
+import { NewsArticle } from "@/components/news/news.types";
 import { pressData } from "@/content/press";
+import { headers } from "next/headers";
+import {
+  getNewsItemsFromResponse,
+  normalizeNewsArticles,
+} from "./news-normalize";
 
-export default function PressPage() {
+async function getNews(): Promise<NewsArticle[]> {
+  try {
+    const headerStore = await headers();
+    const host = headerStore.get("host");
+    const proto = headerStore.get("x-forwarded-proto") ?? "http";
+
+    if (!host) return normalizeNewsArticles(pressData);
+
+    const res = await fetch(`${proto}://${host}/api/news`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) return normalizeNewsArticles(pressData);
+
+    const json = await res.json();
+
+    return normalizeNewsArticles([
+      ...getNewsItemsFromResponse(json),
+      ...pressData,
+    ]);
+  } catch {
+    return normalizeNewsArticles(pressData);
+  }
+}
+
+export default async function PressPage() {
+  const news = await getNews();
+
   return (
     <main className="bg-white">
 
@@ -58,12 +91,12 @@ export default function PressPage() {
           </h2>
 
           <span className="text-xs md:text-sm text-neutral-500">
-            {pressData.length} Articles
+            {news.length} Articles
           </span>
         </div>
 
         {/* Adaptive Feed (auto mobile list) */}
-        <NewsGrid articles={pressData} />
+        <NewsGrid articles={news} />
       </section>
 
       {/* ================= FOOTER NOTE ================= */}
