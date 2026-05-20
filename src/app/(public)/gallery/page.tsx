@@ -1,27 +1,48 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { eventsData } from "@/content/events";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
+import {
+  GalleryEvent,
+  normalizeGalleryEvents,
+} from "./gallery-normalize";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function EventsPage() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [events, setEvents] = useState<GalleryEvent[]>(
+    normalizeGalleryEvents(eventsData),
+  );
 
   const debouncedSearch = useDebounce(search, 400);
 
-  // 🔍 Filter (debounced)
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch("/api/events");
+        const json = await res.json();
+        setEvents(normalizeGalleryEvents([...(json?.data ?? []), ...eventsData]));
+      } catch {
+        setEvents(normalizeGalleryEvents(eventsData));
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  // Filter (debounced)
   const filteredEvents = useMemo(() => {
-    return eventsData.filter((event) =>
+    return events.filter((event) =>
       event.title.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
-  }, [debouncedSearch]);
+  }, [events, debouncedSearch]);
 
   const totalPages = Math.ceil(filteredEvents.length / ITEMS_PER_PAGE);
 

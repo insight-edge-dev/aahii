@@ -5,30 +5,64 @@ import { X, ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
 import { createEvent } from "./api";
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
-export default function EventFormModal({ onClose, refresh }: any) {
+const MAX_IMAGE_SIZE = 1024 * 1024;
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
+
+type EventFormModalProps = {
+  onClose: () => void;
+  refresh: () => void;
+};
+
+type ApiErrorResponse = {
+  error?: string;
+  message?: string;
+  errors?: {
+    fieldErrors?: Record<string, string[]>;
+  };
+};
+
+export default function EventFormModal({ onClose, refresh }: EventFormModalProps) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [eventDate, setEventDate] = useState("");
 
-  const [coverImage, setCoverImage] = useState<any>(null);
+  const [coverImage, setCoverImage] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState("");
 
-  const [images, setImages] = useState<any[]>([]);
+  const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
 
   const [loading, setLoading] = useState(false);
   const MAX_IMAGES = 10;
 
+  const validateImage = (file: File) => {
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      toast.error("Invalid image type. Allowed: JPG, PNG, WEBP");
+      return false;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE) {
+      toast.error("Image exceeds 1MB limit");
+      return false;
+    }
+
+    return true;
+  };
+
   /* ================= COVER ================= */
-  const handleCover = (file: any) => {
+  const handleCover = (file?: File) => {
     if (!file) return;
+    if (!validateImage(file)) return;
     setCoverImage(file);
     setCoverPreview(URL.createObjectURL(file));
   };
 
   /* ================= MULTI IMAGES ================= */
-  const handleImages = (files: any) => {
+  const handleImages = (files: FileList | null) => {
+    if (!files) return;
+
     const fileArray = Array.from(files);
 
     if (images.length + fileArray.length > MAX_IMAGES) {
@@ -36,7 +70,11 @@ export default function EventFormModal({ onClose, refresh }: any) {
       return;
     }
 
-    const newPreviews = fileArray.map((file: any) =>
+    if (!fileArray.every((file) => validateImage(file))) {
+      return;
+    }
+
+    const newPreviews = fileArray.map((file) =>
       URL.createObjectURL(file)
     );
 
@@ -53,8 +91,16 @@ export default function EventFormModal({ onClose, refresh }: any) {
 
   /* ================= SUBMIT ================= */
   const handleSubmit = async () => {
-    if (!title || !description || !eventDate) {
+    if (!title.trim() || !description.trim() || !eventDate) {
       return toast.error("All fields are required");
+    }
+
+    if (title.trim().length < 5) {
+      return toast.error("Title must be at least 5 chars");
+    }
+
+    if (!coverImage && images.length === 0) {
+      return toast.error("At least one image required");
     }
 
     try {
@@ -65,8 +111,8 @@ export default function EventFormModal({ onClose, refresh }: any) {
       formData.append(
         "eventData",
         JSON.stringify({
-          title,
-          description,
+          title: title.trim(),
+          description: description.trim(),
           eventDate,
         })
       );
@@ -79,15 +125,35 @@ export default function EventFormModal({ onClose, refresh }: any) {
         formData.append("images", img);
       });
 
-      await createEvent(formData);
+      const res = await createEvent(formData);
+
+      if (!res.data.success) {
+        throw new Error(res.data.message || "Failed to create event");
+      }
 
       toast.success("Event created successfully");
 
       refresh();
       onClose();
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to create event");
+    } catch (err: unknown) {
+      const data =
+        err instanceof AxiosError
+          ? err.response?.data as ApiErrorResponse | undefined
+          : null;
+      const fieldErrors = data?.errors?.fieldErrors;
+      const firstFieldError =
+        fieldErrors &&
+        Object.values(fieldErrors)
+          .flat()
+          .find(Boolean);
+
+      toast.error(
+        data?.error ||
+        data?.message ||
+        firstFieldError ||
+        (err instanceof Error ? err.message : null) ||
+        "Failed to create event"
+      );
     } finally {
       setLoading(false);
     }
@@ -153,7 +219,7 @@ export default function EventFormModal({ onClose, refresh }: any) {
               <span className="text-sm text-gray-500">
                 Upload Cover Image
               </span>
-              <input type="file" hidden onChange={(e) => handleCover(e.target.files?.[0])} />
+              <input type="file" accept="image/jpeg,image/png,image/webp" hidden onChange={(e) => handleCover(e.target.files?.[0])} />
             </label>
           )}
         </div>
@@ -169,7 +235,7 @@ export default function EventFormModal({ onClose, refresh }: any) {
             <span className="text-xs text-gray-500">
               Upload up to 10 images
             </span>
-            <input type="file" multiple hidden onChange={(e) => handleImages(e.target.files)} />
+            <input type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => handleImages(e.target.files)} />
           </label>
 
           <div className="grid grid-cols-3 gap-2">

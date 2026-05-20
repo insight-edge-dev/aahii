@@ -3,10 +3,10 @@
 import { motion } from "framer-motion";
 import NewsCard from "./NewsCard";
 import NewsList from "./NewsList";
-import { PressItem } from "@/content/press";
+import { NewsArticle } from "./news.types";
 
 interface Props {
-  articles: PressItem[];
+  articles: NewsArticle[];
 }
 
 export default function NewsGrid({ articles }: Props) {

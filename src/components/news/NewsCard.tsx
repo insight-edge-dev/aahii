@@ -4,10 +4,10 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
-import { PressItem } from "@/content/press";
+import { NewsArticle } from "./news.types";
 
 interface Props {
-  article: PressItem;
+  article: NewsArticle;
 }
 
 export default function NewsCard({ article }: Props) {
