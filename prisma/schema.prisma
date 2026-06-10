@@ -77,6 +77,17 @@ enum NewsType {
   INTERNAL
 }
 
+enum TenderStatus {
+  ACTIVE
+  CLOSED
+  CANCELLED
+}
+
+enum TenderDocumentKind {
+  TENDER_DOCUMENT
+  CORRIGENDUM
+}
+
 //////////////////// ADMIN MODAL ////////////////////
 
 model Admin {
@@ -308,4 +319,62 @@ model Video {
   updatedAt DateTime @updatedAt
 
   @@index([publishedAt])
+}
+
+//////////////////// TENDERS ////////////////////
+
+model Tender {
+  id String @id @default(uuid())
+
+  ref String @unique
+
+  title String
+
+  description String @db.Text
+
+  itemType String?
+
+  bidSubmission String?
+
+  status TenderStatus @default(ACTIVE)
+
+  archived Boolean @default(false)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  documents TenderDocument[]
+
+  @@index([status])
+  @@index([archived])
+  @@index([isActive])
+  @@index([createdAt])
+}
+
+model TenderDocument {
+  id String @id @default(uuid())
+
+  tender Tender @relation(fields: [tenderId], references: [id], onDelete: Cascade)
+
+  tenderId String
+
+  kind TenderDocumentKind @default(TENDER_DOCUMENT)
+
+  title String
+
+  fileUrl String
+
+  publicId String
+
+  originalName String
+
+  sortOrder Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([tenderId])
+  @@index([kind])
 }

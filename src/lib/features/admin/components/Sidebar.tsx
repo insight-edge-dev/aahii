@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from "next/image";
-import { LayoutDashboard, Users, Newspaper, Calendar, LogOut } from 'lucide-react'
+import { LayoutDashboard, Users, Newspaper, Calendar, LogOut, FileText, type LucideIcon } from 'lucide-react'
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -44,6 +44,7 @@ export const Sidebar = () => {
       <nav className="flex-1 px-4 space-y-2">
         <SidebarItem icon={LayoutDashboard} label="Dashboard" href="/admin" pathname={pathname} />
         <SidebarItem icon={Users} label="Vendors" href="/admin/vendors" pathname={pathname} />
+        <SidebarItem icon={FileText} label="Tenders" href="/admin/tenders" pathname={pathname} />
         <SidebarItem icon={Newspaper} label="News" href="/admin/news" pathname={pathname} />
         <SidebarItem icon={Calendar} label="Events" href="/admin/events" pathname={pathname} />
       </nav>
@@ -62,7 +63,14 @@ export const Sidebar = () => {
   );
 };
 
-const SidebarItem = ({ icon: Icon, label, href, pathname }: any) => {
+type SidebarItemProps = {
+  icon: LucideIcon;
+  label: string;
+  href: string;
+  pathname: string;
+};
+
+const SidebarItem = ({ icon: Icon, label, href, pathname }: SidebarItemProps) => {
   const active = pathname === href;
 
   return (

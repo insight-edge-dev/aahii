@@ -29,6 +29,7 @@ export const primaryNavigation: NavItem[] = [
 
   { label: "Research & Development", href: "/research-development" },
   { label: "Infrastructure", href: "/infrastructure" },
+  { label: "Tenders", href: "/tenders" },
   { label: "Contact Us", href: "/contact-us" },
 
   {
