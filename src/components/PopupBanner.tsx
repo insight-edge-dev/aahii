@@ -5,28 +5,36 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 
+const VENDOR_BANNER_DISMISSED_KEY = "vendorBannerDismissed";
+
 export default function PopupBanner() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   // ✅ Show only once per session (tab)
   useEffect(() => {
-    const hasSeen = sessionStorage.getItem("hasSeenPopup");
+    const timer = window.setTimeout(() => {
+      const hasSeen = window.localStorage.getItem(
+        VENDOR_BANNER_DISMISSED_KEY,
+      );
 
-    if (!hasSeen) {
-      setIsOpen(true);
-    }
+      if (!hasSeen) {
+        setIsOpen(true);
+      }
+    }, 0);
+
+    return () => window.clearTimeout(timer);
   }, []);
 
   // ✅ Close handler
   const handleClose = () => {
-    sessionStorage.setItem("hasSeenPopup", "true");
+    window.localStorage.setItem(VENDOR_BANNER_DISMISSED_KEY, "true");
     setIsOpen(false);
   };
 
   // ✅ Click handler
   const handleClick = () => {
-    sessionStorage.setItem("hasSeenPopup", "true");
+    window.localStorage.setItem(VENDOR_BANNER_DISMISSED_KEY, "true");
     setIsOpen(false);
     router.push("/vendor-registration");
   };

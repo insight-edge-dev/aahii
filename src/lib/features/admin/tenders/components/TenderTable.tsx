@@ -48,7 +48,7 @@ export function TenderTable() {
                 {tender.itemType || "No item type"}
               </p>
               <p className="mt-1">
-                {tender.bidSubmission || "No bid submission date"}
+                {tender.publicationDate || "No bid publication date"}
               </p>
             </div>
 

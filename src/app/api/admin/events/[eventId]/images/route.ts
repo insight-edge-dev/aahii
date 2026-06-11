@@ -26,8 +26,19 @@ export async function POST(req: NextRequest, { params }: Params) {
     const result = await addEventImages(eventId, formData);
 
     return NextResponse.json(result, { status: result.status });
-  } catch {
-    return NextResponse.json({ success: false }, { status: 500 });
+  } catch (error) {
+    console.error("ADD EVENT IMAGES ROUTE ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Failed to process event images: ${error.message}`
+            : "Failed to process event images",
+      },
+      { status: 500 },
+    );
   }
 }
 
@@ -42,7 +53,18 @@ export async function DELETE(req: NextRequest) {
     const result = await deleteEventImages(body.imageIds);
 
     return NextResponse.json(result, { status: result.status });
-  } catch {
-    return NextResponse.json({ success: false }, { status: 500 });
+  } catch (error) {
+    console.error("DELETE EVENT IMAGES ROUTE ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error
+            ? `Failed to delete event images: ${error.message}`
+            : "Failed to delete event images",
+      },
+      { status: 500 },
+    );
   }
 }

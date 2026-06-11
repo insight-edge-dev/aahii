@@ -176,6 +176,11 @@ export async function createNews(
 
     if(!validation.success){
 
+      console.warn(
+        "CREATE NEWS VALIDATION FAILED:",
+        validation.error.flatten()
+      );
+
       return fail(
         "Validation failed",
         400,
@@ -237,7 +242,10 @@ export async function createNews(
 
         slug,
 
-        source:data.source,
+        source:
+          data.type===NewsType.INTERNAL
+          ? data.source??"AAHII"
+          : data.source!,
 
         title:data.title,
 
@@ -336,6 +344,11 @@ export async function updateNews(
 
     if(!validation.success){
 
+      console.warn(
+        "UPDATE NEWS VALIDATION FAILED:",
+        validation.error.flatten()
+      );
+
       return fail(
         "Validation failed",
         400,
@@ -387,7 +400,10 @@ export async function updateNews(
 
         slug,
 
-        source:data.source??existing.source,
+        source:
+          data.type===NewsType.INTERNAL
+          ? data.source??existing.source??"AAHII"
+          : data.source??existing.source,
 
         title:data.title??existing.title,
 

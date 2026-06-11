@@ -20,7 +20,10 @@ export type AdminTender = {
   title: string;
   description: string;
   itemType: string | null;
-  bidSubmission: string | null;
+  publicationDate: string | null;
+  preBidMeeting: string | null;
+  bidEndDateTime: string | null;
+  bidOpeningDateTime: string | null;
   status: "ACTIVE" | "CLOSED" | "CANCELLED";
   archived: boolean;
   isActive: boolean;

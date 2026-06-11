@@ -66,6 +66,122 @@ function normalizeOptionalText(value?: string) {
   return trimmed ? trimmed : null;
 }
 
+function parseTenderDate(value: string | null | undefined) {
+  if (!value) return null;
+
+  const normalized = value.trim();
+  const months: Record<string, number> = {
+    jan: 0,
+    january: 0,
+    feb: 1,
+    february: 1,
+    mar: 2,
+    march: 2,
+    apr: 3,
+    april: 3,
+    may: 4,
+    jun: 5,
+    june: 5,
+    jul: 6,
+    july: 6,
+    aug: 7,
+    august: 7,
+    sep: 8,
+    sept: 8,
+    september: 8,
+    oct: 9,
+    october: 9,
+    nov: 10,
+    november: 10,
+    dec: 11,
+    december: 11,
+  };
+
+  const numericMatch = normalized.match(
+    /^(\d{1,2})[.\-/](\d{1,2})[.\-/](\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?)?/i,
+  );
+
+  if (numericMatch) {
+    const [, day, month, year, rawHour = "0", minute = "0", second = "0", meridiem] =
+      numericMatch;
+    let hour = Number(rawHour);
+
+    if (meridiem?.toUpperCase() === "PM" && hour < 12) {
+      hour += 12;
+    }
+
+    if (meridiem?.toUpperCase() === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+    const date = new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day),
+      hour,
+      Number(minute),
+      Number(second),
+    );
+
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  const monthNameMatch = normalized.match(
+    /^(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})(?:\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(AM|PM)?)?/i,
+  );
+
+  if (monthNameMatch) {
+    const [
+      ,
+      day,
+      monthName,
+      year,
+      rawHour = "0",
+      minute = "0",
+      second = "0",
+      meridiem,
+    ] = monthNameMatch;
+    const month = months[monthName.toLowerCase()];
+
+    if (month === undefined) return null;
+
+    let hour = Number(rawHour);
+
+    if (meridiem?.toUpperCase() === "PM" && hour < 12) {
+      hour += 12;
+    }
+
+    if (meridiem?.toUpperCase() === "AM" && hour === 12) {
+      hour = 0;
+    }
+
+    const date = new Date(
+      Number(year),
+      month,
+      Number(day),
+      hour,
+      Number(minute),
+      Number(second),
+    );
+
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  const date = new Date(normalized);
+
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+function getTenderStatusRank(status: string) {
+  const ranks: Record<string, number> = {
+    ACTIVE: 0,
+    CLOSED: 1,
+    CANCELLED: 2,
+  };
+
+  return ranks[status] ?? 99;
+}
+
 async function uploadPdf(file: File, tenderId: string): Promise<UploadResult> {
   if (file.type !== "application/pdf") {
     throw new Error("Only PDF documents are allowed");
@@ -209,7 +325,12 @@ export async function createTender(
         title: validation.data.title,
         description: validation.data.description,
         itemType: normalizeOptionalText(validation.data.itemType),
-        bidSubmission: normalizeOptionalText(validation.data.bidSubmission),
+        publicationDate: normalizeOptionalText(validation.data.publicationDate),
+        preBidMeeting: normalizeOptionalText(validation.data.preBidMeeting),
+        bidEndDateTime: normalizeOptionalText(validation.data.bidEndDateTime),
+        bidOpeningDateTime: normalizeOptionalText(
+          validation.data.bidOpeningDateTime,
+        ),
         status: validation.data.status,
         archived: validation.data.archived ?? false,
         isActive: validation.data.isActive ?? true,
@@ -276,10 +397,22 @@ export async function updateTender(
           validation.data.itemType === undefined
             ? existing.itemType
             : normalizeOptionalText(validation.data.itemType),
-        bidSubmission:
-          validation.data.bidSubmission === undefined
-            ? existing.bidSubmission
-            : normalizeOptionalText(validation.data.bidSubmission),
+        publicationDate:
+          validation.data.publicationDate === undefined
+            ? existing.publicationDate
+            : normalizeOptionalText(validation.data.publicationDate),
+        preBidMeeting:
+          validation.data.preBidMeeting === undefined
+            ? existing.preBidMeeting
+            : normalizeOptionalText(validation.data.preBidMeeting),
+        bidEndDateTime:
+          validation.data.bidEndDateTime === undefined
+            ? existing.bidEndDateTime
+            : normalizeOptionalText(validation.data.bidEndDateTime),
+        bidOpeningDateTime:
+          validation.data.bidOpeningDateTime === undefined
+            ? existing.bidOpeningDateTime
+            : normalizeOptionalText(validation.data.bidOpeningDateTime),
         status: validation.data.status ?? existing.status,
         archived: validation.data.archived ?? existing.archived,
         isActive: validation.data.isActive ?? existing.isActive,
@@ -344,12 +477,9 @@ export async function getAllTenders({
   const skip = (page - 1) * limit;
   const where = admin ? {} : { isActive: true };
 
-  const [tenders, total] = await Promise.all([
+  const [allTenders, total] = await Promise.all([
     prisma.tender.findMany({
       where,
-      orderBy: [{ archived: "asc" }, { createdAt: "desc" }],
-      skip,
-      take: limit,
       include: {
         documents: {
           orderBy: [{ kind: "asc" }, { sortOrder: "asc" }],
@@ -358,6 +488,25 @@ export async function getAllTenders({
     }),
     prisma.tender.count({ where }),
   ]);
+
+  const tenders = allTenders
+    .sort((first, second) => {
+      const firstDate =
+        parseTenderDate(first.publicationDate)?.getTime() ??
+        first.createdAt.getTime();
+      const secondDate =
+        parseTenderDate(second.publicationDate)?.getTime() ??
+        second.createdAt.getTime();
+      const statusDifference =
+        getTenderStatusRank(first.status) - getTenderStatusRank(second.status);
+
+      if (statusDifference !== 0) {
+        return statusDifference;
+      }
+
+      return secondDate - firstDate;
+    })
+    .slice(skip, skip + limit);
 
   return {
     success: true,
