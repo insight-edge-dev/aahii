@@ -27,7 +27,10 @@ type Tender = {
   title: string;
   description: string;
   itemType: string | null;
-  bidSubmission: string | null;
+  publicationDate: string | null;
+  preBidMeeting: string | null;
+  bidEndDateTime: string | null;
+  bidOpeningDateTime: string | null;
   status: TenderStatus;
   archived: boolean;
   documents: TenderDocument[];
@@ -205,7 +208,7 @@ export default function TendersPage() {
                         aria-hidden="true"
                         className="h-4 w-4 text-neutral-400"
                       />
-                      <span>{tender.bidSubmission || "Bid date to be announced"}</span>
+                      <span>{tender.publicationDate || "Bid date to be announced"}</span>
                     </div>
                   </button>
                 );
@@ -279,17 +282,40 @@ function TenderDetails({ tender }: { tender: Tender }) {
         <StatusBadge status={tender.status} />
       </div>
 
-      <div className="grid gap-4 border-b border-neutral-200 py-6 sm:grid-cols-2">
-        <InfoCard
-          icon={<CalendarDays aria-hidden="true" className="h-5 w-5" />}
-          label="Bid Submission"
-          value={tender.bidSubmission || "To be announced"}
-        />
-        <InfoCard
-          icon={<Link2 aria-hidden="true" className="h-5 w-5" />}
-          label="Type of Items"
-          value={tender.itemType || "Tender notice"}
-        />
+      <div className="grid gap-4 border-b border-neutral-200 py-6">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <InfoCard
+            icon={<CalendarDays aria-hidden="true" className="h-5 w-5" />}
+            label="Bid Publication"
+            value={tender.publicationDate || "To be announced"}
+          />
+          <InfoCard
+            icon={<Link2 aria-hidden="true" className="h-5 w-5" />}
+            label="Type of Items"
+            value={tender.itemType || "Tender notice"}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <InfoCard
+            icon={<CalendarDays aria-hidden="true" className="h-5 w-5" />}
+            label="Pre-Bid Meeting"
+            value={tender.preBidMeeting || "To be announced"}
+          />
+          <InfoCard
+            icon={<CalendarDays aria-hidden="true" className="h-5 w-5" />}
+            label="Bid End Date/Time"
+            value={tender.bidEndDateTime || "To be announced"}
+          />
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          <InfoCard
+            icon={<CalendarDays aria-hidden="true" className="h-5 w-5" />}
+            label="Bid Opening Date/Time"
+            value={tender.bidOpeningDateTime || "To be announced"}
+          />
+        </div>
       </div>
 
       <div className="py-6">
@@ -322,7 +348,7 @@ function InfoCard({
   value: string;
 }) {
   return (
-    <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+    <div className="h-full rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
       <p className="text-xs font-semibold uppercase tracking-[0.16em] text-neutral-500">
         {label}
       </p>

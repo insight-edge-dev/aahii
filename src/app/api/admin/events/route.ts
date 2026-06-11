@@ -49,10 +49,16 @@ export async function POST(req:NextRequest){
 
     }
 
-    console.error("CREATE EVENT ERROR",error);
+    console.error("CREATE EVENT ROUTE ERROR",error);
 
     return NextResponse.json(
-      { success:false,message:"Failed" },
+      {
+        success:false,
+        message:
+          error instanceof Error
+          ? `Failed to process event upload: ${error.message}`
+          : "Failed to process event upload"
+      },
       { status:500 }
     );
 

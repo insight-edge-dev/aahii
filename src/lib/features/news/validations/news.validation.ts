@@ -9,8 +9,8 @@ export const newsBaseSchema = z.object({
   source:
     z.string()
     .trim()
-    .min(2,"Source required")
-    .max(120),
+    .max(120)
+    .optional(),
 
   title:
     z.string()
@@ -61,6 +61,23 @@ newsBaseSchema.superRefine((data,ctx)=>{
 
   if(
     data.type==="PRESS" &&
+    !data.source
+  ){
+
+    ctx.addIssue({
+
+      code:"custom",
+
+      path:["source"],
+
+      message:"PRESS news must include a source"
+
+    });
+
+  }
+
+  if(
+    data.type==="PRESS" &&
     !data.link
   ){
 
@@ -107,6 +124,23 @@ newsBaseSchema
 .superRefine((data,ctx)=>{
 
   /* Only validate if fields exist */
+
+  if(
+    data.type==="PRESS" &&
+    !data.source
+  ){
+
+    ctx.addIssue({
+
+      code:"custom",
+
+      path:["source"],
+
+      message:"PRESS news should contain source"
+
+    });
+
+  }
 
   if(
     data.type==="PRESS" &&
