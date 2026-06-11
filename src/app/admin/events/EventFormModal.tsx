@@ -7,7 +7,8 @@ import { createEvent } from "./api";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 
-const MAX_IMAGE_SIZE = 1024 * 1024;
+const MAX_IMAGE_SIZE = 10 * 1024 * 1024;
+const MAX_IMAGE_SIZE_MB = 10;
 const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 type EventFormModalProps = {
@@ -44,7 +45,7 @@ export default function EventFormModal({ onClose, refresh }: EventFormModalProps
     }
 
     if (file.size > MAX_IMAGE_SIZE) {
-      toast.error("Image exceeds 1MB limit");
+      toast.error(`Image exceeds ${MAX_IMAGE_SIZE_MB}MB limit`);
       return false;
     }
 
@@ -233,7 +234,7 @@ export default function EventFormModal({ onClose, refresh }: EventFormModalProps
           <label className="flex flex-col items-center justify-center border-2 border-dashed rounded-xl p-4 cursor-pointer hover:bg-gray-50 mb-3">
             <ImagePlus className="mb-1 text-gray-400" />
             <span className="text-xs text-gray-500">
-              Upload up to 10 images
+              Upload up to 10 images, {MAX_IMAGE_SIZE_MB}MB each
             </span>
             <input type="file" accept="image/jpeg,image/png,image/webp" multiple hidden onChange={(e) => handleImages(e.target.files)} />
           </label>

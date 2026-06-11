@@ -6,6 +6,7 @@ import {
   updateEventSchema,
   validateImageFile,
   MAX_IMAGES,
+  MAX_IMAGE_SIZE_MB,
 } from "../validations/events.validations";
 
 import { randomUUID } from "crypto";
@@ -28,6 +29,22 @@ type EventImageInsert = {
 
 const isFileLike = (value: unknown): value is Blob =>
   value instanceof Blob && typeof (value as Blob).arrayBuffer === "function";
+
+const isKnownUploadError = (error: unknown) =>
+  error instanceof Error &&
+  (
+    error.message.includes("image type") ||
+    error.message.includes("Image exceeds") ||
+    error.message.includes("Image file is empty") ||
+    error.message.includes("Max ") ||
+    error.message.includes("No images provided")
+  );
+
+function uploadErrorMessage(error: unknown) {
+  return error instanceof Error
+    ? error.message
+    : "Image upload failed";
+}
 
 /* ================= SLUG ================= */
 
@@ -74,7 +91,11 @@ async function uploadImage(file: File, folder: string): Promise<UploadResult> {
 
         (error, result) => {
           if (error || !result) {
-            return reject(error);
+            return reject(
+              error instanceof Error
+                ? error
+                : new Error("Cloudinary image upload failed"),
+            );
           }
 
           resolve(result as UploadResult);
@@ -82,6 +103,34 @@ async function uploadImage(file: File, folder: string): Promise<UploadResult> {
       )
       .end(buffer);
   });
+}
+
+async function uploadGalleryImages(
+  files: FormDataEntryValue[],
+  eventId: string,
+  uploadedPublicIds: string[],
+) {
+  const validImages: EventImageInsert[] = [];
+
+  for (const file of files) {
+    if (!isFileLike(file) || !file.size) continue;
+
+    const upload = await uploadImage(
+      file as File,
+      `${EVENTS_FOLDER}/${eventId}/gallery`,
+    );
+
+    uploadedPublicIds.push(upload.public_id);
+
+    validImages.push({
+      id: randomUUID(),
+      eventId,
+      fileUrl: upload.secure_url,
+      publicId: upload.public_id,
+    });
+  }
+
+  return validImages;
 }
 
 /* ================= CREATE EVENT ================= */
@@ -130,6 +179,18 @@ export async function createEvent(formData: FormData) {
 
     const slug = await generateSlug(data.title);
 
+    const images = formData.getAll("images");
+
+    if (images.length > MAX_IMAGES) {
+      return {
+        success: false,
+
+        status: 400,
+
+        message: `Max ${MAX_IMAGES} images allowed`,
+      };
+    }
+
     /* ================= COVER ================= */
 
     let coverImage: string | null = null;
@@ -154,45 +215,11 @@ export async function createEvent(formData: FormData) {
 
     /* ================= GALLERY ================= */
 
-    const images = formData.getAll("images");
-
-    if (images.length > MAX_IMAGES) {
-      return {
-        success: false,
-
-        status: 400,
-
-        message: `Max ${MAX_IMAGES} images allowed`,
-      };
-    }
-
-    const galleryUploads = await Promise.all(
-      images.map(async (file) => {
-        const f = file as File;
-
-        if (!f || !f.size) return null;
-
-        const upload = await uploadImage(
-          f,
-
-          `${EVENTS_FOLDER}/${eventId}/gallery`,
-        );
-
-        uploadedPublicIds.push(upload.public_id);
-
-        return {
-          id: randomUUID(),
-
-          eventId,
-
-          fileUrl: upload.secure_url,
-
-          publicId: upload.public_id,
-        };
-      }),
+    const validImages = await uploadGalleryImages(
+      images,
+      eventId,
+      uploadedPublicIds,
     );
-
-    const validImages = galleryUploads.filter(Boolean) as EventImageInsert[];
 
     /* ================= COVER FALLBACK ================= */
 
@@ -261,9 +288,11 @@ export async function createEvent(formData: FormData) {
     return {
       success: false,
 
-      status: 500,
+      status: isKnownUploadError(error) ? 400 : 500,
 
-      message: "Event creation failed",
+      message: isKnownUploadError(error)
+        ? uploadErrorMessage(error)
+        : "Event creation failed",
     };
   }
 }
@@ -409,9 +438,11 @@ export async function updateEvent(eventId: string, formData: FormData) {
     return {
       success: false,
 
-      status: 500,
+      status: isKnownUploadError(error) ? 400 : 500,
 
-      message: "Update failed",
+      message: isKnownUploadError(error)
+        ? uploadErrorMessage(error)
+        : "Update failed",
     };
   }
 }
@@ -443,27 +474,29 @@ export async function addEventImages(eventId: string, formData: FormData) {
       };
     }
 
-    const uploads = await Promise.all(
-      files.map(async (file) => {
-        if (!isFileLike(file)) return null;
+    const validFiles = files.filter((file) => isFileLike(file) && file.size);
 
-        const upload = await uploadImage(
-          file as File,
-          `${EVENTS_FOLDER}/${eventId}/gallery`,
-        );
+    if (!validFiles.length) {
+      return {
+        success: false,
+        status: 400,
+        message: "No valid image files provided",
+      };
+    }
 
-        uploaded.push(upload.public_id);
+    const existingCount = await prisma.eventImage.count({
+      where: { eventId },
+    });
 
-        return {
-          id: randomUUID(),
-          eventId,
-          fileUrl: upload.secure_url,
-          publicId: upload.public_id,
-        } as EventImageInsert;
-      }),
-    );
+    if (existingCount + validFiles.length > MAX_IMAGES) {
+      return {
+        success: false,
+        status: 400,
+        message: `Max ${MAX_IMAGES} event images allowed`,
+      };
+    }
 
-    const valid = uploads.filter(Boolean) as EventImageInsert[];
+    const valid = await uploadGalleryImages(validFiles, eventId, uploaded);
 
     await prisma.eventImage.createMany({
       data: valid,
@@ -473,14 +506,19 @@ export async function addEventImages(eventId: string, formData: FormData) {
       success: true,
       status: 200,
     };
-  } catch {
+  } catch (error) {
     await Promise.allSettled(
       uploaded.map((id) => cloudinary.uploader.destroy(id)),
     );
 
+    console.error("ADD EVENT IMAGES ERROR:", error);
+
     return {
       success: false,
-      status: 500,
+      status: isKnownUploadError(error) ? 400 : 500,
+      message: isKnownUploadError(error)
+        ? uploadErrorMessage(error)
+        : `Failed to upload event images. Each image must be JPG, PNG, or WEBP and under ${MAX_IMAGE_SIZE_MB}MB.`,
     };
   }
 }

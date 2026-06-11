@@ -35,8 +35,10 @@ export async function POST(req:NextRequest){
 
     if(error instanceof UnauthorizedError){
 
+      console.warn("ADMIN NEWS CREATE AUTH FAILED:", error.message);
+
       return NextResponse.json(
-        { message:error.message },
+        { success:false,message:error.message },
         { status:401 }
       );
 
@@ -44,8 +46,10 @@ export async function POST(req:NextRequest){
 
     if(error instanceof ForbiddenError){
 
+      console.warn("ADMIN NEWS CREATE FORBIDDEN:", error.message);
+
       return NextResponse.json(
-        { message:error.message },
+        { success:false,message:error.message },
         { status:403 }
       );
 
@@ -83,8 +87,10 @@ export async function GET(req:NextRequest){
 
     if(error instanceof UnauthorizedError){
 
+      console.warn("ADMIN NEWS LIST AUTH FAILED:", error.message);
+
       return NextResponse.json(
-        { message:error.message },
+        { success:false,message:error.message },
         { status:401 }
       );
 
@@ -92,8 +98,10 @@ export async function GET(req:NextRequest){
 
     if(error instanceof ForbiddenError){
 
+      console.warn("ADMIN NEWS LIST FORBIDDEN:", error.message);
+
       return NextResponse.json(
-        { message:error.message },
+        { success:false,message:error.message },
         { status:403 }
       );
 

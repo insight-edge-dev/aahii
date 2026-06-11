@@ -334,7 +334,13 @@ model Tender {
 
   itemType String?
 
-  bidSubmission String?
+  publicationDate String? @map("bidSubmission")
+
+  preBidMeeting String?
+
+  bidEndDateTime String?
+
+  bidOpeningDateTime String?
 
   status TenderStatus @default(ACTIVE)
 

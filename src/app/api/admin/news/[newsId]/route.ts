@@ -54,6 +54,8 @@ export async function GET(
   catch (error) {
 
     if (error instanceof UnauthorizedError) {
+      console.warn("ADMIN NEWS GET AUTH FAILED:", error.message);
+
       return NextResponse.json(
         {
           success: false,
@@ -64,6 +66,8 @@ export async function GET(
     }
 
     if (error instanceof ForbiddenError) {
+      console.warn("ADMIN NEWS GET FORBIDDEN:", error.message);
+
       return NextResponse.json(
         {
           success: false,
@@ -128,6 +132,8 @@ export async function PUT(
   catch (error) {
 
     if (error instanceof UnauthorizedError) {
+      console.warn("ADMIN NEWS UPDATE AUTH FAILED:", error.message);
+
       return NextResponse.json(
         {
           success: false,
@@ -138,6 +144,8 @@ export async function PUT(
     }
 
     if (error instanceof ForbiddenError) {
+      console.warn("ADMIN NEWS UPDATE FORBIDDEN:", error.message);
+
       return NextResponse.json(
         {
           success: false,
@@ -197,6 +205,8 @@ export async function DELETE(
   catch (error) {
 
     if (error instanceof UnauthorizedError) {
+      console.warn("ADMIN NEWS DELETE AUTH FAILED:", error.message);
+
       return NextResponse.json(
         {
           success: false,
@@ -207,6 +217,8 @@ export async function DELETE(
     }
 
     if (error instanceof ForbiddenError) {
+      console.warn("ADMIN NEWS DELETE FORBIDDEN:", error.message);
+
       return NextResponse.json(
         {
           success: false,

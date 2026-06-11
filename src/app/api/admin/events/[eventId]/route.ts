@@ -118,7 +118,13 @@ result,
 catch(error){
 
 return NextResponse.json(
-{success:false,message:"Failed"},
+{
+success:false,
+message:
+error instanceof Error
+? `Failed to update event: ${error.message}`
+: "Failed to update event"
+},
 {status:500}
 );
 
@@ -148,10 +154,16 @@ result,
 );
 
 }
-catch{
+catch(error){
 
 return NextResponse.json(
-{success:false,message:"Failed"},
+{
+success:false,
+message:
+error instanceof Error
+? `Failed to delete event: ${error.message}`
+: "Failed to delete event"
+},
 {status:500}
 );
 

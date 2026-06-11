@@ -2,7 +2,9 @@ import { z } from "zod";
 
 /* ================= CONSTANTS ================= */
 
-export const MAX_IMAGE_SIZE = 1024 * 1024; // 1MB
+export const MAX_IMAGE_SIZE = 10 * 1024 * 1024; // 10MB
+
+export const MAX_IMAGE_SIZE_MB = 10;
 
 export const MAX_IMAGES = 50;
 
@@ -16,6 +18,14 @@ export const ALLOWED_IMAGE_TYPES = [
 
 export function validateImageFile(file:File){
 
+  if(!file.size){
+
+    throw new Error(
+      "Image file is empty"
+    );
+
+  }
+
   if(!ALLOWED_IMAGE_TYPES.includes(file.type)){
 
     throw new Error(
@@ -27,7 +37,7 @@ export function validateImageFile(file:File){
   if(file.size > MAX_IMAGE_SIZE){
 
     throw new Error(
-      "Image exceeds 1MB limit"
+      `Image exceeds ${MAX_IMAGE_SIZE_MB}MB limit`
     );
 
   }

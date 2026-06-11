@@ -29,7 +29,10 @@ const emptyForm = {
   title: "",
   description: "",
   itemType: "",
-  bidSubmission: "",
+  publicationDate: "",
+  preBidMeeting: "",
+  bidEndDateTime: "",
+  bidOpeningDateTime: "",
   status: "ACTIVE" as TenderStatus,
   archived: false,
   isActive: true,
@@ -63,7 +66,10 @@ export function TenderForm({
       title: editData.title,
       description: editData.description,
       itemType: editData.itemType ?? "",
-      bidSubmission: editData.bidSubmission ?? "",
+      publicationDate: editData.publicationDate ?? "",
+      preBidMeeting: editData.preBidMeeting ?? "",
+      bidEndDateTime: editData.bidEndDateTime ?? "",
+      bidOpeningDateTime: editData.bidOpeningDateTime ?? "",
       status: editData.status,
       archived: editData.archived,
       isActive: editData.isActive,
@@ -160,7 +166,10 @@ export function TenderForm({
           title: form.title.trim(),
           description: form.description.trim(),
           itemType: form.itemType.trim(),
-          bidSubmission: form.bidSubmission.trim(),
+          publicationDate: form.publicationDate.trim(),
+          preBidMeeting: form.preBidMeeting.trim(),
+          bidEndDateTime: form.bidEndDateTime.trim(),
+          bidOpeningDateTime: form.bidOpeningDateTime.trim(),
         }),
       );
 
@@ -302,14 +311,49 @@ export function TenderForm({
             />
           </Field>
 
-          <Field label="Bid Submission Date/Time">
+          <Field label="Bid Publication">
             <input
               className="admin-input"
-              value={form.bidSubmission}
+              value={form.publicationDate}
               onChange={(event) =>
-                setForm({ ...form, bidSubmission: event.target.value })
+                setForm({ ...form, publicationDate: event.target.value })
               }
-              placeholder="31.07.2025 at 03:00 P.M."
+              placeholder="17-06-2026 11:00:00"
+            />
+          </Field>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-3">
+          <Field label="Pre-Bid Meeting">
+            <input
+              className="admin-input"
+              value={form.preBidMeeting}
+              onChange={(event) =>
+                setForm({ ...form, preBidMeeting: event.target.value })
+              }
+              placeholder="17-06-2026 11:00:00"
+            />
+          </Field>
+
+          <Field label="Bid End Date/Time">
+            <input
+              className="admin-input"
+              value={form.bidEndDateTime}
+              onChange={(event) =>
+                setForm({ ...form, bidEndDateTime: event.target.value })
+              }
+              placeholder="30-06-2026 13:00:00"
+            />
+          </Field>
+
+          <Field label="Bid Opening Date/Time">
+            <input
+              className="admin-input"
+              value={form.bidOpeningDateTime}
+              onChange={(event) =>
+                setForm({ ...form, bidOpeningDateTime: event.target.value })
+              }
+              placeholder="30-06-2026 13:30:00"
             />
           </Field>
         </div>
