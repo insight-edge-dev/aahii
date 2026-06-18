@@ -9,10 +9,13 @@ import Niramaya from "@/components/home/niramaya";
 import SyncedImageContent from "@/components/home/SyncedImageContent";
 import PressAndMedia from "@/components/home/PressAndMedia";
 import GovMarquee from "@/components/GovMarquee";
+import LatestNewsTicker from "@/components/latest-news-ticker";
+
 export default function Home() {
   return (
      <>
       <HeroSlider />
+      <LatestNewsTicker />
       <CoreResearch />
       <IITStats />
       <IITHeroGallery />
