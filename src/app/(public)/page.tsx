@@ -15,7 +15,7 @@ export default function Home() {
   return (
      <>
       <HeroSlider />
-      <LatestNewsTicker />
+      <LatestNewsTicker fetchLatest items={[]} />
       <CoreResearch />
       <IITStats />
       <IITHeroGallery />

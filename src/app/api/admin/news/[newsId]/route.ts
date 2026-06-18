@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 import {
   updateNews,
@@ -11,6 +12,12 @@ import {
   UnauthorizedError,
   ForbiddenError
 } from "@/lib/adminAuth";
+
+function revalidateCmsPages() {
+  revalidatePath("/");
+  revalidatePath("/news");
+  revalidatePath("/events");
+}
 
 /* ================= TYPES ================= */
 
@@ -123,6 +130,10 @@ export async function PUT(
         formData
       );
 
+    if (result.success) {
+      revalidateCmsPages();
+    }
+
     return NextResponse.json(
       result,
       { status: result.status }
@@ -195,6 +206,10 @@ export async function DELETE(
 
     const result =
       await deleteNews(newsId);
+
+    if (result.success) {
+      revalidateCmsPages();
+    }
 
     return NextResponse.json(
       result,

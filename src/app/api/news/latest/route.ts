@@ -4,7 +4,10 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    const announcements = await prisma.announcement.findMany({
+    const news = await prisma.news.findMany({
+      where: {
+        isActive: true,
+      },
       orderBy: {
         publishedAt: "desc",
       },
@@ -12,17 +15,22 @@ export async function GET() {
         id: true,
         title: true,
         slug: true,
-        category: true,
+        source: true,
+        type: true,
         publishedAt: true,
-        priority: true,
+        featured: true,
       },
       take: 10,
     });
 
     return NextResponse.json({
-      items: announcements.map((announcement) => ({
-        ...announcement,
-        publishedAt: announcement.publishedAt.toISOString().slice(0, 10),
+      items: news.map((item) => ({
+        id: item.id,
+        title: item.title,
+        slug: item.slug,
+        category: item.source || item.type,
+        publishedAt: item.publishedAt.toISOString().slice(0, 10),
+        priority: item.featured,
       })),
     });
   } catch (error) {

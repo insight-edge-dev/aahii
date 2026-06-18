@@ -1,4 +1,5 @@
 import { NextRequest,NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 import {
 
@@ -15,6 +16,12 @@ UnauthorizedError,
 ForbiddenError
 
 } from "@/lib/adminAuth";
+
+function revalidateCmsPages() {
+revalidatePath("/");
+revalidatePath("/news");
+revalidatePath("/events");
+}
 
 type Params={
 params:Promise<{
@@ -109,6 +116,10 @@ eventId,
 formData
 );
 
+if(result.success){
+revalidateCmsPages();
+}
+
 return NextResponse.json(
 result,
 {status:result.status}
@@ -147,6 +158,10 @@ const {eventId}=await params;
 
 const result=
 await deleteEvent(eventId);
+
+if(result.success){
+revalidateCmsPages();
+}
 
 return NextResponse.json(
 result,

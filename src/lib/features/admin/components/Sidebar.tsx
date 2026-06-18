@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from "next/image";
-import { LayoutDashboard, Users, Newspaper, Calendar, LogOut, FileText, type LucideIcon } from 'lucide-react'
+import { LayoutDashboard, Users, Newspaper, Calendar, LogOut, FileText, Megaphone, type LucideIcon } from 'lucide-react'
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -46,6 +46,7 @@ export const Sidebar = () => {
         <SidebarItem icon={Users} label="Vendors" href="/admin/vendors" pathname={pathname} />
         <SidebarItem icon={FileText} label="Tenders" href="/admin/tenders" pathname={pathname} />
         <SidebarItem icon={Newspaper} label="News" href="/admin/news" pathname={pathname} />
+        <SidebarItem icon={Megaphone} label="Announcements" href="/admin/announcements" pathname={pathname} />
         <SidebarItem icon={Calendar} label="Events" href="/admin/events" pathname={pathname} />
       </nav>
 

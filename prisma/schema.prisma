@@ -269,14 +269,16 @@ model Announcement {
   title       String
   slug        String   @unique
   category    String
-  content     String
+  link        String?
   priority    Boolean  @default(false)
+  isActive    Boolean  @default(true)
   publishedAt DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([publishedAt])
   @@index([priority])
+  @@index([isActive])
 }
 
 model Event {
