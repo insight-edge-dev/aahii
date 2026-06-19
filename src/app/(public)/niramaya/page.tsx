@@ -60,37 +60,37 @@ const sectors = [
     {
         title: "Diagnostics",
         desc: "Advanced diagnostic tools and platforms for early and accurate detection.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/diagnostics.jpg",
+        image: "/avatars/diagnostics.png",
     },
     {
         title: "Precision Therapeutics",
         desc: "Targeted therapies driven by molecular insights and personalized medicine.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/22378297_6567456.jpg",
+        image: "/avatars/thera.png",
     },
     {
         title: "Medical Devices (AI/ML)",
         desc: "Smart medical devices powered by artificial intelligence and machine learning.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/Picture2-1.jpg",
+        image: "/avatars/digitalhealth.png",
     },
     {
         title: "Robotics & Supply Chain",
         desc: "Automation, robotics, and optimized healthcare supply chain solutions.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/ChatGPT-Image-Jan-30-2026-02_53_36-PM.png",
+        image: "/avatars/robotics.png",
     },
     {
         title: "Nutraceuticals / AYUSH",
         desc: "Evidence-based nutraceuticals and AYUSH innovations.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/ayur.png",
+        image: "/images/Integrated-Medicine.jpg",
     },
     {
         title: "Functional Foods",
         desc: "Health-focused food innovations enhancing nutrition and wellness.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/food.jpg",
+        image: "/avatars/stem.png",
     },
     {
         title: "Assistive Technologies",
         desc: "Technologies empowering accessibility, rehabilitation, and inclusive healthcare.",
-        image: "https://agihf.org/wp-content/uploads/2026/01/Picture7.jpg",
+        image: "/images/Personalized-Medicine.jpg",
     },
 ];
 export default function NiramayaPage() {
@@ -136,7 +136,7 @@ export default function NiramayaPage() {
                         transition={{ delay: 0.5, duration: 0.8 }}
                         className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed"
                     >
-                        Giving wings to healthcare innovations — bridging research,
+                        Giving wings to healthcare innovations - bridging research,
                         clinical validation, and market translation across Northeast India.
                     </motion.p>
                 </div>
@@ -160,7 +160,7 @@ export default function NiramayaPage() {
                         </h2>
 
                         <p className="text-gray-600 leading-relaxed mb-8">
-                            AAHII has also taken up initiative to nurture innovation based Start-ups in Health-tech to develop a pipeline of products even when infrastructure is in progress. A Program “NIRAMAYA” has been launched to support the Healthcare based start-ups. AAHII is registered as an Incubator with Start-up India, GoI. The NIRAMAYA program supports health-tech startups to build a robust innovation pipeline aligned with national healthcare priorities.
+                            AAHII has also taken up initiative to nurture innovation based Start-ups in Health-tech to develop a pipeline of products even when infrastructure is in progress. A Program &quot;NIRAMAYA&quot; has been launched to support the Healthcare based start-ups. AAHII is registered as an Incubator with Start-up India, GoI. The NIRAMAYA program supports health-tech startups to build a robust innovation pipeline aligned with national healthcare priorities.
                         </p>
                     </div>
 
@@ -378,7 +378,7 @@ export default function NiramayaPage() {
             src={sector.image}
             alt={sector.title}
             fill
-            className="object-cover"
+            className="bg-white object-contain p-8"
           />
         </motion.div>
 

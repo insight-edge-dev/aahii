@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 import {
   createNews,
@@ -10,6 +11,12 @@ import {
   UnauthorizedError,
   ForbiddenError
 } from "@/lib/adminAuth";
+
+function revalidateCmsPages() {
+  revalidatePath("/");
+  revalidatePath("/news");
+  revalidatePath("/events");
+}
 
 /* ================= CREATE ================= */
 
@@ -24,6 +31,10 @@ export async function POST(req:NextRequest){
 
     const result=
     await createNews(formData);
+
+    if(result.success){
+      revalidateCmsPages();
+    }
 
     return NextResponse.json(
       result,

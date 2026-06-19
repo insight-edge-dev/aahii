@@ -1,6 +1,11 @@
 "use client";
 
-export default function StatusFilter({ status, setStatus }: any) {
+type StatusFilterProps = {
+    status: string;
+    setStatus: (status: string) => void;
+};
+
+export default function StatusFilter({ status, setStatus }: StatusFilterProps) {
     const options = [
         { label: "ALL", value: "" },
         { label: "PENDING", value: "PENDING" },
@@ -9,7 +14,7 @@ export default function StatusFilter({ status, setStatus }: any) {
     ];
 
     return (
-        <div className="flex gap-2 bg-white p-1 rounded-xl border shadow-sm w-fit">
+        <div className="flex w-fit gap-1 rounded-2xl border border-gray-200 bg-white p-1 shadow-sm">
             {options.map((opt) => {
                 const isActive = status === opt.value;
 
@@ -17,15 +22,15 @@ export default function StatusFilter({ status, setStatus }: any) {
             <button
                 key={opt.value}
                 onClick={() => setStatus(opt.value)}
-                className={`px-4 py-1.5 text-sm rounded-lg font-medium transition-all duration-200 ${isActive
+                className={`rounded-xl px-5 py-2 text-sm font-semibold transition-all duration-200 hover:bg-gray-50 ${isActive
                         ? opt.value === "APPROVED"
-                            ? "bg-green-500 text-white"
+                            ? "bg-emerald-600 text-white shadow-sm hover:bg-emerald-600"
                             : opt.value === "REJECTED"
-                                ? "bg-red-500 text-white"
+                                ? "bg-red-600 text-white shadow-sm hover:bg-red-600"
                                 : opt.value === "PENDING"
-                                    ? "bg-yellow-500 text-white"
-                                    : "bg-black text-white"
-                        : ""
+                                    ? "bg-amber-500 text-white shadow-sm hover:bg-amber-500"
+                                    : "bg-gray-950 text-white shadow-sm hover:bg-gray-950"
+                        : "text-gray-700"
                 }`}
             >
                         {opt.label}

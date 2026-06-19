@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 
 import {
   createEvent,
@@ -11,6 +12,12 @@ import {
   ForbiddenError
 } from "@/lib/adminAuth";
 
+function revalidateCmsPages() {
+  revalidatePath("/");
+  revalidatePath("/news");
+  revalidatePath("/events");
+}
+
 /* ================= CREATE EVENT ================= */
 
 export async function POST(req:NextRequest){
@@ -22,6 +29,10 @@ export async function POST(req:NextRequest){
     const formData=await req.formData();
 
     const result=await createEvent(formData);
+
+    if(result.success){
+      revalidateCmsPages();
+    }
 
     return NextResponse.json(
       result,
