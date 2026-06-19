@@ -11,10 +11,12 @@ type ApiNews = {
   id: string;
   slug: string;
   source: string;
+  category?: string | null;
   title: string;
   excerpt: string;
   link: string | null;
   coverImage: string | null;
+  featuredImageUrl?: string | null;
   publishedAt: string;
   featured?: boolean;
 };
@@ -23,11 +25,11 @@ function mapNews(item: ApiNews): NewsArticle {
   return {
     id: item.id,
     slug: item.slug,
-    source: item.source,
+    source: item.category || item.source,
     title: item.title,
     excerpt: item.excerpt,
-    image: item.coverImage ?? "/press/news1.jpg",
-    link: item.link ?? "#",
+    image: item.featuredImageUrl ?? item.coverImage ?? "/press/news1.jpg",
+    link: `/news/${item.slug}`,
     publishedAt: new Date(item.publishedAt).toLocaleDateString("en-IN", {
       day: "numeric",
       month: "short",

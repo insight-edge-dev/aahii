@@ -8,16 +8,25 @@ export async function GET(
   req: NextRequest,
   context: { params: Promise<{ slug: string }> }
 ) {
-  const { slug } = await context.params;
+  try {
+    const { slug } = await context.params;
 
-  const news = await getNewsBySlug(slug);
+    const news = await getNewsBySlug(slug);
 
-  if (!news) {
+    if (!news.success) {
+      return NextResponse.json(
+        { success: false, message: news.message || "Not found" },
+        { status: news.status }
+      );
+    }
+
+    return NextResponse.json(news);
+  } catch (error) {
+    console.error("GET /api/news/[slug]:", error);
+
     return NextResponse.json(
-      { message: "Not found" },
-      { status: 404 }
+      { success: false, message: "Failed to load news article" },
+      { status: 500 }
     );
   }
-
-  return NextResponse.json(news);
 }

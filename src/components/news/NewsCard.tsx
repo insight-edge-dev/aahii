@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
@@ -73,7 +74,7 @@ export default function NewsCard({ article }: Props) {
         />
       </div>
 
-      <a href={article.link} target="_blank" rel="noopener noreferrer">
+      <Link href={article.slug ? `/news/${article.slug}` : article.link}>
         {/* IMAGE */}
         <div className="relative h-28 sm:h-32 md:h-56 overflow-hidden">
           <Image
@@ -162,7 +163,7 @@ export default function NewsCard({ article }: Props) {
             "
           />
         </div>
-      </a>
+      </Link>
     </motion.article>
   );
 }
