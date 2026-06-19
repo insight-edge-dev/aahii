@@ -58,6 +58,11 @@ export const primaryNavigation: NavItem[] = [
   },
 
   { label: "Vendors", href: "/vendor-registration" },
+  
+  {
+  label: "Employee",
+  href: "https://loginhrms.spineng.in/Home"
+}
 ];
 
 

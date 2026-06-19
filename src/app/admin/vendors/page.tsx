@@ -27,8 +27,18 @@ export default function VendorsPage() {
   }, [status]);
 
   return (
-    <div className="p-6 space-y-4">
-      <h1 className="text-xl font-semibold">Vendors</h1>
+    <div className="space-y-6">
+      <div>
+        <p className="text-sm font-medium uppercase tracking-wide text-slate-500">
+          Vendor Management
+        </p>
+        <h1 className="mt-1 text-2xl font-semibold text-gray-950">
+          Vendors
+        </h1>
+        <p className="mt-1 text-sm text-gray-500">
+          Review vendor registrations and manage approval status.
+        </p>
+      </div>
 
       <StatusFilter status={status} setStatus={setStatus} />
 

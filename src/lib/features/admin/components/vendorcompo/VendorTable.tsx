@@ -1,30 +1,41 @@
 import VendorRow from "./VendorRow";
 
-export default function VendorTable({ vendors, loading, refresh }: any) {
-  // 🔄 Loading State (Card Skeleton)
+type VendorListItem = {
+  id: string;
+  entityName?: string | null;
+  email?: string | null;
+  website?: string | null;
+  status: string;
+  createdAt?: string | Date;
+};
+
+type VendorTableProps = {
+  vendors: VendorListItem[];
+  loading: boolean;
+  refresh: () => void;
+};
+
+export default function VendorTable({ vendors, loading, refresh }: VendorTableProps) {
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl border shadow-sm p-4">
-        <div className="space-y-3">
-          {[...Array(6)].map((_, i) => (
-            <div
-              key={i}
-              className="h-12 bg-gray-100 animate-pulse rounded-xl"
-            />
-          ))}
-        </div>
+      <div className="space-y-3">
+        {[...Array(4)].map((_, i) => (
+          <div
+            key={i}
+            className="h-24 animate-pulse rounded-2xl border border-slate-200/80 bg-white shadow-[0_1px_2px_rgba(15,23,42,0.04)]"
+          />
+        ))}
       </div>
     );
   }
 
-  // ❌ Empty State
   if (!vendors.length) {
     return (
-      <div className="bg-white rounded-2xl border shadow-sm p-10 text-center">
-        <p className="text-gray-500 text-lg font-medium">
+      <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-10 text-center shadow-[0_1px_2px_rgba(15,23,42,0.04)]">
+        <p className="text-lg font-medium text-slate-900">
           No vendors found
         </p>
-        <p className="text-sm text-gray-400 mt-1">
+        <p className="mt-2 text-sm text-slate-500">
           Try changing filters or adding new vendors
         </p>
       </div>
@@ -32,32 +43,14 @@ export default function VendorTable({ vendors, loading, refresh }: any) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
-      {/* 🔝 Table */}
-      <table className="w-full">
-        
-        {/* Header */}
-        <thead className="bg-gray-50 text-gray-600 text-sm sticky top-0 z-10">
-          <tr>
-             <th className="p-4 font-medium text-left">ID</th>
-            <th className="p-4 font-medium text-left">Vendor</th>
-            <th className="p-4 font-medium text-left">Email</th>
-            <th className="p-4 font-medium text-left">Status</th>
-            <th className="p-4 font-medium text-right">Actions</th>
-          </tr>
-        </thead>
-
-        {/* Body */}
-        <tbody className="divide-y">
-          {vendors.map((vendor: any) => (
-            <VendorRow
-              key={vendor.id}
-              vendor={vendor}
-              refresh={refresh}
-            />
-          ))}
-        </tbody>
-      </table>
+    <div className="space-y-3">
+      {vendors.map((vendor) => (
+        <VendorRow
+          key={vendor.id}
+          vendor={vendor}
+          refresh={refresh}
+        />
+      ))}
     </div>
   );
 }
