@@ -88,6 +88,12 @@ enum TenderDocumentKind {
   CORRIGENDUM
 }
 
+enum VacancyStatus {
+  DRAFT
+  OPEN
+  CLOSED
+}
+
 //////////////////// ADMIN MODAL ////////////////////
 
 model Admin {
@@ -400,4 +406,26 @@ model TenderDocument {
 
   @@index([tenderId])
   @@index([kind])
+}
+
+model Vacancy {
+  id                    String        @id @default(cuid())
+  title                 String
+  slug                  String        @unique
+  location              String
+  employmentType        String
+  department            String
+  description           String        @db.Text
+  applyEmail            String
+  advertisementUrl      String?
+  advertisementPublicId String?
+  status                VacancyStatus @default(DRAFT)
+  postedAt              DateTime
+  applicationDeadline   DateTime?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+
+  @@index([status])
+  @@index([postedAt])
+  @@index([applicationDeadline])
 }

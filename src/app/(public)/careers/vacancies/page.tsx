@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
@@ -15,127 +16,81 @@ import {
 
 } from "lucide-react";
 
-type Job = {
+type VacancyItem = {
   id: string;
   title: string;
+  slug: string;
   location: string;
-  type: string;
-  dept: string;
-  date: string;
+  employmentType: string;
+  department: string;
   description: string;
-  pdf: string;
+  applyEmail: string;
+  advertisementUrl?: string | null;
+  status: "DRAFT" | "OPEN" | "CLOSED";
+  postedAt: string;
+  applicationDeadline?: string | null;
 };
-const jobs: Job[] = [
-  {
-    id: "ra-plant-drugs",
-    title: "Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis",
-    location: "Assam Advanced Healthcare Innovation Institute (AAHII), IIT Guwahati",
-    type: "Full-time",
-    dept: "R&D",
-    date: "17.05.2026",
-    description:
-      "Work on developing plant-based therapeutics for rheumatoid arthritis including phytochemical extraction, in-vitro/in-vivo studies, and molecular analysis.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
-  },
-  {
-    id: "rf-engineer-mri",
-    title: "RF Engineer – Low-field MRI Systems (Indigenous Development)",
-    location: "AAHII, IIT Guwahati",
-    type: "Full-time",
-    dept: "R&D",
-    date: "17.05.2026",
-    description:
-      "Design and optimize RF subsystems for low-field MRI including RF coils, EM simulations, impedance matching, and signal chain optimization.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
-  },
-  {
-    id: "robotics-mechatronics",
-    title: "Robotics and Mechatronics Engineer",
-    location: "AAHII, IIT Guwahati",
-    type: "Full-time",
-    dept: "Engineering",
-    date: "17.05.2026",
-    description:
-      "Design, build, and test electromechanical systems for surgical robotics including CAD design, embedded systems, sensors, and system integration.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
-  },
-  {
-    id: "senior-robotics-software",
-    title: "Senior Robotics Software Engineer (C++ Expert)",
-    location: "AAHII, IIT Guwahati",
-    type: "Full-time",
-    dept: "Engineering",
-    date: "17.05.2026",
-    description:
-      "Develop high-performance real-time robotic software using modern C++, ROS2, and multi-threaded architectures for surgical robotics systems.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf",
-  },
-  {
-    id: "senior-design-surgical",
-    title: "Senior Design Engineer – Surgical Robotics",
-    location: "AAHII, IIT Guwahati",
-    type: "Full-time",
-    dept: "Engineering",
-    date: "17.05.2026",
-    description:
-      "Design and develop next-generation surgical robotic systems including mechanisms, actuation, and sterilizable interfaces with focus on precision and safety.",
-    pdf: "https://res.cloudinary.com/ddi8hisku/image/upload/fl_attachment/v1777976451/Advertisement_for_website_3_yxpaev.pdf"
-  },
-];
 
+type VacanciesResponse = {
+  data?: {
+    open?: VacancyItem[];
+    closed?: VacancyItem[];
+  };
+};
 
+function formatDate(value?: string | null) {
+  if (!value) return "Not specified";
 
-const previousVacancies = [
-  {
-    department: "R&D",
-    role: "Research Associate – Development of Plant-Based Drugs for Rheumatoid Arthritis",
-    lastDate: "30/06/2025",
-    status: "Closed",
-  },
-  {
-    department: "R&D",
-    role: "Project Engineer – Low-field MRI Hardware Development – Corrigendum",
-    lastDate: "25/06/2025",
-    status: "Closed",
-  },
-  {
-    department: "R&D",
-    role: "Research Associate – Low-field MRI Metamaterial Development",
-    lastDate: "25/06/2025",
-    status: "Closed",
-  },
-  {
-    department: "R&D",
-    role: "Project Engineer – Low-field MRI Hardware Development",
-    lastDate: "05/06/2025",
-    status: "Closed",
-  },
-  {
-    department: "Finance",
-    role: "Executive – Finance and Accounts",
-    lastDate: "30/09/2024",
-    status: "Closed",
-  },
-  {
-    department: "Procurement",
-    role: "Procurement Executive",
-    lastDate: "30/09/2024",
-    status: "Closed",
-  },
-  {
-    department: "R&D",
-    role: "Research Associate",
-    lastDate: "30/09/2024",
-    status: "Closed",
-  },
-];
+  const date = new Date(value);
 
+  if (Number.isNaN(date.getTime())) {
+    return value;
+  }
 
+  return new Intl.DateTimeFormat("en-GB").format(date);
+}
 
 export default function VacanciesPage() {
+  const [jobs, setJobs] = useState<VacancyItem[]>([]);
+  const [previousVacancies, setPreviousVacancies] = useState<VacancyItem[]>([]);
+
   const copyEmail = () => {
     navigator.clipboard.writeText("careers@agihf.org");
   };
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadVacancies() {
+      try {
+        const response = await fetch("/api/vacancies", {
+          signal: controller.signal,
+          headers: {
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to load vacancies");
+        }
+
+        const json = await response.json() as VacanciesResponse;
+        setJobs(json.data?.open ?? []);
+        setPreviousVacancies(json.data?.closed ?? []);
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return;
+        }
+
+        setJobs([]);
+        setPreviousVacancies([]);
+      }
+    }
+
+    loadVacancies();
+
+    return () => controller.abort();
+  }, []);
 
   return (
     <div className="bg-white">
@@ -166,7 +121,7 @@ export default function VacanciesPage() {
     <div className="space-y-6">
   {jobs.map((job, i) => (
     <motion.div
-      key={i}
+      key={job.id}
       whileHover={{ y: -3 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -199,15 +154,15 @@ export default function VacanciesPage() {
         </span>
 
         <span className="flex items-center gap-1">
-          <Clock size={16} /> {job.type}
+          <Clock size={16} /> {job.employmentType}
         </span>
 
         <span className="flex items-center gap-1">
-          <Building2 size={16} /> Dept: {job.dept}
+          <Building2 size={16} /> Dept: {job.department}
         </span>
 
         <span className="flex items-center gap-1">
-          <Clock size={16} /> Posted: {job.date}
+          <Clock size={16} /> Posted: {formatDate(job.postedAt)}
         </span>
       </div>
 
@@ -218,21 +173,23 @@ export default function VacanciesPage() {
       {/* ACTIONS */}
       <div className="mt-5 flex gap-4 flex-wrap">
         <a
-          href="mailto:careers@agihf.org"
+          href={`mailto:${job.applyEmail}`}
           className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
         >
           <Mail size={16} />
           Apply via Email
         </a>
 
-        <a
-          href={job.pdf}
-          target="_blank"
-          className="flex items-center gap-2 border px-5 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
-        >
-          <FileText size={16} />
-          PDF Advt.
-        </a>
+        {job.advertisementUrl ? (
+          <a
+            href={job.advertisementUrl}
+            target="_blank"
+            className="flex items-center gap-2 border px-5 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
+          >
+            <FileText size={16} />
+            PDF Advt.
+          </a>
+        ) : null}
       </div>
 
     </motion.div>
@@ -294,25 +251,25 @@ export default function VacanciesPage() {
 
             {/* Body */}
 <tbody className="divide-y">
-  {previousVacancies.map((job, i) => (
-    <tr key={i} className="hover:bg-gray-50 transition">
+  {previousVacancies.map((job) => (
+    <tr key={job.id} className="hover:bg-gray-50 transition">
       
       <td className="px-6 py-4 text-gray-600">
         {job.department}
       </td>
 
       <td className="px-6 py-4 font-medium text-gray-800">
-        {job.role}
+        {job.title}
       </td>
 
       <td className="px-6 py-4 text-gray-500">
-        {job.lastDate}
+        {formatDate(job.applicationDeadline)}
       </td>
 
       <td className="px-6 py-4">
         <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
           <XCircle size={14} />
-          {job.status}
+          Closed
         </span>
       </td>
 
@@ -391,7 +348,7 @@ export default function VacanciesPage() {
 
             {/* Deadline */}
             <p className="mt-4 text-sm text-yellow-300">
-              📅 Deadline: Applications accepted on a rolling basis unless specified.
+              Deadline: Applications accepted on a rolling basis unless specified.
             </p>
 
           </div>
