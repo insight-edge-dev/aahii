@@ -11,6 +11,8 @@ import PressAndMedia from "@/components/home/PressAndMedia";
 import GovMarquee from "@/components/GovMarquee";
 import LatestNewsTicker from "@/components/latest-news-ticker";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
      <>

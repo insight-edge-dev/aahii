@@ -79,7 +79,7 @@ export default function LegalDisclaimerPage() {
                 Privacy Policy
               </Link>
               ,{" "}
-              <Link href="/terms-and-conditions" className="text-blue-600 hover:underline">
+              <Link href="/terms" className="text-blue-600 hover:underline">
                 Terms & Conditions
               </Link>,{" "}
               

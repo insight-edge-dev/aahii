@@ -207,8 +207,8 @@ export default function LatestNewsTicker({
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="mx-auto flex max-w-7xl flex-col overflow-hidden rounded-md border border-slate-200 bg-white shadow-[0_4px_18px_rgba(15,23,42,0.08)] sm:min-h-14 sm:flex-row">
-        <div className="flex shrink-0 items-center justify-center bg-[#C62828] px-4 py-2 text-sm font-bold uppercase tracking-[0.08em] text-white sm:w-40 sm:py-0">
-          Latest News
+        <div className="flex shrink-0 items-center justify-center bg-[#C62828] px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.08em] text-white sm:w-52 sm:px-5 sm:py-0 sm:text-sm">
+          Latest News / Updates
         </div>
 
         <div className="flex min-w-0 flex-1 items-center gap-2 px-3 py-3 sm:px-4">
