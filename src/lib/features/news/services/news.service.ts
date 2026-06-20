@@ -63,6 +63,7 @@ type NewsListParams = {
   limit?: number;
   search?: string;
   category?: string;
+  source?: string;
   status?: NewsStatus | "ALL";
   featured?: boolean;
   publicOnly?: boolean;
@@ -297,6 +298,10 @@ function buildWhere(params: NewsListParams) {
 
   if (params.category && params.category !== "ALL") {
     where.category = params.category;
+  }
+
+  if (params.source && params.source !== "ALL") {
+    where.source = params.source;
   }
 
   if (typeof params.featured === "boolean") {

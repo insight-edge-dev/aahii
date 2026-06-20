@@ -1,63 +1,185 @@
-export default function UpcomingDepartmentsPage() {
-  const departments = [
-    { name: "Advanced Laparoscopic Surgery", bg: "bg-indigo-50", dot: "bg-indigo-500" },
-    { name: "Endo-Urology", bg: "bg-yellow-50", dot: "bg-yellow-500" },
-    { name: "Stem Cell Therapy", bg: "bg-emerald-50", dot: "bg-emerald-500" },
-    { name: "Precision Medicine", bg: "bg-pink-50", dot: "bg-pink-500" },
+import DepartmentsShowcase, {
+  type DepartmentGroup,
+  type DepartmentStat,
+} from "@/components/departments/DepartmentsShowcase";
 
-    { name: "Neonatology", bg: "bg-sky-50", dot: "bg-sky-500" },
-    { name: "Robotic Surgery", bg: "bg-green-50", dot: "bg-green-500" },
-    { name: "Advanced Neurosurgery", bg: "bg-blue-50", dot: "bg-blue-500" },
-    { name: "Adult & Paediatric Cardiac Surgery", bg: "bg-violet-50", dot: "bg-violet-500" },
+const stats: DepartmentStat[] = [
+  {
+    label: "Total Departments",
+    value: "12",
+    description: "Advanced service areas spanning surgery, precision care, and critical specialties.",
+  },
+  {
+    label: "Expansion Phases",
+    value: "4",
+    description: "Clinical capabilities aligned with infrastructure, training, and technology readiness.",
+  },
+  {
+    label: "Healthcare Focus Areas",
+    value: "9+",
+    description: "Integrated focus across advanced procedures, diagnostics, newborn care, and intensive care.",
+  },
+];
 
-    { name: "Gastroenterology", bg: "bg-amber-50", dot: "bg-amber-500" },
-    { name: "Hepatology", bg: "bg-cyan-50", dot: "bg-cyan-500" },
-    { name: "Microbiology", bg: "bg-rose-50", dot: "bg-rose-500" },
-    { name: "Critical Care", bg: "bg-purple-50", dot: "bg-purple-500" },
-  ];
+const groups: DepartmentGroup[] = [
+  {
+    title: "Surgical Innovation",
+    description:
+      "Procedure-led services focused on safer surgery, faster recovery, and technology-enabled operating environments.",
+    departments: [
+      {
+        name: "Advanced Laparoscopic Surgery",
+        description:
+          "Minimally invasive surgical care designed to reduce trauma, recovery time, and hospital stay.",
+        detail:
+          "This service area supports modern operating workflows, image-guided decision-making, and protocol-based perioperative safety.",
+        status: "Clinical Service",
+        category: "Surgery",
+        icon: "scissors",
+      },
+      {
+        name: "Endo-Urology",
+        description:
+          "Specialized urological procedures using endoscopic and minimally invasive approaches.",
+        detail:
+          "Endo-Urology will strengthen treatment pathways for stone disease, urinary tract conditions, and precision procedural care.",
+        status: "Clinical Service",
+        category: "Surgery",
+        icon: "stethoscope",
+      },
+      {
+        name: "Robotic Surgery",
+        description:
+          "Technology-assisted surgical capability for greater precision and consistency in complex procedures.",
+        detail:
+          "The program will support skill development, advanced instrumentation, and multidisciplinary surgical planning.",
+        status: "Clinical Service",
+        category: "Surgery",
+        icon: "activity",
+      },
+    ],
+  },
+  {
+    title: "Precision & Regenerative Care",
+    description:
+      "Forward-looking services connecting molecular insight, regenerative therapies, and patient-specific treatment strategies.",
+    departments: [
+      {
+        name: "Stem Cell Therapy",
+        description:
+          "Regenerative medicine capability focused on translational care and future therapeutic innovation.",
+        detail:
+          "The service will be developed with attention to evidence, ethics, laboratory readiness, and clinical governance.",
+        status: "Clinical Service",
+        category: "Regenerative",
+        icon: "dna",
+      },
+      {
+        name: "Precision Medicine",
+        description:
+          "Personalized treatment planning guided by molecular, clinical, and diagnostic insights.",
+        detail:
+          "Precision Medicine will connect diagnostics, data, and clinical decision-making to support targeted care pathways.",
+        status: "Clinical Service",
+        category: "Precision Care",
+        icon: "microscope",
+      },
+      {
+        name: "Microbiology",
+        description:
+          "Diagnostic microbiology support for infection detection, antimicrobial guidance, and hospital safety.",
+        detail:
+          "The department strengthens infection control, laboratory-backed diagnosis, and evidence-led treatment decisions.",
+        status: "Clinical Service",
+        category: "Diagnostics",
+        icon: "flask",
+      },
+    ],
+  },
+  {
+    title: "Maternal & Child Health",
+    description:
+      "Specialized care pathways for newborns, children, mothers, and family-centered clinical support.",
+    departments: [
+      {
+        name: "Neonatology",
+        description:
+          "Specialized newborn care focused on premature, low-birth-weight, and medically complex infants.",
+        detail:
+          "Neonatology will support high-dependency newborn care, monitoring, family counselling, and coordinated paediatric escalation.",
+        status: "Clinical Service",
+        category: "Newborn Care",
+        icon: "baby",
+      },
+      {
+        name: "Adult & Paediatric Cardiac Surgery",
+        description:
+          "Cardiac surgical services planned for adult and paediatric heart conditions.",
+        detail:
+          "This capability will require multidisciplinary coordination across cardiology, anaesthesia, intensive care, and rehabilitation.",
+        status: "Clinical Service",
+        category: "Cardiac Care",
+        icon: "heart-pulse",
+      },
+    ],
+  },
+  {
+    title: "Advanced Critical Specialties",
+    description:
+      "High-complexity clinical services for neurological, digestive, liver, and intensive care needs.",
+    departments: [
+      {
+        name: "Advanced Neurosurgery",
+        description:
+          "Specialized surgical care for complex brain, spine, and nervous system conditions.",
+        detail:
+          "Advanced Neurosurgery will support high-precision surgical planning, critical monitoring, and rehabilitation-linked recovery.",
+        status: "Clinical Service",
+        category: "Neurosciences",
+        icon: "brain",
+      },
+      {
+        name: "Gastroenterology",
+        description:
+          "Specialty care for digestive disorders supported by diagnostic and procedure-based services.",
+        detail:
+          "The department will connect medical gastroenterology, endoscopy-linked referrals, nutrition, and long-term disease management.",
+        status: "Clinical Service",
+        category: "Digestive Health",
+        icon: "pill",
+      },
+      {
+        name: "Hepatology",
+        description:
+          "Focused care for liver diseases, metabolic liver conditions, and complex hepatic disorders.",
+        detail:
+          "Hepatology will add specialty depth for liver diagnostics, chronic disease monitoring, and advanced referral pathways.",
+        status: "Clinical Service",
+        category: "Liver Care",
+        icon: "shield-plus",
+      },
+      {
+        name: "Critical Care",
+        description:
+          "Intensive care capability for patients requiring close monitoring and advanced life support.",
+        detail:
+          "Critical Care will support protocol-driven escalation, multidisciplinary rounds, and technology-assisted patient monitoring.",
+        status: "Clinical Service",
+        category: "Acute Care",
+        icon: "badge-plus",
+      },
+    ],
+  },
+];
 
+export default function ClinicalServicesPage() {
   return (
-    <section className="bg-white py-24">
-      <div className="max-w-7xl mx-auto px-6">
-
-        {/* Heading */}
-        <div className="text-center mb-20">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#1e3a8a]">
-            Upcoming Clinical Departments
-          </h1>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">
-            These departments are currently under planning and development and
-            will be operational in a phased manner.
-          </p>
-        </div>
-
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
-          {departments.map((dept, index) => (
-            <div
-              key={index}
-              className={`relative rounded-2xl p-6 ${dept.bg}
-                border border-black/5`}
-            >
-              {/* Upcoming badge */}
-              <span className="inline-block mb-4 text-xs font-semibold text-orange-600 bg-orange-100 px-3 py-1 rounded-full">
-                Upcoming
-              </span>
-
-              {/* Department name */}
-              <h3 className="text-base font-semibold text-[#0b1b3a] leading-snug">
-                {dept.name}
-              </h3>
-
-              {/* Right connector dot (LEGACY DETAIL) */}
-              <span
-                className={`hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full ${dept.dot}`}
-              />
-            </div>
-          ))}
-        </div>
-
-      </div>
-    </section>
+    <DepartmentsShowcase
+      eyebrow="Clinical Services"
+      title="Clinical Services"
+      intro="AAHII's clinical service roadmap brings together advanced medicine, surgical innovation, diagnostics, and patient-centered specialty care."
+      groups={groups}
+      stats={stats}
+    />
   );
 }

@@ -69,37 +69,34 @@ export default function NewsShareButtons({
       {links.map((item) => (
         <a
           aria-label={`Share on ${item.label}`}
-          className="inline-flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
           href={item.href}
           key={item.label}
           rel="noopener noreferrer"
           target="_blank"
         >
           <item.icon aria-hidden="true" size={18} />
+          <span>{item.label}</span>
         </a>
       ))}
       <button
         aria-label="Copy article link"
-        className="inline-flex size-10 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:border-blue-200 hover:text-blue-700"
+        className="inline-flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-700"
         onClick={copyLink}
         type="button"
       >
         {copied ? <Check aria-hidden="true" size={18} /> : <Copy aria-hidden="true" size={18} />}
+        <span>{copied ? "Copied" : "Copy Link"}</span>
       </button>
     </>
   );
 
   return (
-    <>
-      <aside className="fixed left-6 top-1/3 z-30 hidden flex-col gap-3 lg:flex">
-        {content}
-      </aside>
-
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.08)] backdrop-blur lg:hidden">
-        <div className="mx-auto flex max-w-md items-center justify-between gap-2">
-          {content}
-        </div>
-      </div>
-    </>
+    <div
+      aria-label="Share this article"
+      className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+    >
+      {content}
+    </div>
   );
 }

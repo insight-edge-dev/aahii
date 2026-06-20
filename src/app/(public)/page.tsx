@@ -10,7 +10,6 @@ import SyncedImageContent from "@/components/home/SyncedImageContent";
 import PressAndMedia from "@/components/home/PressAndMedia";
 import GovMarquee from "@/components/GovMarquee";
 import LatestNewsTicker from "@/components/latest-news-ticker";
-import FeaturedNewsSection from "@/components/home/FeaturedNewsSection";
 
 export const dynamic = "force-dynamic";
 
@@ -19,7 +18,6 @@ export default function Home() {
      <>
       <HeroSlider />
       <LatestNewsTicker fetchLatest items={[]} />
-      <FeaturedNewsSection />
       <CoreResearch />
       <IITStats />
       <IITHeroGallery />
