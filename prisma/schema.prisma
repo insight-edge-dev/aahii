@@ -77,6 +77,12 @@ enum NewsType {
   INTERNAL
 }
 
+enum NewsStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
 enum TenderStatus {
   ACTIVE
   CLOSED
@@ -245,6 +251,8 @@ model News {
 
   source String
 
+  category String?
+
   title String
 
   excerpt String @db.Text
@@ -257,17 +265,59 @@ model News {
 
   publicId String?
 
+  featuredImageUrl String?
+
+  featuredImagePublicId String?
+
   publishedAt DateTime
 
   featured Boolean @default(false)
+
+  status NewsStatus @default(PUBLISHED)
 
   type NewsType @default(PRESS)
 
   isActive Boolean @default(true)
 
+  metaTitle String?
+
+  metaDescription String? @db.Text
+
+  facebookCaption String? @db.Text
+
+  linkedinCaption String? @db.Text
+
+  twitterCaption String? @db.Text
+
+  socialCaption String? @db.Text
+
+  socialHashtags String?
+
   createdAt DateTime @default(now())
 
   updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([featured])
+  @@index([publishedAt])
+  @@index([category])
+}
+
+model Announcement {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  category    String
+  link        String?
+  priority    Boolean  @default(false)
+  isActive    Boolean  @default(true)
+  publishedAt DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([publishedAt])
+  @@index([priority])
+  @@index([isActive])
 }
 
 model Announcement {

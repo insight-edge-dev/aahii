@@ -3,7 +3,8 @@ import { revalidatePath } from "next/cache";
 
 import {
   createNews,
-  getAllNews
+  getAdminNews,
+  type NewsStatus
 } from "@/lib/features/news/services/news.service";
 
 import {
@@ -16,6 +17,22 @@ function revalidateCmsPages() {
   revalidatePath("/");
   revalidatePath("/news");
   revalidatePath("/events");
+}
+
+type AdminNewsStatusFilter = NewsStatus | "ALL";
+
+const adminNewsStatuses = new Set<AdminNewsStatusFilter>([
+  "DRAFT",
+  "PUBLISHED",
+  "ARCHIVED",
+  "ALL",
+]);
+
+function parseAdminStatus(value: string | null): AdminNewsStatusFilter | undefined | null {
+  if (!value) return undefined;
+  return adminNewsStatuses.has(value as AdminNewsStatusFilter)
+    ? (value as AdminNewsStatusFilter)
+    : null;
 }
 
 /* ================= CREATE ================= */
@@ -67,7 +84,7 @@ export async function POST(req:NextRequest){
     }
 
     return NextResponse.json(
-      { message:"Failed" },
+      { success:false,message:"Failed" },
       { status:500 }
     );
 
@@ -83,13 +100,26 @@ export async function GET(req:NextRequest){
 
     await requireAdmin();
 
-    const page=
-    Number(
-      req.nextUrl.searchParams.get("page")
-    ) || 1;
+    const page = Number(req.nextUrl.searchParams.get("page")) || 1;
+    const limit = Number(req.nextUrl.searchParams.get("limit")) || 10;
+    const search = req.nextUrl.searchParams.get("search") || undefined;
+    const category = req.nextUrl.searchParams.get("category") || undefined;
+    const status = parseAdminStatus(req.nextUrl.searchParams.get("status"));
 
-    const data=
-    await getAllNews(page,20);
+    if(status === null){
+      return NextResponse.json(
+        { success:false,message:"Invalid status filter" },
+        { status:400 }
+      );
+    }
+
+    const data = await getAdminNews({
+      page,
+      limit,
+      search,
+      category,
+      status,
+    });
 
     return NextResponse.json(data);
 
@@ -119,7 +149,7 @@ export async function GET(req:NextRequest){
     }
 
     return NextResponse.json(
-      { message:"Failed" },
+      { success:false,message:"Failed" },
       { status:500 }
     );
 

@@ -52,17 +52,19 @@ export const primaryNavigation: NavItem[] = [
     children: [
       { label: "News", href: "/news" },
       { label: "Gallery", href: "/gallery" },
-      { label: "Videos", href: "/videos" },
       { label: "Employee Engagement", href: "/employee-engagement" },
     ],
   },
 
   { label: "Vendors", href: "/vendor-registration" },
-  
+
   {
-  label: "Employee",
-  href: "https://loginhrms.spineng.in/Home"
-}
+    label: "Login",
+    children: [
+      { label: "Employee Login", href: "https://loginhrms.spineng.in/Home" },
+      { label: "Admin Login", href: "/login" },
+    ],
+  },
 ];
 
 

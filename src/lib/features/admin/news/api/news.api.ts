@@ -1,35 +1,46 @@
-import { api } from '@/lib/axios'
+import { api } from "@/lib/axios";
 
-// ✅ GET LIST
-export const getNews = async (page = 1, limit = 10) => {
-  const res = await api.get(`/admin/news?page=${page}&limit=${limit}`)
-  return res.data
-}
+export type AdminNewsQuery = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+  status?: string;
+};
 
-// ✅ CREATE
+export const getNews = async (query: AdminNewsQuery = {}) => {
+  const params = new URLSearchParams();
+
+  Object.entries(query).forEach(([key, value]) => {
+    if (value !== undefined && value !== "" && value !== "ALL") {
+      params.set(key, String(value));
+    }
+  });
+
+  const res = await api.get(`/admin/news?${params.toString()}`);
+  return res.data;
+};
+
 export const createNews = async (data: FormData) => {
-  const res = await api.post('/admin/news', data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
-  return res.data
-}
+  const res = await api.post("/admin/news", data, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
 
-// ✅ DELETE
 export const deleteNews = async (id: string) => {
-  const res = await api.delete(`admin/news/${id}`)
-  return res.data
-}
+  const res = await api.delete(`/admin/news/${id}`);
+  return res.data;
+};
 
-// ✅ GET BY ID
 export const getNewsById = async (id: string) => {
-  const res = await api.get(`/admin/news/${id}`)
-  return res.data
-}
+  const res = await api.get(`/admin/news/${id}`);
+  return res.data;
+};
 
-// ✅ UPDATE
 export const updateNews = async (id: string, data: FormData) => {
   const res = await api.put(`/admin/news/${id}`, data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  })
-  return res.data
-}
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data;
+};
