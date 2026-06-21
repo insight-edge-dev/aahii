@@ -1,16 +1,18 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from "next/image";
 import { LayoutDashboard, Users, Newspaper, Calendar, LogOut, FileText, Megaphone, Briefcase, type LucideIcon } from 'lucide-react'
+import LogoutTransition from './LogoutTransition';
 
 export const Sidebar = () => {
   const pathname = usePathname();
-  const router = useRouter();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const handleLogout = () => {
-    router.push("/admin/logout");
+    setIsLoggingOut(true);
   };
 
   return (
@@ -69,13 +71,15 @@ export const Sidebar = () => {
 
           <button
             onClick={handleLogout}
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-transparent px-3 py-2.5 text-sm font-medium text-slate-500 transition-all duration-200 hover:-translate-y-0.5 hover:border-red-100 hover:bg-red-50 hover:text-red-600 hover:shadow-sm"
+            disabled={isLoggingOut}
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-transparent px-3 py-2.5 text-sm font-medium text-slate-500 transition-all duration-200 hover:-translate-y-0.5 hover:border-red-100 hover:bg-red-50 hover:text-red-600 hover:shadow-sm disabled:pointer-events-none disabled:opacity-60"
           >
             <LogOut size={18} />
             Logout
           </button>
         </div>
 
+        {isLoggingOut && <LogoutTransition />}
       </div>
     </aside>
   );

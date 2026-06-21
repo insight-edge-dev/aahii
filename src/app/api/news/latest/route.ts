@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { pressData } from "@/content/press";
-import { prisma } from "@/lib/prisma";
+import { getLatestNews } from "@/lib/features/news/services/news.service";
 
 function fallbackSlug(title: string, id: number) {
   const slug = title
@@ -16,24 +16,7 @@ function fallbackSlug(title: string, id: number) {
 
 export async function GET() {
   try {
-    const news = await prisma.news.findMany({
-      where: {
-        isActive: true,
-      },
-      orderBy: {
-        publishedAt: "desc",
-      },
-      select: {
-        id: true,
-        title: true,
-        slug: true,
-        source: true,
-        type: true,
-        publishedAt: true,
-        featured: true,
-      },
-      take: 10,
-    });
+    const news = await getLatestNews(10);
 
     if (news.length === 0) {
       return NextResponse.json({
@@ -53,7 +36,7 @@ export async function GET() {
         id: item.id,
         title: item.title,
         slug: item.slug,
-        category: item.source || item.type,
+        category: item.category || item.source || item.type,
         publishedAt: item.publishedAt.toISOString().slice(0, 10),
         priority: item.featured,
       })),
@@ -66,7 +49,7 @@ export async function GET() {
         items: [],
         message: "Failed to load latest news",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

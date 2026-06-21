@@ -35,12 +35,13 @@ export default function HeroSlider() {
             alt={`Hero slide ${index + 1}`}
             fill
             priority={index === 0}
+            quality={100}
             sizes="100vw"
-            className="object-cover object-center sm:object-[center_top]"
+            className="object-cover object-center sm:object-[center_top] contrast-[1.08] saturate-[1.1]"
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/35 sm:bg-black/25" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/12 to-black/6 sm:from-black/25 sm:via-black/10 sm:to-black/5" />
         </div>
       ))}
 
@@ -58,6 +59,7 @@ export default function HeroSlider() {
               text-white font-bold leading-snug
               text-xl sm:text-4xl lg:text-5xl
               max-w-4xl mx-auto
+              drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]
             "
           >
             Advancing Healthcare Through
