@@ -2,13 +2,19 @@ import jwt, { JwtPayload as DefaultJwtPayload } from "jsonwebtoken";
 
 /* ================= ENV ================= */
 
-const JWT_SECRET = process.env.JWT_SECRET;
+function getJwtSecret():string{
 
-if(!JWT_SECRET){
+  const JWT_SECRET = process.env.JWT_SECRET;
 
-  throw new Error(
-    "JWT_SECRET environment variable missing"
-  );
+  if(!JWT_SECRET){
+
+    throw new Error(
+      "JWT_SECRET environment variable missing"
+    );
+
+  }
+
+  return JWT_SECRET;
 
 }
 
@@ -36,7 +42,7 @@ export function signToken(
 
     payload,
 
-    JWT_SECRET as string,
+    getJwtSecret(),
 
     {
 
@@ -65,7 +71,7 @@ export function verifyToken(
 
       token,
 
-      JWT_SECRET as string,
+      getJwtSecret(),
 
       {
 
