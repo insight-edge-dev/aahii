@@ -117,6 +117,20 @@ export default function MainNav() {
     };
   }, [mobileOpen]);
 
+  /* close mobile menu on Escape (keyboard a11y) */
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        closeMenu();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
   const isActive = (href?: string) => {
     if (!href) return false;
     if (href === "/") return pathname === "/";
@@ -127,19 +141,20 @@ export default function MainNav() {
     <>
       {/* ================= BRANDING BAR ================= */}
       {/* Sticky ONLY on mobile */}
-      <div className="sticky top-0 z-50 bg-white md:static">
+      <div className="sticky top-0 z-50 bg-white xl:static">
         <BrandingBar onOpenMenu={openMenu} />
       </div>
 
       {/* ================= DESKTOP NAV (STICKY) ================= */}
-      <nav className="hidden md:block sticky top-0 z-40 bg-white border-t border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-6">
-          <ul className="flex items-center justify-center gap-10 h-14 text-sm font-medium">
+      <nav className="hidden xl:block sticky top-0 z-40 bg-white border-t border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <ul className="flex items-center justify-center gap-0.5 lg:gap-1 h-16 text-sm font-medium">
             {primaryNavigation.map((item, index) => {
               const hasChildren = !!item.children?.length;
               const isDropdownOnly = hasChildren && (!item.href || item.disabled);
               const isOpen = desktopOpenIndex === index;
               const dropdownId = `desktop-nav-dropdown-${index}`;
+              const isLastItem = index === primaryNavigation.length - 1;
 
               return (
                 <li
@@ -161,7 +176,7 @@ export default function MainNav() {
                       aria-haspopup="menu"
                       aria-controls={dropdownId}
                       className={clsx(
-                        "flex items-center gap-2 rounded-md px-2.5 py-2 whitespace-nowrap transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
+                        "flex items-center gap-1.5 rounded-md px-2.5 py-2.5 lg:px-3 whitespace-nowrap transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
                         isOpen
                           ? "bg-(--nav-blue) text-white font-semibold"
                           : "text-slate-700 group-hover:bg-(--nav-blue) group-hover:text-white",
@@ -170,7 +185,7 @@ export default function MainNav() {
                         setDesktopOpenIndex(index)
                       }
                     >
-                      <NavItemIcon label={item.label} />
+                      <NavItemIcon label={item.label} className="h-3.5 w-3.5" />
                       <span>{item.label}</span>
                       <ChevronDown
                         className={clsx(
@@ -183,13 +198,13 @@ export default function MainNav() {
                     <Link
                       href={item.href ?? "#"}
                       className={clsx(
-                        "flex items-center gap-2 py-2 px-2.5 rounded-md transition duration-200 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
+                        "flex items-center gap-1.5 py-2.5 px-2.5 lg:px-3 rounded-md transition duration-200 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
                         isActive(item.href)
                           ? "bg-(--nav-blue) text-white font-semibold"
                           : "text-slate-700 group-hover:bg-(--nav-blue) group-hover:text-white",
                       )}
                     >
-                      <NavItemIcon label={item.label} />
+                      <NavItemIcon label={item.label} className="h-3.5 w-3.5" />
                       <span>{item.label}</span>
 
                       {hasChildren && (
@@ -203,7 +218,8 @@ export default function MainNav() {
                       id={dropdownId}
                       role="menu"
                       className={clsx(
-                        "absolute left-0 top-full mt-2 min-w-60 rounded-xl border border-slate-100 bg-white p-3 shadow-xl transition-all duration-200 ease-out",
+                        "absolute top-full mt-3 min-w-60 rounded-xl border border-slate-100 bg-white p-3 shadow-xl ring-1 ring-black/5 transition-all duration-200 ease-out",
+                        isLastItem ? "right-0" : "left-0",
                         item.label === "Login" && "w-64",
                         isOpen
                           ? "visible translate-y-0 opacity-100"
@@ -222,7 +238,7 @@ export default function MainNav() {
                             href={child.href!}
                             role="menuitem"
                             className={clsx(
-                              "group/dropdownitem relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
+                              "group/dropdownitem relative flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
                               isActive(child.href)
                                 ? "bg-(--nav-blue) text-white font-medium"
                                 : "text-slate-700 hover:bg-blue-50 hover:text-(--nav-blue)",
@@ -250,47 +266,59 @@ export default function MainNav() {
       {/* ================= MOBILE MENU ================= */}
       <div
         className={clsx(
-          "fixed inset-0 z-50 md:hidden transition-opacity duration-200",
+          "fixed inset-0 z-50 xl:hidden transition-opacity duration-200",
           mobileOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none",
         )}
       >
-        <div onClick={closeMenu} className="absolute inset-0 bg-black/30" />
+        <div
+          onClick={closeMenu}
+          className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        />
 
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
           className={clsx(
-            "absolute left-0 right-0 top-0 bg-[#eaf1fb] shadow-lg",
+            "absolute right-0 top-0 flex h-full w-[88%] max-w-95 flex-col bg-[#eaf1fb] shadow-2xl",
             "transition-transform duration-300 ease-out",
-            mobileOpen ? "translate-y-0" : "-translate-y-3",
-            "max-h-screen",
+            mobileOpen ? "translate-x-0" : "translate-x-full",
           )}
         >
-          <div className="flex items-center justify-end px-5 h-14 bg-[#eaf1fb]">
-            <button onClick={closeMenu} aria-label="Close menu" className="p-2">
-              <X className="w-6 h-6 text-blue-700" />
+          <div className="flex items-center justify-between px-5 h-16 shrink-0 bg-[#eaf1fb]">
+            <span className="text-sm font-semibold uppercase tracking-[0.12em] text-blue-700">
+              Menu
+            </span>
+            <button
+              onClick={closeMenu}
+              aria-label="Close menu"
+              className="flex h-11 w-11 items-center justify-center rounded-lg text-blue-700 transition hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2"
+            >
+              <X className="w-6 h-6" />
             </button>
           </div>
 
-          <div className="h-px bg-slate-300/50" />
+          <div className="h-px bg-slate-300/50 shrink-0" />
 
-          <div className="overflow-y-auto overscroll-contain">
-            <ul className="px-5 py-4 space-y-2">
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            <ul className="px-4 py-3 space-y-1">
               {primaryNavigation.map((item, index) => {
                 const isOpen = openIndex === index;
                 const hasChildren = !!item.children?.length;
 
                 return (
                   <li key={item.label}>
-                    <div className="flex items-center justify-between py-4 font-semibold">
+                    <div className="flex items-center justify-between gap-1 font-semibold">
                       {item.href ? (
                         <Link
                           href={item.href}
                           className={clsx(
-                            "flex items-center gap-2 flex-1 transition-colors duration-200",
+                            "flex flex-1 items-center gap-3 rounded-lg px-2 py-3 min-h-11 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
                             isActive(item.href)
-                              ? "text-blue-700"
-                              : "text-slate-800",
+                              ? "bg-white text-blue-700"
+                              : "text-slate-800 hover:bg-white/60",
                           )}
                           onClick={closeMenu}
                         >
@@ -302,7 +330,7 @@ export default function MainNav() {
                           type="button"
                           aria-expanded={hasChildren ? isOpen : undefined}
                           aria-haspopup={hasChildren ? "menu" : undefined}
-                          className="flex flex-1 items-center gap-2 text-left text-slate-800 transition-colors duration-200"
+                          className="flex flex-1 items-center gap-3 rounded-lg px-2 py-3 min-h-11 text-left text-slate-800 transition-colors duration-200 hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2"
                           onClick={() => {
                             if (hasChildren) {
                               setOpenIndex(isOpen ? null : index);
@@ -319,6 +347,7 @@ export default function MainNav() {
                           type="button"
                           aria-label={`${isOpen ? "Collapse" : "Expand"} ${item.label}`}
                           aria-expanded={isOpen}
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-slate-500 transition hover:bg-white/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2"
                           onClick={(e) => {
                             e.stopPropagation();
                             setOpenIndex(isOpen ? null : index);
@@ -326,7 +355,7 @@ export default function MainNav() {
                         >
                           <ChevronDown
                             className={clsx(
-                              "w-5 h-5 transition-transform",
+                              "w-5 h-5 transition-transform duration-200",
                               isOpen && "rotate-180",
                             )}
                           />
@@ -337,11 +366,11 @@ export default function MainNav() {
                     {hasChildren && (
                       <div
                         className={clsx(
-                          "overflow-hidden transition-all duration-300",
+                          "overflow-hidden transition-all duration-300 ease-in-out",
                           isOpen ? "max-h-96" : "max-h-0",
                         )}
                       >
-                        <ul className="ml-3 mt-2 space-y-1 rounded-xl bg-white/45 px-3 py-3">
+                        <ul className="ml-3 mt-1 mb-2 space-y-1 rounded-xl bg-white/45 px-3 py-3">
                           <li
                             aria-hidden="true"
                             className="px-2 pb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500"
@@ -353,7 +382,7 @@ export default function MainNav() {
                               <Link
                                 href={child.href!}
                                 className={clsx(
-                                  "group/mobileitem relative flex items-center gap-3 rounded-lg px-2 py-2 text-sm transition-colors duration-200",
+                                  "group/mobileitem relative flex items-center gap-3 rounded-lg px-3 py-3 min-h-11 text-sm transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--nav-blue) focus-visible:ring-offset-2",
                                   isActive(child.href)
                                     ? "bg-white text-blue-700 font-medium"
                                     : "text-slate-700 hover:bg-white hover:text-blue-700",

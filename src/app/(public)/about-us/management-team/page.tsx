@@ -70,7 +70,7 @@ const consultants: TeamMember[] = [
     linkedin: "#",
   },
   {
-    name: "Torgam Jagat Singh",
+    name: " Mr. Tongbram Jagat Singh",
     role: "Consultant",
     image: "/about/management-team/Tongbram_Jagat_Singh.webp",
     linkedin: "#",
