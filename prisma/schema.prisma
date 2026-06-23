@@ -320,6 +320,8 @@ model Announcement {
   @@index([isActive])
 }
 
+
+
 model Event {
   id            String   @id @default(uuid())
   title         String
