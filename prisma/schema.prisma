@@ -321,7 +321,6 @@ model Announcement {
 }
 
 
-
 model Event {
   id            String   @id @default(uuid())
   title         String
