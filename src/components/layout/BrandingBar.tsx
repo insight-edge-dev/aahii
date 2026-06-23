@@ -9,7 +9,7 @@ export default function BrandingBar({
   return (
 <div className="bg-white border-b border-slate-200/60">
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="flex items-center justify-between py-3 sm:py-4">
+    <div className="flex items-center justify-between gap-3 min-h-18 py-2.5 sm:min-h-20 sm:py-4">
 
       {/* LEFT SECTION */}
       <div className="flex items-center gap-3 sm:gap-5 min-w-0">
@@ -24,7 +24,7 @@ export default function BrandingBar({
   height={90}
   priority
   className="
-    w-14 h-14
+    w-12 h-12
     sm:w-16 sm:h-16
     md:w-20 md:h-20
     object-contain
@@ -37,41 +37,42 @@ export default function BrandingBar({
         {/* Text Block */}
         <div className="min-w-0">
           <h1 className="
-            text-[8px]
+            text-[11px]
             sm:text-base
             md:text-lg
             lg:text-lg
             font-bold
             text-blue-900
-            leading-snug
+            leading-tight
             tracking-tight
           ">
             Assam Advanced Healthcare Innovation Institute (AAHII)
           </h1>
 
-          <p className="text-[6px] sm:text-xs italic font-semibold text-blue-500">
+          <p className="text-[9px] sm:text-xs italic font-semibold text-blue-500 mt-0.5">
             by
           </p>
 
           <p className="
-            text-[8px]
+            text-[10px]
             sm:text-sm
             md:text-base
             font-semibold
             text-slate-800
-            leading-snug
+            leading-tight
+            mt-0.5
           ">
             Assam Government IIT-G Healthcare Foundation (AGIHF)
           </p>
 
-          <p className="hidden sm:block text-[11px] text-red-600 mt-0.5">
+          <p className="hidden sm:block text-[11px] text-red-600 mt-1">
             A joint venture between Govt. of Assam & IIT-G
           </p>
         </div>
       </div>
 
       {/* RIGHT SECTION */}
-      <div className="flex items-center gap-3 sm:gap-5 flex-shrink-0">
+      <div className="flex items-center gap-2.5 sm:gap-5 shrink-0">
 
         {/* Assam Govt Logo */}
         <Image
@@ -79,7 +80,7 @@ export default function BrandingBar({
           alt="Government of Assam logo"
           width={60}
           height={60}
-          className="w-8 h-8 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain"
+          className="w-9 h-9 sm:w-12 sm:h-12 md:w-14 md:h-14 object-contain self-center"
         />
 
         {/* IITG Logo (Desktop Only) */}
@@ -97,16 +98,22 @@ export default function BrandingBar({
         <button
           onClick={onOpenMenu}
           className="
-            md:hidden
-            p-2
+            xl:hidden
+            flex items-center justify-center
+            h-11 w-11
             rounded-lg
+            text-slate-700
             hover:bg-slate-100
             active:scale-95
             transition
+            focus-visible:outline-none
+            focus-visible:ring-2
+            focus-visible:ring-(--nav-blue)
+            focus-visible:ring-offset-2
           "
           aria-label="Open menu"
         >
-          <Menu className="w-5 h-5 text-slate-700" />
+          <Menu className="w-5 h-5" />
         </button>
 
       </div>

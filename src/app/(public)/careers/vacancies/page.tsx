@@ -97,16 +97,16 @@ export default function VacanciesPage() {
 
       {/* CURRENT OPPORTUNITIES */}
 
-      <section className="max-w-6xl mx-auto px-6 pb-20">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10 pb-14 sm:pb-20">
 
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8">
 
-          <h2 className="text-2xl font-semibold flex items-center gap-3">
-            <span className="w-1 h-6 bg-yellow-500"></span>
+          <h2 className="text-xl sm:text-2xl font-semibold flex items-center gap-3 text-slate-900">
+            <span className="w-1 h-6 bg-yellow-500 shrink-0"></span>
             Current Opportunities
           </h2>
 
-          <span className="text-yellow-500 text-sm uppercase tracking-wide">
+          <span className="inline-flex w-fit items-center rounded-full bg-yellow-50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-yellow-600">
             Open Positions
           </span>
 
@@ -118,7 +118,7 @@ export default function VacanciesPage() {
     </div>
   ) : (
 
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-5">
   {jobs.map((job, i) => (
     <motion.div
       key={job.id}
@@ -126,55 +126,50 @@ export default function VacanciesPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: i * 0.1 }}
-      className="relative border rounded-xl p-6 bg-gray-50 hover:shadow-lg transition"
+      className="relative rounded-2xl border border-gray-200 bg-gray-50 p-5 sm:p-6 transition hover:shadow-lg hover:border-gray-300"
     >
-      
-{/* 
-<div className="absolute top-2 right-2 z-10">
-  <div className="flex items-center gap-2 px-2.5 py-1 bg-white border border-gray-200 rounded-full shadow-sm">
-    
-    <span className="relative flex h-2 w-2">
-      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-      <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500"></span>
-    </span>
 
-    <span className="text-xs font-medium text-gray-600 whitespace-nowrap">
-      Extended Till 10th April
-    </span>
-  </div>
-</div>
-*/}
+      <div className="flex flex-wrap items-start gap-2 justify-between">
+        <h3 className="text-base sm:text-lg font-semibold text-slate-900 leading-snug">
+          {job.title}
+        </h3>
 
-      <h3 className="text-lg font-semibold">{job.title}</h3>
+        {job.status === "OPEN" && (
+          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-medium text-green-700">
+            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+            Open
+          </span>
+        )}
+      </div>
 
       {/* META */}
-      <div className="flex flex-wrap gap-6 text-sm text-gray-500 mt-2">
-        <span className="flex items-center gap-1">
-          <MapPin size={16} /> {job.location}
+      <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500 mt-3">
+        <span className="flex items-center gap-1.5">
+          <MapPin size={15} className="shrink-0" /> {job.location}
         </span>
 
-        <span className="flex items-center gap-1">
-          <Clock size={16} /> {job.employmentType}
+        <span className="flex items-center gap-1.5">
+          <Clock size={15} className="shrink-0" /> {job.employmentType}
         </span>
 
-        <span className="flex items-center gap-1">
-          <Building2 size={16} /> Dept: {job.department}
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+          <Building2 size={13} className="shrink-0" /> {job.department}
         </span>
 
-        <span className="flex items-center gap-1">
-          <Clock size={16} /> Posted: {formatDate(job.postedAt)}
+        <span className="flex items-center gap-1.5">
+          <Calendar size={15} className="shrink-0" /> Posted {formatDate(job.postedAt)}
         </span>
       </div>
 
-      <p className="mt-3 text-gray-600 max-w-3xl">
+      <p className="mt-3 text-sm sm:text-base text-gray-600 max-w-3xl">
         {job.description}
       </p>
 
       {/* ACTIONS */}
-      <div className="mt-5 flex gap-4 flex-wrap">
+      <div className="mt-5 flex flex-col sm:flex-row gap-3">
         <a
           href={`mailto:${job.applyEmail}`}
-          className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-5 py-2 rounded-lg text-sm font-medium transition"
+          className="inline-flex items-center justify-center gap-2 min-h-11 rounded-xl bg-yellow-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-yellow-600 hover:shadow"
         >
           <Mail size={16} />
           Apply via Email
@@ -184,7 +179,7 @@ export default function VacanciesPage() {
           <a
             href={job.advertisementUrl}
             target="_blank"
-            className="flex items-center gap-2 border px-5 py-2 rounded-lg text-sm hover:bg-gray-100 transition"
+            className="inline-flex items-center justify-center gap-2 min-h-11 rounded-xl border border-gray-300 bg-white px-5 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-gray-100"
           >
             <FileText size={16} />
             PDF Advt.
@@ -199,23 +194,54 @@ export default function VacanciesPage() {
       </section>
 
       {/* PREVIOUS VACANCIES */}
-      <section className="max-w-6xl mx-auto px-6 pb-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24">
 
         {/* Heading */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8">
 
-          <h2 className="text-2xl font-semibold flex items-center gap-3">
-            <span className="w-1 h-6 bg-yellow-500"></span>
+          <h2 className="text-xl sm:text-2xl font-semibold flex items-center gap-3 text-slate-900">
+            <span className="w-1 h-6 bg-yellow-500 shrink-0"></span>
             Previous Vacancies
           </h2>
 
-          <span className="text-sm text-gray-500 uppercase tracking-wide">
+          <span className="inline-flex w-fit items-center rounded-full bg-gray-100 px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-500">
             Closed Positions
           </span>
 
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-gray-200">
+        {/* Mobile: card list */}
+        <div className="space-y-3 md:hidden">
+          {previousVacancies.map((job) => (
+            <div
+              key={job.id}
+              className="rounded-xl border border-gray-200 bg-white p-4"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <p className="font-medium text-slate-800 leading-snug">
+                  {job.title}
+                </p>
+
+                <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-500">
+                  <XCircle size={12} />
+                  Closed
+                </span>
+              </div>
+
+              <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs text-gray-500">
+                <span className="flex items-center gap-1.5">
+                  <Building2 size={13} /> {job.department}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Calendar size={13} /> {formatDate(job.applicationDeadline)}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop: table */}
+        <div className="hidden md:block overflow-x-auto rounded-xl border border-gray-200">
 
           <table className="w-full text-sm">
 
@@ -253,7 +279,7 @@ export default function VacanciesPage() {
 <tbody className="divide-y">
   {previousVacancies.map((job) => (
     <tr key={job.id} className="hover:bg-gray-50 transition">
-      
+
       <td className="px-6 py-4 text-gray-600">
         {job.department}
       </td>
@@ -267,7 +293,7 @@ export default function VacanciesPage() {
       </td>
 
       <td className="px-6 py-4">
-        <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-100 text-red-600">
+        <span className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-full bg-red-50 text-red-500">
           <XCircle size={14} />
           Closed
         </span>
@@ -285,7 +311,7 @@ export default function VacanciesPage() {
 
       {/* APPLICATION INSTRUCTIONS */}
 
-      <section className="max-w-6xl mx-auto px-6 pb-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16 sm:pb-24">
 
         <motion.div
           className="grid md:grid-cols-2 overflow-hidden rounded-2xl bg-blue-900 text-white"
@@ -310,35 +336,35 @@ export default function VacanciesPage() {
           </div>
 
           {/* Content Side */}
-          <div className="p-10">
+          <div className="p-6 sm:p-10">
 
-            <h3 className="text-2xl font-semibold">
+            <h3 className="text-xl sm:text-2xl font-semibold">
               Application Instructions
             </h3>
 
-            <p className="mt-3 text-blue-100 leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base text-blue-100 leading-relaxed">
               Interested candidates should submit their updated CV along with
               a cover letter highlighting relevant experience and research
               interests.
             </p>
 
             {/* Email Card */}
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-lg bg-blue-800 p-4">
+            <div className="mt-6 flex flex-col sm:flex-row sm:flex-wrap sm:items-center sm:justify-between gap-4 rounded-lg bg-blue-800 p-4">
 
               <div>
                 <p className="text-xs text-gray-300">
                   SUBMISSION EMAIL
                 </p>
 
-                <p className="mt-1 flex items-center gap-2 text-lg font-semibold">
-                  <Mail size={18} />
+                <p className="mt-1 flex items-center gap-2 text-base sm:text-lg font-semibold break-all">
+                  <Mail size={18} className="shrink-0" />
                   careers@agihf.org
                 </p>
               </div>
 
               <button
                 onClick={copyEmail}
-                className="flex items-center gap-2 rounded-md bg-gray-200 px-4 py-2 text-sm text-black transition hover:bg-white"
+                className="flex items-center justify-center gap-2 min-h-11 rounded-md bg-gray-200 px-4 py-2 text-sm text-black transition hover:bg-white"
               >
                 <Copy size={16} />
                 Copy Email Address
