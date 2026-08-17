@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from "next/image";
-import { LayoutDashboard, Users, Newspaper, Calendar, LogOut, FileText, Megaphone, Briefcase, type LucideIcon } from 'lucide-react'
+import { LayoutDashboard, Users, Newspaper, Calendar, Images, LogOut, FileText, Megaphone, Briefcase, type LucideIcon } from 'lucide-react'
 import LogoutTransition from './LogoutTransition';
 
 export const Sidebar = () => {
@@ -52,6 +52,7 @@ export const Sidebar = () => {
           <SidebarItem icon={Megaphone} label="Announcements" href="/admin/announcements" pathname={pathname} />
           <SidebarItem icon={Briefcase} label="Vacancies" href="/admin/vacancies" pathname={pathname} />
           <SidebarItem icon={Calendar} label="Events" href="/admin/events" pathname={pathname} />
+          <SidebarItem icon={Images} label="Infrastructure" href="/admin/infrastructure" pathname={pathname} />
         </nav>
 
         <div className="mt-6 rounded-2xl border border-blue-100/80 bg-white/80 p-3 shadow-sm backdrop-blur">
