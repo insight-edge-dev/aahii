@@ -100,6 +100,11 @@ enum VacancyStatus {
   CLOSED
 }
 
+enum InfrastructureCategory {
+  ON_SITE_DEVELOPMENT
+  CONCEPT_PLAN
+}
+
 //////////////////// ADMIN MODAL ////////////////////
 
 model Admin {
@@ -462,4 +467,20 @@ model Vacancy {
   @@index([status])
   @@index([postedAt])
   @@index([applicationDeadline])
+}
+
+model InfrastructureImage {
+  id         String                 @id @default(uuid())
+  category   InfrastructureCategory
+  imageUrl   String
+  publicId   String?
+  caption    String?
+  altText    String?
+  sortOrder  Int                    @default(0)
+  isFeatured Boolean                @default(false)
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+
+  @@index([category, sortOrder])
+  @@index([category, isFeatured])
 }
