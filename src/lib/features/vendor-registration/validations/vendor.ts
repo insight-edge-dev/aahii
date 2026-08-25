@@ -67,7 +67,7 @@ const registeredAddressSchema = z.object({
     message: "Address must be at least 3 characters",
   }).trim(),
 
-  pin: z.string().regex(/^[1-9][0-9]{5}$/, {
+  pin: z.string().trim().regex(/^[1-9][0-9]{5}$/, {
     message: "PIN code must be a valid 6-digit number",
   }),
 
@@ -87,7 +87,7 @@ const communicationAddressSchema = z.discriminatedUnion(
       address: z.string().min(3, {
         message: "Communication address is required",
       }),
-      pin: z.string().regex(/^[1-9][0-9]{5}$/, {
+      pin: z.string().trim().regex(/^[1-9][0-9]{5}$/, {
         message: "PIN code must be a valid 6-digit number",
       }),
       contactNumber: z.string().regex(/^[6-9]\d{9}$/, {
@@ -226,7 +226,7 @@ export const vendorSchema = z.object({
 
 })
 .superRefine((data, ctx) => {
-  const corporateTypes = ["private_ltd", "public_ltd", "llp"];
+  const corporateTypes = ["private_ltd", "public_ltd"];
 
   if (
     corporateTypes.includes(data.businessDetails.establishmentType) &&
