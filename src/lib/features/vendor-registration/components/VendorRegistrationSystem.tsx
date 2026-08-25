@@ -136,6 +136,11 @@ export default function VendorRegistrationSystem() {
       // We deep clone the state to mold it exactly into what the backend expects
       const payload: any = JSON.parse(JSON.stringify(form));
 
+      payload.registeredAddress.pin = payload.registeredAddress.pin.trim();
+      if (!payload.communicationAddress.sameAsRegistered) {
+        payload.communicationAddress.pin = payload.communicationAddress.pin.trim();
+      }
+
       // 1. Format Business Arrays
       payload.businessDetails.keyProducts = form.businessDetails.keyProductsStr
         .split(',').map((s) => s.trim()).filter(Boolean);
@@ -292,6 +297,9 @@ function VendorDetailsSection({ form, setForm, setFiles, setFileErrors }: any) {
     { value: "authorised_dealer", label: "Authorised Dealer" },
     { value: "service_provider", label: "Service Provider" },
   ];
+  const isCinRequired = ["private_ltd", "public_ltd"].includes(
+    form.businessDetails.establishmentType,
+  );
 
   const handleTopLevelChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -412,7 +420,7 @@ function VendorDetailsSection({ form, setForm, setFiles, setFileErrors }: any) {
             <label className={labelStyles}>PIN Code <span className="text-red-500">*</span></label>
             <div className="relative">
               <Map className="w-4 h-4 text-gray-400 absolute left-3 top-3.5" />
-              <input required value={form.registeredAddress.pin} onChange={(e) => handleNestedChange("registeredAddress", "pin", e.target.value)} className={`${inputStyles} pl-10`} placeholder="e.g. 110001" />
+              <input required inputMode="numeric" maxLength={6} pattern="[1-9][0-9]{5}" title="Enter a valid 6-digit PIN code" value={form.registeredAddress.pin} onChange={(e) => handleNestedChange("registeredAddress", "pin", e.target.value)} className={`${inputStyles} pl-10`} placeholder="e.g. 110001" />
             </div>
           </div>
           <div className="md:col-span-2">
@@ -444,7 +452,7 @@ function VendorDetailsSection({ form, setForm, setFiles, setFileErrors }: any) {
             </div>
             <div>
               <label className={labelStyles}>PIN Code <span className="text-red-500">*</span></label>
-              <input required value={form.communicationAddress.pin} onChange={(e) => handleNestedChange("communicationAddress", "pin", e.target.value)} className={inputStyles} />
+              <input required inputMode="numeric" maxLength={6} pattern="[1-9][0-9]{5}" title="Enter a valid 6-digit PIN code" value={form.communicationAddress.pin} onChange={(e) => handleNestedChange("communicationAddress", "pin", e.target.value)} className={inputStyles} />
             </div>
             <div className="md:col-span-2">
               <label className={labelStyles}>Contact Number <span className="text-red-500">*</span></label>
@@ -467,8 +475,8 @@ function VendorDetailsSection({ form, setForm, setFiles, setFileErrors }: any) {
             <input required pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" maxLength={10} title="Valid 10-character PAN (e.g., ABCDE1234F)" value={form.taxDetails.panNumber} onChange={(e) => handleNestedChange("taxDetails", "panNumber", e.target.value.toUpperCase())} className={`${inputStyles} uppercase font-medium`} placeholder="ABCDE1234F" />
           </div>
           <div>
-            <label className={labelStyles}>CIN Number (Optional)</label>
-            <input value={form.taxDetails.cinNumber} onChange={(e) => handleNestedChange("taxDetails", "cinNumber", e.target.value.toUpperCase())} className={`${inputStyles} uppercase font-medium`} placeholder="L12345AA1234PLC123456" />
+            <label className={labelStyles}>CIN Number {isCinRequired ? <span className="text-red-500">*</span> : "(Optional)"}</label>
+            <input required={isCinRequired} value={form.taxDetails.cinNumber} onChange={(e) => handleNestedChange("taxDetails", "cinNumber", e.target.value.toUpperCase())} className={`${inputStyles} uppercase font-medium`} placeholder="L12345AA1234PLC123456" />
           </div>
         </div>
 
@@ -549,7 +557,7 @@ function VendorDetailsSection({ form, setForm, setFiles, setFileErrors }: any) {
               <option value="private_ltd">Private Limited</option>
               <option value="public_ltd">Public Limited</option>
               <option value="llp">LLP</option>
-              <option value="others">Others</option>
+              <option value="other">Others</option>
             </select>
           </div>
           <div className="md:col-span-2">
