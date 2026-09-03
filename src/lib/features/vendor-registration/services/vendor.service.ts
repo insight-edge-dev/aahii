@@ -642,6 +642,77 @@ export async function rejectVendor(vendorId: string, reason: string) {
 }
 
 /* ===================================================== */
+/* ================= DELETE VENDOR ===================== */
+/* ===================================================== */
+
+type CloudinaryResourceType = "image" | "raw" | "video";
+
+function getCloudinaryResourceType(fileUrl: string): CloudinaryResourceType {
+  const match = fileUrl.match(/\/(image|raw|video)\/upload\//);
+  return (match?.[1] as CloudinaryResourceType | undefined) ?? "image";
+}
+
+export async function deleteVendor(vendorId: string) {
+  try {
+    const vendor = await prisma.vendor.findUnique({
+      where: { id: vendorId },
+      select: {
+        id: true,
+        documents: {
+          select: {
+            publicId: true,
+            fileUrl: true,
+          },
+        },
+      },
+    });
+
+    if (!vendor) {
+      return { success: false, status: 404, message: "Vendor not found" };
+    }
+
+    // All Vendor relations use onDelete: Cascade, so this removes the
+    // registration and its relational data in one database operation.
+    await prisma.vendor.delete({ where: { id: vendorId } });
+
+    const cleanupResults = await Promise.allSettled(
+      vendor.documents.map((document) =>
+        cloudinary.uploader.destroy(document.publicId, {
+          invalidate: true,
+          resource_type: getCloudinaryResourceType(document.fileUrl),
+        }),
+      ),
+    );
+
+    cleanupResults.forEach((result, index) => {
+      if (result.status === "rejected") {
+        console.error("Delete Vendor Cloudinary Cleanup Error:", {
+          vendorId,
+          publicId: vendor.documents[index].publicId,
+          error: result.reason,
+        });
+      }
+    });
+
+    return { success: true, status: 200 };
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return { success: false, status: 404, message: "Vendor not found" };
+    }
+
+    console.error("Delete Vendor Error:", error);
+    return {
+      success: false,
+      status: 500,
+      message: "Unable to delete vendor",
+    };
+  }
+}
+
+/* ===================================================== */
 /* ================= FETCH ============================= */
 /* ===================================================== */
 

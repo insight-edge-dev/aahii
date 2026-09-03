@@ -9,13 +9,16 @@ import {
   Globe,
   Loader2,
   Mail,
+  Trash2,
   X,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
   approveVendor,
+  deleteVendor,
   rejectVendor,
 } from "@/lib/features/admin/news/api/vendor.api";
+import DeleteVendorModal from "@/lib/features/admin/components/vendorcompo/DeleteVendorModal";
 import RejectVendorModal from "@/lib/features/admin/components/vendorcompo/RejectVendorModal";
 import toast from "react-hot-toast";
 
@@ -36,7 +39,7 @@ type VendorListItem = {
 
 type VendorRowProps = {
   vendor: VendorListItem;
-  refresh: () => void;
+  refresh: () => void | Promise<void>;
 };
 
 function formatDate(value?: string | Date) {
@@ -56,7 +59,10 @@ function formatDate(value?: string | Date) {
 }
 
 export default function VendorRow({ vendor, refresh }: VendorRowProps) {
-  const [loading, setLoading] = useState<"approve" | "reject" | null>(null);
+  const [loading, setLoading] = useState<
+    "approve" | "reject" | "delete" | null
+  >(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const router = useRouter();
 
@@ -179,6 +185,16 @@ export default function VendorRow({ vendor, refresh }: VendorRowProps) {
           >
             <Eye size={18} />
           </button>
+
+          <button
+            aria-label={`Delete ${vendor.entityName || "vendor"}`}
+            className="rounded-lg p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600 disabled:cursor-not-allowed disabled:opacity-50"
+            disabled={loading !== null}
+            onClick={() => setShowDeleteModal(true)}
+            type="button"
+          >
+            <Trash2 size={18} />
+          </button>
         </div>
       </div>
 
@@ -195,6 +211,31 @@ export default function VendorRow({ vendor, refresh }: VendorRowProps) {
             setShowRejectModal(false);
           } catch {
             toast.error("Something went wrong");
+          } finally {
+            setLoading(null);
+          }
+        }}
+      />
+
+      <DeleteVendorModal
+        isOpen={showDeleteModal}
+        vendorName={vendor.entityName || "this vendor"}
+        loading={loading === "delete"}
+        onClose={() => {
+          if (loading !== "delete") setShowDeleteModal(false);
+        }}
+        onConfirm={async () => {
+          if (loading !== null) return;
+
+          try {
+            setLoading("delete");
+            await deleteVendor(vendor.id);
+            setShowDeleteModal(false);
+            toast.success("Vendor deleted successfully.");
+            await refresh();
+          } catch (error) {
+            console.error("Delete vendor request failed:", error);
+            toast.error("Unable to delete vendor. Please try again.");
           } finally {
             setLoading(null);
           }
