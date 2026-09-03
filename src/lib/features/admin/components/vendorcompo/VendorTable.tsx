@@ -12,7 +12,7 @@ type VendorListItem = {
 type VendorTableProps = {
   vendors: VendorListItem[];
   loading: boolean;
-  refresh: () => void;
+  refresh: () => void | Promise<void>;
 };
 
 export default function VendorTable({ vendors, loading, refresh }: VendorTableProps) {

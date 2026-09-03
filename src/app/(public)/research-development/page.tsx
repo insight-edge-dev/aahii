@@ -10,6 +10,7 @@ import {
 import { motion, type Variants, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import ImageCarousel from "@/components/ImageCarousel";
+import ProjectResearchTeams from "@/components/research/ProjectResearchTeams";
 
 
 
@@ -45,8 +46,9 @@ const fadeUp: Variants = {
 export default function ResearchDevelopmentPage() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0);
   return (
-    <section className="bg-white py-20">
-      <div className="max-w-7xl mx-auto px-6">
+    <>
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-6">
         {/* ===== HERO ===== */}
         <motion.div
           variants={fadeUp}
@@ -340,7 +342,9 @@ export default function ResearchDevelopmentPage() {
             })()}
           </div>
         </motion.section>
-      </div>
-    </section>
+        </div>
+      </section>
+      <ProjectResearchTeams />
+    </>
   );
 }
