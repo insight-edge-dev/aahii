@@ -16,3 +16,7 @@ export const rejectVendor = async (vendorId: string, reason: string) => {
     reason,
   });
 };
+
+export const deleteVendor = async (vendorId: string) => {
+  return api.delete(`/admin/vendors/${vendorId}`);
+};
