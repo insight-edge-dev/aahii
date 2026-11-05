@@ -8,9 +8,9 @@
 .backgroundCampusImage { object-fit: cover; object-position: center; }
 .header { text-align: center; }
 .eyebrow { margin: 0; color: #328cf6; font-size: 12px; font-weight: 600; letter-spacing: .27em; line-height: 1.4; }
-.heading { margin: 7px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(56px, 4.2vw, 64px); font-weight: 400; line-height: 1.03; letter-spacing: -.03em; }
+.heading { margin: 7px 0 0; font-size: clamp(52px, 4.2vw, 64px); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; }
 .underline { display: block; width: 71px; height: 2px; margin: 9px auto 0; background: #4b9aff; }
-.intro { max-width: 660px; margin: 17px auto 0; color: #4c5362; font-size: 16px; font-weight: 400; line-height: 1.55; }
+.intro { max-width: 660px; margin: 17px auto 0; color: #4c5362; font-size: 17px; font-weight: 400; line-height: 1.55; letter-spacing: normal; }
 .stage { position: relative; isolation: isolate; margin-top: 40px; }
 .desktopPath { position: absolute; z-index: 0; top: 0; left: -19px; width: calc(100% + 50px); height: 746px; color: #7fa9d7; overflow: visible; }
 .topRow { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
@@ -30,9 +30,9 @@
 .card3 .iconBadge { background: #d9e9ff; }
 .card4 .iconBadge { background: #cbf5de; }
 .card5 .iconBadge { background: #dce1ff; }
-.year { margin: 9px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 500; letter-spacing: -.025em; line-height: 1; }
-.title { margin: 3px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 500; letter-spacing: -.015em; line-height: 1.15; }
-.details { margin: 7px 0 0; padding: 0; font-size: 15px; font-weight: 400; line-height: 1.55; letter-spacing: 0; }
+.year { margin: 9px 0 0; font-size: 32px; font-weight: 400; letter-spacing: -.045em; line-height: 1.12; }
+.title { margin: 3px 0 0; font-size: 22px; font-weight: 400; letter-spacing: -.045em; line-height: 1.12; }
+.details { margin: 7px 0 0; padding: 0; font-size: 15px; font-weight: 400; line-height: 1.55; letter-spacing: normal; }
 .details li { margin: 0; }
 .proseDetails { max-width: 300px; list-style: none; color: #46505d; }
 .card2 .proseDetails { max-width: 340px; }
@@ -70,7 +70,6 @@
   .wideCard .cardCopy { padding-left: 18px; }
   .wideCard .details { font-size: 14px; }
 }
-
 @media (max-width: 767px) {
   .section { min-height: 0; padding: 65px 20px 80px; }
   .backgroundCampus { width: 310px; height: 230px; opacity: .1; }
@@ -78,8 +77,8 @@
   .leftOrb { width: 300px; height: 300px; top: 105px; }
   .leftRing { width: 360px; height: 360px; left: -150px; }
   .eyebrow { font-size: 11px; }
-  .heading { font-size: clamp(38px, 10.5vw, 44px); line-height: 1.05; }
-  .intro { max-width: 390px; font-size: 15px; line-height: 1.55; }
+  .heading { font-size: clamp(38px, 10.5vw, 44px); line-height: 1.08; }
+  .intro { max-width: 390px; font-size: 17px; line-height: 1.55; }
   .stage { margin-top: 44px; padding-left: 37px; }
   .stage::before { content: ''; position: absolute; top: 28px; bottom: 38px; left: 17px; width: 1px; background: #8dbaf4; }
   .desktopPath { display: none; }
@@ -89,7 +88,7 @@
   .topCard, .wideCard { display: flex; flex-direction: column; }
   .cardCopy, .topCard .cardCopy, .wideCard .cardCopy, .card5 .cardCopy { width: 100%; padding: 20px 22px 15px; }
   .year { font-size: 28px; }
-  .title { font-size: 20px; }
+  .title { font-size: 22px; }
   .details, .wideCard .details { white-space: normal; font-size: 14px; line-height: 1.55; }
   .bulletDetails { line-height: 1.6; }
   .wideCard .details { margin-top: 9px; }
