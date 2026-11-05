@@ -7,8 +7,10 @@
 .introContent { position: relative; z-index: 1; max-width: 600px; padding: 34px 18px 32px 28px; }
 .eyebrow { display: flex; align-items: center; gap: 16px; margin: 0 0 14px; color: #0874d5; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
 .eyebrow span { width: 75px; height: 1px; background: #b8d3e8; }
-.heading { margin: 0; color: #0b1940; font-size: clamp(38px, 3.45vw, 56px); font-weight: 400; line-height: 1.05; letter-spacing: -.045em; }
+
+.heading { margin: 0; color: #0b1940; font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px, 3.45vw, 56px); font-weight: 400; line-height: .98; letter-spacing: -.047em; }
 .description { max-width: 490px; margin: 16px 0 0; color: #344769; font-size: 17px; font-weight: 400; line-height: 1.55; letter-spacing: normal; }
+
 .marginalia { position: absolute; z-index: 1; right: 18px; top: 36px; margin: 0; padding-left: 13px; border-left: 1px solid #bfd8ed; color: #416b9f; font-size: 9px; font-weight: 600; line-height: 1.8; letter-spacing: .25em; text-transform: uppercase; }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; }
 .card { position: relative; isolation: isolate; min-width: 0; overflow: hidden; border: 1px solid #dfeaf3; border-radius: 8px; background: #f5faff; }
@@ -28,7 +30,8 @@
 .numberLine { display: flex; align-items: center; gap: 14px; height: 15px; color: #274a79; font-size: 11px; letter-spacing: .08em; }
 .numberLine span:last-child { width: 28px; height: 1px; background: #b9d0df; }
 .category { margin: 9px 0 4px; color: #0874d5; font-size: 10px; font-weight: 700; letter-spacing: .095em; line-height: 1.35; text-transform: uppercase; }
-.cardTitle { margin: 0; color: #0b1940; font-size: clamp(20px, 1.7vw, 27px); font-weight: 400; line-height: 1.12; letter-spacing: -.045em; }
+
+.cardTitle { margin: 0; color: #0b1940; font-family: Georgia, "Times New Roman", serif; font-size: clamp(20px, 1.7vw, 27px); font-weight: 400; line-height: 1.05; letter-spacing: -.035em; }
 .details { margin: 9px 0 10px; padding-left: 14px; color: #2e4364; font-size: 12px; font-weight: 400; line-height: 1.55; letter-spacing: normal; }
 .details li + li { margin-top: 3px; }
 .cta { display: inline-flex; align-items: center; gap: 10px; min-height: 30px; margin-top: auto; color: #234b85; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
@@ -42,6 +45,7 @@
 .undergraduate .cardImage, .fellowships .cardImage, .certificates .cardImage { width: 54%; }
 .undergraduate .cardTitle, .fellowships .cardTitle, .certificates .cardTitle { font-size: clamp(20px, 1.55vw, 24px); }
 .undergraduate .details, .fellowships .details, .certificates .details { font-size: 11px; }
+
 @media (max-width: 1100px) {
   .section { padding-inline: 20px; }
   .cardContent { width: 64%; padding-left: 19px; }
@@ -49,6 +53,7 @@
   .details { font-size: 11px; }
   .undergraduate .cardContent, .fellowships .cardContent, .certificates .cardContent { width: 70%; }
 }
+
 @media (max-width: 800px) {
   .intro { min-height: 275px; }
   .introContent { max-width: 540px; }
@@ -63,6 +68,7 @@
   .certificates .cardContent { width: 48%; }
   .certificates .cardImage { width: 55%; }
 }
+
 @media (max-width: 640px) {
   .section { padding: 0 16px 56px; }
   .intro { min-height: 260px; align-items: flex-start; }
@@ -84,6 +90,7 @@
   .cardImage img { object-position: 68% center; }
   .cta { position: relative; z-index: 1; order: 2; min-height: 52px; margin: 5px 20px 6px; align-self: flex-start; font-size: 10px; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   .cardImage img, .arrow { transition: none; }
   .card:hover .cardImage img, .cta:hover .arrow { transform: none; }

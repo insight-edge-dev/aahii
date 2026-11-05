@@ -3,6 +3,14 @@ import Link from "next/link";
 import { sliderData } from "@/content/homeslider";
 import styles from "./SyncedImageContent.module.css";
 
+const INTERVAL_MS = 4000;
+
+const imageDescriptions = [
+  "Dr. Himanta Biswa Sarma speaking at an event",
+  "Portrait of Prime Minister Narendra Modi",
+  "Portrait of Prime Minister Narendra Modi in a dark vest",
+] as const;
+
 const cards = [
   {
     category: "Foundation",
@@ -10,16 +18,12 @@ const cards = [
     description: sliderData[0].title,
     attribution: `${sliderData[0].author}, ${sliderData[0].designation}`,
     href: "/about-us",
-    image: sliderData[0].image,
-    imageAlt: "Dr. Himanta Biswa Sarma speaking at an event",
   },
   {
     category: "Research",
     headline: "Where science, technology, and healthcare converge",
     description: "Where research, collaboration, and innovation converge to shape the next generation of healthcare delivery for India and the world.",
     href: "/research-development",
-    image: "/about/vision.jpeg",
-    imageAlt: "Illustration of connected healthcare technology, research, and innovation",
   },
   {
     category: "Innovation",
@@ -27,10 +31,19 @@ const cards = [
     description: sliderData[2].title,
     attribution: `${sliderData[2].author}, ${sliderData[2].designation}`,
     href: "/about-us/vision-mission",
-    image: sliderData[2].image,
-    imageAlt: "Portrait of Prime Minister Narendra Modi in a dark vest",
   },
 ] as const;
+
+export default function SyncedImageContent() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const interval = window.setInterval(() => {
+      setActiveIndex((previous) => (previous + 1) % sliderData.length);
+    }, INTERVAL_MS);
+    return () => window.clearInterval(interval);
+  }, []);
 
 export default function SyncedImageContent() {
   return (
@@ -47,7 +60,14 @@ export default function SyncedImageContent() {
           {cards.map((card, slot) => (
             <article className={styles.card} key={card.category}>
               <div className={styles.visual}>
-                <Image src={card.image} alt={card.imageAlt} fill priority={slot === 0} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 25vw" className={styles.image} />
+                {sliderData.map((image, imageIndex) => {
+                  const visible = imageIndex === (slot + activeIndex) % sliderData.length;
+                  return (
+                    <div key={image.image} className={`${styles.imageLayer} ${visible ? styles.visible : ""}`} aria-hidden={!visible}>
+                      <Image src={image.image} alt={visible ? imageDescriptions[imageIndex] : ""} fill priority={slot === 0 && imageIndex === 0} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 25vw" className={styles.image} />
+                    </div>
+                  );
+                })}
                 <Link className={styles.imageLink} href={card.href} aria-label={`Read more: ${card.headline}`}><span aria-hidden="true">↗</span></Link>
               </div>
               <div className={styles.tags}><span className={styles.tag}>{card.category}</span></div>

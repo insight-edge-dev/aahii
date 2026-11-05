@@ -25,6 +25,12 @@ const projects: Project[] = [
     title: "Development of Plant-based Drug for Treatment of Rheumatoid Arthritis",
     researchers: [
       {
+        name: "Vaghela Darshankumar Jagdishchandra",
+        role: "Research Associate",
+        initials: "VD",
+        kind: "Researcher",
+      },
+      {
         name: "Varnita Karmakar",
         role: "Research Associate",
         initials: "VK",
