@@ -77,7 +77,7 @@ export default function CoreResearch() {
       whileInView="visible"
       viewport={{ once: true }}
       variants={containerVariants}>
-      <motion.h2 className="text-2xl sm:text-4xl font-bold text-center text-[#0f2a6d] mb-12 sm:mb-14"
+      <motion.h2 className="text-3xl sm:text-4xl font-normal leading-[1.12] tracking-[-0.045em] text-center text-[#0f2a6d] mb-12 sm:mb-14"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -132,10 +132,10 @@ export default function CoreResearch() {
 
             {/* Content */}
             <div>
-              <p className="text-sm sm:text-[15px] font-semibold text-[#0f2a6d]">
+              <p className="text-[22px] font-normal leading-[1.12] tracking-[-0.045em] text-[#0f2a6d]">
                 {item.title}
               </p>
-              <p className="mt-4 text-xs sm:text-[15px] leading-snug text-gray-600">
+              <p className="mt-4 text-base font-normal leading-[1.55] tracking-normal text-gray-600">
                 {item.desc}
               </p>
             </div>

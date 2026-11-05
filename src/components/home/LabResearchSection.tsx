@@ -81,7 +81,7 @@ function ExploreLink({ href, featured = false }: { href: string; featured?: bool
 
 function CardNumber({ index }: { index: number }) {
   return (
-    <div className="flex items-center gap-2.5 font-serif text-lg text-[#062456]">
+    <div className="flex items-center gap-2.5 text-lg text-[#062456]">
       <span>{String(index + 1).padStart(2, "0")}</span>
       <span className="h-px w-9 bg-[#75b5ec]" aria-hidden="true" />
     </div>
@@ -105,18 +105,18 @@ export default function LabResearchSection() {
             <p className="mb-5 text-xs font-bold tracking-[0.26em] text-[#248ee2]">
               RESEARCH &amp; INNOVATION
             </p>
-            <h2 className="font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-[#061d46] sm:text-5xl lg:text-6xl xl:text-[70px]">
+            <h2 className="text-4xl font-normal leading-[1.05] tracking-[-0.045em] text-[#061d46] sm:text-5xl lg:text-6xl xl:text-[70px]">
               Research &amp; Innovation
               <br />
               Possibilities at AAHII
             </h2>
-            <p className="mt-6 max-w-[700px] text-base leading-7 text-slate-600 sm:text-lg sm:leading-8">
+            <p className="mt-6 max-w-[700px] text-[17px] font-normal leading-[1.55] tracking-normal text-slate-600">
               Interdisciplinary translational R&amp;D centre for innovation in frontier areas of health sciences and cutting-edge health technologies.
             </p>
           </motion.div>
 
           <motion.aside variants={revealVariants} className="border-l border-slate-300 pl-7 lg:mb-1">
-            <p className="font-serif text-2xl leading-[1.02] text-slate-600 sm:text-[28px]">
+            <p className="text-2xl font-normal leading-[1.12] tracking-[-0.045em] text-slate-600 sm:text-[28px]">
               From
               <br />
               Discovery to
@@ -133,12 +133,12 @@ export default function LabResearchSection() {
             <div className="absolute inset-0 bg-linear-to-r from-white via-white/88 to-white/10 sm:via-white/82" />
             <div className="relative z-10 flex h-full max-w-[455px] flex-col justify-end p-7 sm:p-10 lg:p-11">
               <CardNumber index={0} />
-              <h3 className="mt-5 font-serif text-3xl leading-[1.05] tracking-[-0.035em] text-[#061d46] sm:text-4xl lg:text-[42px]">
+              <h3 className="mt-5 text-3xl font-normal leading-[1.08] tracking-[-0.045em] text-[#061d46] sm:text-4xl lg:text-[42px]">
                 Invasive to Non-Invasive
                 <br />
                 Diagnostics
               </h3>
-              <p className="mt-4 text-[15px] leading-6 text-slate-600 sm:text-base sm:leading-7">{featured.desc}</p>
+              <p className="mt-4 text-base font-normal leading-[1.55] tracking-normal text-slate-600">{featured.desc}</p>
               <div className="mt-6"><ExploreLink href={featured.href} featured /></div>
             </div>
           </article>
@@ -150,8 +150,8 @@ export default function LabResearchSection() {
                 <div className="absolute inset-0 bg-linear-to-r from-white via-white/95 to-white/10" />
                 <div className="relative z-10 flex h-full max-w-[66%] flex-col justify-center p-6 sm:p-7">
                   <CardNumber index={index + 1} />
-                  <h3 className="mt-2 font-serif text-2xl leading-[1.02] tracking-[-0.025em] text-[#061d46]">{lab.title}</h3>
-                  <p className="mt-2 text-sm leading-[1.35] text-slate-600">{lab.desc}</p>
+                  <h3 className="mt-2 text-2xl font-normal leading-[1.12] tracking-[-0.045em] text-[#061d46]">{lab.title}</h3>
+                  <p className="mt-2 text-[15px] font-normal leading-[1.55] tracking-normal text-slate-600">{lab.desc}</p>
                   <div className="mt-3"><ExploreLink href={lab.href} /></div>
                 </div>
               </motion.article>
@@ -168,8 +168,8 @@ export default function LabResearchSection() {
               </div>
               <div className="px-6 pb-6 pt-1">
                 <CardNumber index={index + 3} />
-                <h3 className="mt-2 font-serif text-2xl leading-[1.05] tracking-[-0.025em] text-[#061d46]">{lab.title}</h3>
-                <p className="mt-2 text-sm leading-[1.45] text-slate-600">{lab.desc}</p>
+                <h3 className="mt-2 text-2xl font-normal leading-[1.12] tracking-[-0.045em] text-[#061d46]">{lab.title}</h3>
+                <p className="mt-2 text-[15px] font-normal leading-[1.55] tracking-normal text-slate-600">{lab.desc}</p>
                 <div className="mt-4"><ExploreLink href={lab.href} /></div>
               </div>
             </motion.article>

@@ -123,6 +123,7 @@
   margin: 15px 0 0;
   color: #42454c;
   font-size: 15px;
+  font-weight: 400;
   line-height: 1.55;
 }
 
@@ -150,7 +151,7 @@
   .visual { aspect-ratio: 4 / 3; border-radius: 15px; }
   .tags { margin-top: 18px; }
   .cardTitle { margin-top: 12px; font-size: clamp(27px, 7vw, 34px); }
-  .description { margin-top: 10px; font-size: 14px; }
+  .description { margin-top: 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

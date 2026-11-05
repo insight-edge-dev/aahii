@@ -51,7 +51,7 @@ export default function IITHeroGallery() {
         <h1
   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
   text-white/80 text-3xl sm:text-5xl md:text-6xl
-  font-extrabold tracking-wide"
+  font-normal leading-[1.12] tracking-[-0.045em]"
 >
   IIT GUWAHATI
 </h1>
