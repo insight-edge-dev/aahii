@@ -119,10 +119,10 @@ function NewsroomCard({ article }: { article: HomeNewsArticle }) {
           </span>
         </div>
 
-        <h3 className="mt-4 line-clamp-2 text-lg font-semibold leading-snug text-slate-950 transition-colors duration-300 group-hover:text-blue-700">
+        <h3 className="mt-4 line-clamp-2 text-xl font-normal leading-[1.12] tracking-[-0.045em] text-slate-950 transition-colors duration-300 group-hover:text-blue-700">
           {article.title}
         </h3>
-        <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">
+        <p className="mt-3 line-clamp-3 text-[15px] font-normal leading-[1.55] tracking-normal text-slate-600">
           {article.excerpt}
         </p>
 
@@ -178,10 +178,10 @@ export default function PressAndMedia() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-700">
             News
           </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#0f2a6d] md:text-5xl">
+          <h2 className="mt-3 text-3xl font-normal leading-[1.12] tracking-[-0.045em] text-[#0f2a6d] md:text-5xl">
             AAHII Newsroom
           </h2>
-          <p className="mt-5 text-base leading-7 text-slate-600 md:text-lg md:leading-8">
+          <p className="mt-5 text-[17px] font-normal leading-[1.55] tracking-normal text-slate-600">
             Official announcements and media coverage of the Assam Advanced
             Healthcare Innovation Institute (AAHII), advancing healthcare
             innovation, research, partnerships and public health initiatives.

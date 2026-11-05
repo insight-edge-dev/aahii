@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { sliderData } from "@/content/homeslider";
@@ -48,6 +45,7 @@ export default function SyncedImageContent() {
     return () => window.clearInterval(interval);
   }, []);
 
+export default function SyncedImageContent() {
   return (
     <section className={styles.section} aria-labelledby="vision-stories-heading">
       <div className={styles.inner}>

@@ -52,8 +52,8 @@ function MarqueeItem({ text }: { text: string }) {
       className="
         inline-flex items-center whitespace-nowrap
         pr-20 md:pr-16 sm:pr-10
-        text-[18px] md:text-[16px] sm:text-[15px]
-        font-semibold tracking-[0.3px]
+        text-[17px]
+        font-normal leading-[1.55] tracking-normal
         text-[#0f2a6d]
         before:content-['☸']
         before:mr-3 sm:before:mr-2

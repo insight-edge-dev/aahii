@@ -1,22 +1,22 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Instagram, Twitter, Linkedin, Youtube } from "lucide-react";
+import { Instagram, Twitter, Linkedin } from "lucide-react";
 
 const SOCIALS = [
   {
     label: "Twitter / X",
-    href: "https://x.com/AssamIitg78651",
+    href: "https://x.com/AAHII_Official",
     Icon: Twitter,
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/company/assam-government-iitg-healthcare-foundation/",
+    href: "https://www.linkedin.com/company/assam-government-iitg-healthcare-foundation/home/?viewAsMember=true",
     Icon: Linkedin,
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/agihf.web?igsh=MWQ1ZXpqNzEzbmxjcQ==/",
-    Icon: Youtube,
+    href: "https://www.instagram.com/aahii.official?cplk=MXc5N2h5ZmFoMGw2bA%3D%3D&utm_source=qr",
+    Icon: Instagram,
   },
 ];
 
