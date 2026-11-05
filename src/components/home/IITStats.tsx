@@ -88,15 +88,15 @@ export default function IITStats() {
       className="max-w-7xl mx-auto px-4 sm:px-6 py-5">
       {/* ================= HEADER ================= */}
       <div className="mb-14 max-w-3xl mx-auto text-center">
-        <h3 className="text-2xl sm:text-4xl font-bold text-[#0f2a6d] mb-2">
+        <h3 className="text-3xl sm:text-4xl font-normal leading-[1.12] tracking-[-0.045em] text-[#0f2a6d] mb-2">
           Indian Institute of Technology Guwahati
         </h3>
 
-        <h2 className="text-xl sm:text-2xl font-bold text-[#0f2a6d] mb-4">
+        <h2 className="text-2xl sm:text-3xl font-normal leading-[1.12] tracking-[-0.045em] text-[#0f2a6d] mb-4">
           Excellence that speaks through impact
         </h2>
 
-        <p className="text-[15px] leading-relaxed text-[#2f2f2f]">
+        <p className="text-[17px] font-normal leading-[1.55] tracking-normal text-[#2f2f2f]">
           The strategic commitment of IIT Guwahati provides the road map for the
           journey towards excellence.
         </p>
@@ -155,7 +155,7 @@ export default function IITStats() {
             {/* Badge */}
             <div
               className="inline-block bg-[#e9f1ff] text-[#1f3b8b]
-              text-[14px] font-semibold px-3 py-[4px] rounded-full mb-4"
+              text-[14px] font-medium tracking-[0.035em] px-3 py-[4px] rounded-full mb-4"
             >
               {item.label}
             </div>
@@ -166,7 +166,7 @@ export default function IITStats() {
             </div>
 
             {/* Description */}
-            <p className="text-[15px] leading-[1.6] text-[#2f2f2f]">
+            <p className="text-[15px] font-normal leading-[1.55] tracking-normal text-[#2f2f2f]">
               {item.desc}
             </p>
           </motion.div>

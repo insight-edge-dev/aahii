@@ -46,10 +46,10 @@ export default function HeroSlider() {
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.08fr)] lg:gap-14 xl:gap-20">
           <div className="max-w-[590px] lg:py-4">
             <p className="mb-5 text-[10px] font-bold tracking-[0.14em] text-slate-600 sm:text-xs">ASSAM ADVANCED HEALTHCARE INNOVATION INSTITUTE</p>
-            <h1 className="font-serif text-[42px] leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-7xl xl:text-[80px]">
+            <h1 className="text-[42px] font-normal leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-6xl lg:text-7xl xl:text-[80px]">
               Advancing<br /><span className="text-(--nav-blue)">Healthcare</span> through <br /> <i>Innovation</i>
             </h1>
-            <p className="mt-6 max-w-[520px] text-sm leading-6 text-slate-600 sm:mt-7 sm:text-base sm:leading-7 lg:text-[17px]">
+            <p className="mt-6 max-w-[520px] text-[17px] font-normal leading-[1.55] tracking-normal text-slate-600 sm:mt-7">
               A Government of Assam and IIT Guwahati initiative building a future-ready healthcare ecosystem through advanced care, research, innovation and capacity building.
             </p>
             <div className="mt-7 flex flex-wrap gap-3 sm:mt-8">
