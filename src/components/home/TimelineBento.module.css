@@ -1,0 +1,100 @@
+.section { position: relative; isolation: isolate; overflow: hidden; min-height: 1024px; padding: 46px 32px 88px; background: #f8fbff; color: #091e4b; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.inner { position: relative; z-index: 1; max-width: 1306px; margin: 0 auto; }
+.atmosphere { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.leftOrb { position: absolute; width: 410px; height: 410px; left: -178px; top: 142px; border-radius: 50%; background: radial-gradient(circle at 65% 45%, #b8dff3a8, #e9f7fc55 65%, transparent 72%); }
+.leftRing { position: absolute; width: 550px; height: 550px; left: 25px; top: 42px; border: 1px solid #93c5f62b; border-radius: 50%; }
+.assamMap { position: absolute; width: 310px; left: 140px; top: 30px; color: #8cbee829; transform: rotate(-8deg); }
+.backgroundCampus { position: absolute; right: -22px; top: -20px; width: 550px; height: 365px; opacity: .18; mask-image: linear-gradient(to bottom, black 10%, transparent 96%); }
+.backgroundCampusImage { object-fit: cover; object-position: center; }
+.header { text-align: center; }
+.eyebrow { margin: 0; color: #328cf6; font-size: 12px; font-weight: 600; letter-spacing: .27em; line-height: 1.4; }
+.heading { margin: 7px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(56px, 4.2vw, 64px); font-weight: 400; line-height: 1.03; letter-spacing: -.03em; }
+.underline { display: block; width: 71px; height: 2px; margin: 9px auto 0; background: #4b9aff; }
+.intro { max-width: 660px; margin: 17px auto 0; color: #4c5362; font-size: 16px; font-weight: 400; line-height: 1.55; }
+.stage { position: relative; isolation: isolate; margin-top: 40px; }
+.desktopPath { position: absolute; z-index: 0; top: 0; left: -19px; width: calc(100% + 50px); height: 746px; color: #7fa9d7; overflow: visible; }
+.topRow { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; }
+.bottomRow { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3.2fr); gap: 30px; margin: 98px 0 0 16px; }
+.card { position: relative; border: 1px solid #b5c8dc36; border-radius: 23px; box-shadow: 0 15px 32px #193d7010; }
+.topCard { display: flex; height: 380px; flex-direction: column; overflow: visible; }
+.card1 { background: linear-gradient(135deg, #fff2f5 0%, #fffafb 75%); }
+.card2 { background: linear-gradient(135deg, #fff9ec 0%, #fffdfa 75%); }
+.card3 { background: linear-gradient(135deg, #f0f7ff 0%, #fafcff 75%); }
+.card4 { background: #eafbf4; }
+.card5 { background: #eff3ff; }
+.cardCopy { position: relative; z-index: 1; }
+.topCard .cardCopy { flex: 1; min-height: 0; padding: 17px 29px 5px; }
+.iconBadge { display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; border-radius: 50%; color: #102b59; }
+.card1 .iconBadge { background: #fbe2e9; }
+.card2 .iconBadge { background: #ffedc9; }
+.card3 .iconBadge { background: #d9e9ff; }
+.card4 .iconBadge { background: #cbf5de; }
+.card5 .iconBadge { background: #dce1ff; }
+.year { margin: 9px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 500; letter-spacing: -.025em; line-height: 1; }
+.title { margin: 3px 0 0; font-family: Georgia, 'Times New Roman', serif; font-size: 22px; font-weight: 500; letter-spacing: -.015em; line-height: 1.15; }
+.details { margin: 7px 0 0; padding: 0; font-size: 15px; font-weight: 400; line-height: 1.55; letter-spacing: 0; }
+.details li { margin: 0; }
+.proseDetails { max-width: 300px; list-style: none; color: #46505d; }
+.card2 .proseDetails { max-width: 340px; }
+.proseDetails li + li { margin-top: 3px; }
+.bulletDetails { padding-left: 19px; color: #0c2046; line-height: 1.6; }
+.photo { position: relative; overflow: hidden; }
+.topCard .photo { height: 136px; flex: none; margin: 0 7px 7px; border-radius: 5px 5px 15px 15px; }
+.photoImage { object-fit: cover; object-position: center; }
+.card1 .photoImage { object-position: center 57%; }
+.card2 .photoImage { object-position: center 55%; }
+.marker { position: absolute; z-index: 3; display: flex; align-items: center; flex-direction: column; pointer-events: none; }
+.topCard .marker { top: calc(100% + 1px); left: 50%; transform: translateX(-50%); }
+.stem { height: 21px; border-left: 1px dashed #7eb5ff; }
+.node { display: flex; width: 42px; height: 42px; align-items: center; justify-content: center; border: 1px solid #c6dff7; border-radius: 50%; box-shadow: 0 3px 12px #224b8012; color: #0b2857; font-size: 15px; font-weight: 600; }
+.card1 .node { background: #fbe0e9; border-color: #fbd4e0; }
+.card2 .node { background: #ffe5b4; border-color: #ffdfa3; }
+.card3 .node { background: #cce3ff; border-color: #a9d1ff; }
+.card4 .node { background: #b7eed2; border-color: #a2e4c0; }
+.card5 .node { background: #bfc6ff; border-color: #abb6ff; }
+.wideCard { height: 211px; overflow: visible; }
+.wideCard .cardCopy { padding: 20px 26px; width: 60%; }
+.wideCard .year { margin-top: 8px; }
+.wideCard .details { margin-top: 13px; font-size: 15px; line-height: 1.6; white-space: normal; }
+.wideCard .photo { position: absolute; inset: 4px 4px 4px auto; width: 48%; border-radius: 0 18px 18px 0; mask-image: linear-gradient(to right, transparent, black 34%); }
+.card5 .cardCopy { width: 71%; }
+.card5 .details { max-width: 470px; }
+.card5 .photo { width: 49%; }
+.wideCard .marker { top: calc(100% + 1px); left: 50%; transform: translateX(-50%); }
+
+@media (max-width: 1100px) {
+  .section { padding-left: 28px; padding-right: 28px; }
+  .topRow, .bottomRow { gap: 18px; }
+  .topCard .cardCopy { padding-left: 22px; padding-right: 22px; }
+  .topCard .details { font-size: 14px; }
+  .wideCard .cardCopy { padding-left: 18px; }
+  .wideCard .details { font-size: 14px; }
+}
+
+@media (max-width: 767px) {
+  .section { min-height: 0; padding: 65px 20px 80px; }
+  .backgroundCampus { width: 310px; height: 230px; opacity: .1; }
+  .assamMap { left: -20px; width: 220px; }
+  .leftOrb { width: 300px; height: 300px; top: 105px; }
+  .leftRing { width: 360px; height: 360px; left: -150px; }
+  .eyebrow { font-size: 11px; }
+  .heading { font-size: clamp(38px, 10.5vw, 44px); line-height: 1.05; }
+  .intro { max-width: 390px; font-size: 15px; line-height: 1.55; }
+  .stage { margin-top: 44px; padding-left: 37px; }
+  .stage::before { content: ''; position: absolute; top: 28px; bottom: 38px; left: 17px; width: 1px; background: #8dbaf4; }
+  .desktopPath { display: none; }
+  .topRow, .bottomRow { display: grid; grid-template-columns: 1fr; gap: 30px; margin: 0; }
+  .bottomRow { margin-top: 30px; }
+  .card, .topCard, .wideCard { height: auto; min-height: 350px; overflow: visible; }
+  .topCard, .wideCard { display: flex; flex-direction: column; }
+  .cardCopy, .topCard .cardCopy, .wideCard .cardCopy, .card5 .cardCopy { width: 100%; padding: 20px 22px 15px; }
+  .year { font-size: 28px; }
+  .title { font-size: 20px; }
+  .details, .wideCard .details { white-space: normal; font-size: 14px; line-height: 1.55; }
+  .bulletDetails { line-height: 1.6; }
+  .wideCard .details { margin-top: 9px; }
+  .photo, .topCard .photo, .wideCard .photo, .card5 .photo { position: relative; inset: auto; width: auto; height: 160px; flex: none; margin: auto 7px 7px; border-radius: 6px 6px 16px 16px; mask-image: none; }
+  .marker, .topCard .marker, .wideCard .marker { top: 25px; left: -37px; transform: none; }
+  .stem { display: none; }
+  .node { width: 35px; height: 35px; font-size: 12px; }
+}

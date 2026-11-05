@@ -1,231 +1,51 @@
-"use client";
-
 import Image from "next/image";
-import { motion, type Variants } from "framer-motion";
+import Link from "next/link";
+import styles from "./ProposedPrograms.module.css";
+
+const programs = [
+  { number: "02", category: "Postgraduate (Clinical)", title: "PG Degree (Clinical)", details: ["MD – Medicine, Emergency Medicine & Traumatology", "MS – Surgery, G&O, Ortho"], image: "/programs/clinical.webp", className: styles.clinical },
+  { number: "01", category: "Doctoral Program", title: "PhD", details: ["Medical, Engineering & Science programs including integrated PG–PhD programs"], image: "/programs/phd-research.webp", className: styles.phd },
+  { number: "03", category: "Postgraduate (Pre / Para-clinical)", title: "PG Degree (Pre / Para-clinical)", details: ["MD – Biochemistry, Medicine Physiology and Community Medicine"], image: "/programs/preclinical-lab.webp", className: styles.preclinical },
+  { number: "04", category: "Superspeciality", title: "Superspeciality Degree", details: ["MCh – Neurosurgery, GI Surgery, Urology", "DM – Gastroenterology, Nephrology, Neurology"], image: "/programs/superspeciality-imaging.webp", className: styles.superspeciality },
+  { number: "05", category: "Undergraduate", title: "UG Degree", details: ["Dialysis, OT, ICU, MLT & Radiology"], image: "/programs/undergraduate-ward.webp", className: styles.undergraduate },
+  { number: "06", category: "Fellowships", title: "Fellowships", details: ["Short-term (6 months) & Long-term (12–18 months)"], image: "/programs/fellowships-clinicians.webp", className: styles.fellowships },
+  { number: "07", category: "Certification Programs", title: "Certificates", details: ["Speciality specific fellowships", "Skill-based program for AHP"], image: "/programs/certificates-documents.webp", className: styles.certificates },
+] as const;
 
 export default function ProposedPrograms() {
-  // 🔥 COMMON CARD BASE WITH HOVER
-  const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 40,
-    scale: 0.98,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.7,
-      ease: "easeOut",
-    },
-  },
-};
-
-  const cardBase =
-    "rounded-[18px] p-[16px_16px_18px] shadow-[0_10px_26px_rgba(15,42,109,0.10)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_22px_52px_rgba(15,42,109,0.18)] active:scale-[0.98]";
-
   return (
- <motion.section
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, amount: 0.2 }}
-  variants={containerVariants}
-  className="
-    px-[14px] pt-[60px] pb-[70px]
-    bg-gradient-to-b
-    from-[#f0fdf4] via-[#f0f9ff] to-[#6baced]
-    md:px-[6%]
-    mt-15 mb-15
-  "
->
-
-      {/* ===== HEADING (ADDED) ===== */}
- <motion.div
-  initial={{ opacity: 0, y: 30 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, ease: "easeOut" }}
-  viewport={{ once: true }}
-  className="max-w-4xl mx-auto text-center mb-16"
->
-
-        <h2 className="text-2xl sm:text-4xl font-extrabold tracking-wide text-[#0f2a6d] mb-4">
-          Proposed Academic Programs at AAHII
-        </h2>
-      </motion.div>
-
-      {/* ===== GRID ===== */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 gap-[22px] md:grid-cols-4 md:gap-6">
-
-        {/* PhD */}
-        <motion.div
-            variants={cardVariants}
-            whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#fff7ed]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/phd.png"
-              alt="PhD"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
+    <section className={styles.section} aria-labelledby="academic-programs-heading">
+      <div className={styles.container}>
+        <div className={styles.intro}>
+          <div className={styles.campusImage} aria-hidden="true">
+            <Image src="/hero/hero1.webp" alt="" fill sizes="(max-width: 768px) 100vw, 70vw" loading="eager" />
           </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">PhD</h3>
-          <p className="text-[14px] leading-[1.55]">
-            • Medical, Engineering & Science programs including integrated
-            PG–PhD programs
-          </p>
-        </motion.div>
-
-        {/* PG Clinical */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#c8f2d5]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/pgclinical.png"
-              alt="PG Degree Clinical"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
+          <div className={styles.introContent}>
+            <p className={styles.eyebrow}>Academic pathways <span aria-hidden="true" /></p>
+            <h2 id="academic-programs-heading" className={styles.heading}>Proposed Academic<br />Programs at AAHII</h2>
+            <p className={styles.description}>A comprehensive academic ecosystem to build a future-ready healthcare workforce through research, clinical excellence and innovation.</p>
           </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">
-            PG Degree (Clinical)
-          </h3>
-          <p className="text-[14px] leading-[1.55]">
-            • MD - Medicine, Emergency Medicine & Traumatology
-          </p>
-          <p className="text-[14px] leading-[1.55] mt-2">
-            • MS - Surgery, G&O, Ortho
-          </p>
-        </motion.div>
-
-        {/* PG Pre / Para */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#cfeaff] md:col-span-2`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/ip.jpg"
-              alt="PG Pre Para"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
-          </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">
-            PG Degree (Pre / Para-clinical)
-          </h3>
-          <p className="text-[14px] leading-[1.55]">
-            • MD - Biochemistry, Medicine Physiology and Community Medicine
-          </p>
-        </motion.div>
-
-        {/* Superspeciality – BENTO */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#fefce8]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/superspeciality.png"
-              alt="Superspeciality Degree"
-              width={900}
-              height={400}
-              className="h-[180px] w-full object-cover"
-            />
-          </div>
-          <h3 className="text-[18px] font-semibold mb-2">
-            Superspeciality Degree
-          </h3>
-          <p className="text-[14px] leading-[1.55]">
-            • MCh – Neurosurgery, GI Surgery, Urology
-          </p>
-          <p className="text-[14px] leading-[1.55]">
-            • DM – Gastroenterology, Nephrology, Neurology
-          </p>
-        </motion.div>
-
-        {/* UG */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#dcd9ff]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/ugdegree.png"
-              alt="UG Degree"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
-          </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">UG Degree</h3>
-          <p className="text-[14px] leading-[1.55]">
-            • Dialysis, OT, ICU, MLT & Radiology
-          </p>
-        </motion.div>
-
-        {/* Fellowships */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#e0f2fe]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/fellowships.png"
-              alt="Fellowships"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
-          </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">Fellowships</h3>
-          <p className="text-[14px] leading-[1.55]">
-            • Short-term (6 months) & Long-term (12–18 months)
-          </p>
-        </motion.div>
-        {/* Certificates */}
-        <motion.div
-          variants={cardVariants}
-          whileHover={{y: -10,transition: { duration: 0.3 }, }}
-          className={`${cardBase} bg-[#ffe1cf]`}
-        >
-          <div className="overflow-hidden rounded-[14px] mb-4">
-            <Image
-              src="/programs/certificate.png"
-              alt="Certificates"
-              width={600}
-              height={400}
-              className="h-[170px] w-full object-cover"
-            />
-          </div>
-          <h3 className="text-[17px] font-semibold mb-[6px]">Certificates</h3>
-          <p className="text-[14px] leading-[1.55]">
-            • Speciality specific fellowships<br />
-            • Skill-based program for AHP
-          </p>
-        </motion.div>
+          <p className={styles.marginalia} aria-hidden="true">Education<br />Research<br />Clinical care<br />Innovation</p>
+        </div>
+        <div className={styles.grid}>
+          {programs.map((program) => (
+            <article key={program.number} className={`${styles.card} ${program.className}`}>
+              <div className={styles.cardImage} aria-hidden="true">
+                <Image src={program.image} alt="" fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 45vw" loading={program.number === "02" ? "eager" : "lazy"} />
+              </div>
+              <div className={styles.cardContent}>
+                <div className={styles.numberLine}><span>{program.number}</span><span aria-hidden="true" /></div>
+                <p className={styles.category}>{program.category}</p>
+                <h3 className={styles.cardTitle}>{program.title}</h3>
+                <ul className={styles.details}>{program.details.map((detail) => <li key={detail}>{detail}</li>)}</ul>
+                <Link className={styles.cta} href="/contact-us" aria-label={`Enquire about ${program.title}`}>
+                  <span className={styles.arrow} aria-hidden="true">→</span><span>Explore program</span><span className={styles.ctaArrow} aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
-    </motion.section>
+    </section>
   );
 }

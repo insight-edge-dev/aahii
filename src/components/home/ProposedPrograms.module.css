@@ -1,0 +1,90 @@
+.section { background: linear-gradient(180deg, #f8fcff 0%, #f4faff 52%, #f8fcff 100%); color: #091b42; padding: 0 24px 82px; }
+.container { max-width: 1320px; margin: 0 auto; }
+.intro { position: relative; display: flex; align-items: center; min-height: 310px; overflow: hidden; }
+.campusImage { position: absolute; inset: 0 0 0 32%; opacity: .58; }
+.campusImage img { object-fit: cover; object-position: center 43%; }
+.campusImage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, #f8fcff 0%, #f8fcfff2 14%, #f8fcff82 47%, #f8fcff11 100%), linear-gradient(0deg, #f8fcff 0%, transparent 35%); }
+.introContent { position: relative; z-index: 1; max-width: 600px; padding: 34px 18px 32px 28px; }
+.eyebrow { display: flex; align-items: center; gap: 16px; margin: 0 0 14px; color: #0874d5; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.eyebrow span { width: 75px; height: 1px; background: #b8d3e8; }
+.heading { margin: 0; color: #0b1940; font-family: Georgia, "Times New Roman", serif; font-size: clamp(38px, 3.45vw, 56px); font-weight: 400; line-height: .98; letter-spacing: -.047em; }
+.description { max-width: 490px; margin: 16px 0 0; color: #344769; font-size: 14px; line-height: 1.55; }
+.marginalia { position: absolute; z-index: 1; right: 18px; top: 36px; margin: 0; padding-left: 13px; border-left: 1px solid #bfd8ed; color: #416b9f; font-size: 9px; font-weight: 600; line-height: 1.8; letter-spacing: .25em; text-transform: uppercase; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; }
+.card { position: relative; isolation: isolate; min-width: 0; overflow: hidden; border: 1px solid #dfeaf3; border-radius: 8px; background: #f5faff; }
+.clinical { grid-column: span 7; min-height: 260px; --card-wash: #f5faff; }
+.phd { grid-column: span 5; min-height: 260px; background: #f9fbfc; --card-wash: #f9fbfc; }
+.preclinical, .superspeciality { grid-column: span 6; min-height: 238px; }
+.preclinical { background: #f5fbfa; --card-wash: #f5fbfa; }
+.superspeciality { background: #f5fafb; --card-wash: #f5fafb; }
+.undergraduate, .fellowships, .certificates { grid-column: span 4; min-height: 218px; }
+.undergraduate { background: #f8faff; --card-wash: #f8faff; }
+.fellowships { background: #f7faff; --card-wash: #f7faff; }
+.certificates { background: #fcfaf7; --card-wash: #fcfaf7; }
+.cardImage { position: absolute; z-index: -1; top: 0; right: 0; bottom: 0; width: 58%; overflow: hidden; }
+.cardImage img { object-fit: cover; object-position: 63% center; transition: transform .4s ease; }
+.cardImage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--card-wash) 0%, color-mix(in srgb, var(--card-wash) 72%, transparent) 26%, transparent 65%); }
+.cardContent { display: flex; flex-direction: column; align-items: flex-start; width: 58%; min-height: inherit; padding: 20px 20px 17px 25px; }
+.numberLine { display: flex; align-items: center; gap: 14px; height: 15px; color: #274a79; font-size: 11px; letter-spacing: .08em; }
+.numberLine span:last-child { width: 28px; height: 1px; background: #b9d0df; }
+.category { margin: 9px 0 4px; color: #0874d5; font-size: 10px; font-weight: 700; letter-spacing: .095em; line-height: 1.35; text-transform: uppercase; }
+.cardTitle { margin: 0; color: #0b1940; font-family: Georgia, "Times New Roman", serif; font-size: clamp(20px, 1.7vw, 27px); font-weight: 400; line-height: 1.05; letter-spacing: -.035em; }
+.details { margin: 9px 0 10px; padding-left: 14px; color: #2e4364; font-size: 12px; line-height: 1.4; }
+.details li + li { margin-top: 3px; }
+.cta { display: inline-flex; align-items: center; gap: 10px; min-height: 30px; margin-top: auto; color: #234b85; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+.arrow { display: grid; width: 30px; height: 30px; flex: none; place-items: center; border-radius: 50%; background: #0a285a; color: #fff; font-size: 17px; font-weight: 400; line-height: 1; transition: transform .25s ease, background .25s ease; }
+.ctaArrow { font-size: 13px; line-height: 1; }
+.card:hover { border-color: #b9d4e8; }
+.card:hover .cardImage img { transform: scale(1.035); }
+.cta:hover .arrow { transform: translateX(3px); background: #07539a; }
+.cta:focus-visible { outline: 2px solid #0874d5; outline-offset: 4px; border-radius: 2px; }
+.undergraduate .cardContent, .fellowships .cardContent, .certificates .cardContent { width: 63%; padding: 17px 11px 13px 18px; }
+.undergraduate .cardImage, .fellowships .cardImage, .certificates .cardImage { width: 54%; }
+.undergraduate .cardTitle, .fellowships .cardTitle, .certificates .cardTitle { font-size: clamp(20px, 1.55vw, 24px); }
+.undergraduate .details, .fellowships .details, .certificates .details { font-size: 11px; }
+@media (max-width: 1100px) {
+  .section { padding-inline: 20px; }
+  .cardContent { width: 64%; padding-left: 19px; }
+  .cardTitle { font-size: 22px; }
+  .details { font-size: 11px; }
+  .undergraduate .cardContent, .fellowships .cardContent, .certificates .cardContent { width: 70%; }
+}
+@media (max-width: 800px) {
+  .intro { min-height: 275px; }
+  .introContent { max-width: 540px; }
+  .marginalia { display: none; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card, .clinical, .phd, .preclinical, .superspeciality, .undergraduate, .fellowships, .certificates { grid-column: span 1; min-height: 270px; }
+  .cardContent, .undergraduate .cardContent, .fellowships .cardContent, .certificates .cardContent { width: 69%; padding: 17px 10px 15px 17px; }
+  .cardImage, .undergraduate .cardImage, .fellowships .cardImage, .certificates .cardImage { width: 58%; }
+  .cardTitle, .undergraduate .cardTitle, .fellowships .cardTitle, .certificates .cardTitle { font-size: 21px; }
+  .details, .undergraduate .details, .fellowships .details, .certificates .details { font-size: 11px; }
+  .certificates { grid-column: span 2; }
+  .certificates .cardContent { width: 48%; }
+  .certificates .cardImage { width: 55%; }
+}
+@media (max-width: 640px) {
+  .section { padding: 0 16px 56px; }
+  .intro { min-height: 260px; align-items: flex-start; }
+  .campusImage { inset: 0 -16px 0 10%; opacity: .25; }
+  .campusImage::after { background: linear-gradient(90deg, #f8fcff 0%, #f8fcffb8 60%, #f8fcff66), linear-gradient(0deg, #f8fcff 0%, transparent 65%); }
+  .introContent { padding: 35px 0 28px; }
+  .heading { font-size: clamp(35px, 9vw, 43px); }
+  .description { max-width: 380px; font-size: 13px; }
+  .grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .card, .clinical, .phd, .preclinical, .superspeciality, .undergraduate, .fellowships, .certificates { display: flex; flex-direction: column; grid-column: 1; min-height: 0; }
+  .cardContent, .undergraduate .cardContent, .fellowships .cardContent, .certificates .cardContent { display: contents; }
+  .numberLine, .category, .cardTitle, .details { position: relative; z-index: 1; margin-left: 20px; margin-right: 20px; }
+  .numberLine { margin-top: 20px; }
+  .category { margin-top: 9px; margin-bottom: 5px; font-size: 10px; }
+  .cardTitle, .undergraduate .cardTitle, .fellowships .cardTitle, .certificates .cardTitle { font-size: 26px; }
+  .details, .undergraduate .details, .fellowships .details, .certificates .details { margin-top: 10px; margin-bottom: 15px; padding-left: 15px; font-size: 13px; line-height: 1.45; }
+  .cardImage, .undergraduate .cardImage, .fellowships .cardImage, .certificates .cardImage { position: relative; z-index: 0; order: 1; width: auto; height: 175px; margin: 0 12px; border-radius: 4px; }
+  .cardImage::after { display: none; }
+  .cardImage img { object-position: 68% center; }
+  .cta { position: relative; z-index: 1; order: 2; min-height: 52px; margin: 5px 20px 6px; align-self: flex-start; font-size: 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cardImage img, .arrow { transition: none; }
+  .card:hover .cardImage img, .cta:hover .arrow { transform: none; }
+}
