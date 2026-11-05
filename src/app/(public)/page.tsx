@@ -24,7 +24,9 @@ export default function Home() {
       <GovMarquee />
       <LabResearchSection />
       <TimelineBento />
-      <GovMarquee />
+      <div className="mt-8 md:mt-10 xl:mt-16">
+        <GovMarquee />
+      </div>
       <ProposedPrograms />
       <GovMarquee />
       <Niramaya />

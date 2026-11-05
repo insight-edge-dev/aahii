@@ -2,10 +2,10 @@
 
 import { motion, type Variants } from "framer-motion";
 import Image from "next/image";
+import { NiramayaAbout, NiramayaAtGlance, NiramayaHero } from "@/components/niramaya/NiramayaEntrance";
+import SelectedStartups from "@/components/niramaya/SelectedStartups";
 import {
     Eye,
-    Landmark,
-    ShieldCheck,
 } from "lucide-react";
 
 /* ================= ANIMATION VARIANTS ================= */
@@ -95,114 +95,20 @@ const sectors = [
 ];
 export default function NiramayaPage() {
     return (
-        <main className="w-full bg-[#f5f7fa] text-gray-900">
-
-            {/* ================= HERO ================= */}
-            <motion.section
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.8 }}
-                className="relative overflow-hidden bg-[#e9eef5] py-28 px-6"
-            >
-                {/* Subtle grid background */}
-                <div className="absolute inset-0 opacity-[0.04] bg-[linear-gradient(#000_1px,transparent_1px),linear-gradient(to_right,#000_1px,transparent_1px)] bg-[size:60px_60px]" />
-
-                <div className="relative max-w-5xl mx-auto text-center">
-
-                    {/* Badge */}
-                    <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.2, duration: 0.6 }}
-                        className="inline-block mb-8 px-4 py-1 text-2xl tracking-wide bg-blue-100 font-bold text-blue-700 "
-                    >
-                        Northeast Incubator for Rapid Acceleration of Medical & Allied Innovations
-                    </motion.div>
-
-                    {/* Title */}
-                    <motion.h1
-                        initial={{ y: 40, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.3, duration: 0.8 }}
-                        className="text-6xl md:text-7xl font-bold  text-[#3a6ef0]"
-                    >
-                        NIRAMAYA
-                    </motion.h1>
-
-                    {/* Subtitle */}
-                    <motion.p
-                        initial={{ y: 30, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5, duration: 0.8 }}
-                        className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed"
-                    >
-                        Giving wings to healthcare innovations - bridging research,
-                        clinical validation, and market translation across Northeast India.
-                    </motion.p>
-                </div>
-            </motion.section>
-
-
-            {/* ================= BRIDGING ================= */}
-            <motion.section
-                variants={sectionFade}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                className="py-20 px-6"
-            >
-                <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-start">
-
-                    <div>
-                        <h2 className="text-4xl font-bold leading-tight mb-6">
-                            About {" "}
-                            <span className="text-blue-600">NIRAMAYA</span>{" "}
-                        </h2>
-
-                        <p className="text-gray-600 leading-relaxed mb-8">
-                            AAHII has also taken up initiative to nurture innovation based Start-ups in Health-tech to develop a pipeline of products even when infrastructure is in progress. A Program &quot;NIRAMAYA&quot; has been launched to support the Healthcare based start-ups. AAHII is registered as an Incubator with Start-up India, GoI. The NIRAMAYA program supports health-tech startups to build a robust innovation pipeline aligned with national healthcare priorities.
-                        </p>
-                    </div>
-
-                    {/* Stagger cards */}
-                    <motion.div
-                        variants={staggerContainer}
-                        className="space-y-6"
-                    >
-                        {[
-                            {
-                                icon: <Landmark className="text-blue-600 mb-4" />,
-                                title: "Host Institution",
-                                desc: "AAHII with IIT-G provides world-class engineering foundation.",
-                            },
-                            {
-                                icon: <ShieldCheck className="text-blue-600 mb-4" />,
-                                title: "Implementation Partner",
-                                desc: "BioNEST at IIT-G Research park.",
-                            },
-                        ].map((item, i) => (
-                            <motion.div
-                                key={i}
-                                variants={sectionFade}
-                                className="bg-white rounded-2xl shadow p-6"
-                            >
-                                {item.icon}
-                                <h3 className="font-semibold mb-2">{item.title}</h3>
-                                <p className="text-sm text-gray-600">{item.desc}</p>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-
-                </div>
-            </motion.section>
+        <main className="w-full overflow-x-clip bg-[#f5f7fa] text-gray-900">
+            <NiramayaHero />
+            <NiramayaAtGlance />
+            <SelectedStartups />
+            <NiramayaAbout />
 
             {/* ================= VISION ================= */}
             <motion.section
+                id="vision"
                 variants={sectionFade}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
-                className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-24 px-6"
+                className="scroll-mt-36 bg-gradient-to-br from-[#0f172a] to-[#1e293b] text-white py-24 px-6"
             >
                 <div className="max-w-6xl mx-auto">
                     <div className="flex gap-2 items-center mb-8">
@@ -220,11 +126,12 @@ export default function NiramayaPage() {
             {/* ================= FACILITIES ================= */}
             {/* ================= INFRASTRUCTURE & SUPPORT ================= */}
             <motion.section
+                id="infrastructure"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={staggerContainer}
-                className="py-28 px-6 bg-[#eef2f6]"
+                className="scroll-mt-36 py-28 px-6 bg-[#eef2f6]"
             >
                 <div className="max-w-6xl mx-auto">
 
@@ -336,11 +243,12 @@ export default function NiramayaPage() {
                 </div>
             </motion.section>
             <motion.section
+                id="innovation"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.15 }}
                 variants={containerVariants}
-                className="py-28 px-6 bg-[#f7f9fc]">
+                className="scroll-mt-36 py-28 px-6 bg-[#f7f9fc]">
                 <div className="max-w-6xl mx-auto">
 
                     {/* Header */}

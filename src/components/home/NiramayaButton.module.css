@@ -1,0 +1,85 @@
+.button {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  min-height: 56px;
+  margin-top: 32px;
+  padding: 4px 4px 4px 20px;
+  overflow: hidden;
+  border-radius: 13px;
+  background: #052e18;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.015em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 350ms ease;
+}
+
+.button::before {
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  right: 4px;
+  bottom: 4px;
+  width: 48px;
+  border-radius: 9px;
+  background: #f1fb73;
+  content: "";
+  transition: top 350ms ease, right 350ms ease, bottom 350ms ease, width 350ms ease, border-radius 350ms ease;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+.arrow {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  color: #052e18;
+  transition: transform 350ms ease;
+}
+
+.arrow svg {
+  width: 22px;
+  height: 22px;
+}
+
+.button:hover,
+.button:focus-visible {
+  color: #052e18;
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: 13px;
+}
+
+.button:hover .arrow,
+.button:focus-visible .arrow {
+  transform: translateX(3px);
+}
+
+.button:focus-visible {
+  outline: 2px solid #052e18;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .button::before,
+  .arrow {
+    transition: none;
+  }
+}

@@ -28,7 +28,7 @@ export const sliderData: SliderItem[] = [
   },
   {
     label: "DEDICATES TO THE NATION",
-    title: "ASSAM ADVANCED HEALTHCARE INNOVATION INNOVATION INSTITUTE (AAHII)",
+    title: "ASSAM ADVANCED HEALTHCARE INNOVATION INSTITUTE (AAHII)",
     description: "14th April 2023",
     image: "/banners/Banners-2.png",
     author: "Narendra Modi",
